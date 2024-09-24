@@ -11,6 +11,11 @@ app.get("/robots.txt", (req, res) => {
   res.sendFile(path.join(__dirname, "robots.txt"));
 });
 
+// Serve favicon
+app.get("/favicon.ico", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "private/image.webp"));
+});
+
 app.get("/", (req, res) => {
   const metadataPath = path.join(__dirname, "..", "metadata.json");
   fs.readFile(metadataPath, "utf8", (err, data) => {
@@ -22,11 +27,13 @@ app.get("/", (req, res) => {
       const fileList = Object.keys(metadata).map((file) => {
         const { title, desc, createdAt } = metadata[file];
         return `
-          <li>
-            <a href="/articles/${file}" target="_blank">${title}</a>
-            <p>${desc}</p>
-            <small>Created at: ${new Date(createdAt).toISOString()}</small>
-          </li>`;
+          <div class="card">
+        <a href="/articles/${file}" target="_blank">
+          <h2>${title}</h2>
+        </a>
+        <p>${desc}</p>
+        <small>Created at: ${new Date(createdAt).toISOString()}</small>
+          </div>`;
       });
       const html = `
         <!DOCTYPE html>
@@ -58,14 +65,28 @@ app.get("/", (req, res) => {
           font-size: 18px;
           margin-bottom: 20px;
         }
-        ul {
-          list-style-type: disc;
-          padding-left: 20px;
-          margin: 0;
+        .card {
+          background-color: #fff;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          padding: 20px;
+          margin-bottom: 20px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        li {
-          margin-bottom: 10px;
-          color: #1e90ff;
+        .card h2 {
+          font-size: 24px;
+          color: #007acc;
+          margin: 0 0 10px 0;
+        }
+        .card p {
+          font-size: 16px;
+          color: #333;
+          margin: 0 0 10px 0;
+        }
+        .card small {
+          display: block;
+          margin-top: 10px;
+          color: #666;
         }
         a {
           color: #1e90ff;
@@ -75,18 +96,13 @@ app.get("/", (req, res) => {
         a:hover {
           text-decoration: underline;
         }
-        small {
-          display: block;
-          margin-top: 5px;
-          color: #666;
-        }
           </style>
         </head>
         <body>
           <div class="container">
         <h1>Welcome to Copasan ChatGPT Archives!</h1>
         <p>Explore the fascinating conversations and insights from my interactions with ChatGPT. Dive into the knowledge and fun!</p>
-        <ul>${fileList.join("")}</ul>
+        <div class="card-container">${fileList.join("")}</div>
           </div>
           <script>
         document.querySelectorAll('small').forEach((element) => {
