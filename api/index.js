@@ -12,9 +12,7 @@ app.get("/robots.txt", (req, res) => {
 });
 
 // Serve favicon
-app.get("/favicon.ico", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "private/image.webp"));
-});
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.get("/", (req, res) => {
   const metadataPath = path.join(__dirname, "..", "metadata.json");
