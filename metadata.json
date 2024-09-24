@@ -3,5 +3,10 @@
     "title": "Step-by-Step Guide: Installing and Configuring Redis as a PHP Session Handler on Ubuntu with PHP 8.3",
     "desc": "Here is a step-by-step guide to installing Redis and setting it up as a session handler for a PHP application on an Ubuntu machine running PHP 8.3....",
     "createdAt": "2024-09-24T15:07:07.250Z"
+  },
+  "diagnosing-and-solving-performance-issues-in-a-monolithic-php-app.md": {
+    "title": "Diagnosing and Solving Performance Issues in a Monolithic PHP App",
+    "desc": "If you’ve deployed a monolithic PHP application with a MySQL database and you notice that the performance drops significantly when around 80 users acc...",
+    "createdAt": "2024-09-24T15:40:22.221Z"
   }
 }
