@@ -42,22 +42,15 @@ app.get("/", (req, res) => {
           color: #333;
           margin: 0;
           padding: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
         }
         .container {
-          background: #fff;
           padding: 20px 40px;
-          border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          max-width: 600px;
+          max-width: 100%;
           width: 100%;
           text-align: left;
         }
         h1 {
-          color: #ff6347;
+          color: #007acc;
           font-size: 32px;
           margin-bottom: 20px;
         }
@@ -139,7 +132,7 @@ app.get("/articles/:filename", (req, res) => {
       }
       h1, h2, h3, h4, h5, h6 {
       font-family: 'Calibri', sans-serif;
-      color: #ff4500;
+      color: #007acc;
       margin-top: 20px;
       margin-bottom: 10px;
       }
@@ -180,11 +173,40 @@ app.get("/articles/:filename", (req, res) => {
       padding: 10px;
       border-radius: 4px;
       overflow-x: auto;
+      position: relative;
+      }
+      .copy-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #007acc;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 4px;
       }
       </style>
       </head>
       <body>
       ${htmlContent}
+      <script>
+      document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+        button.innerText = 'Copied!';
+        setTimeout(() => {
+          button.innerText = 'Copy';
+        }, 2000);
+        });
+      });
+      pre.appendChild(button);
+      });
+      </script>
       </body>
       </html>
     `);
