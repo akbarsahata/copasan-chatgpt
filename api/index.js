@@ -6,25 +6,27 @@ const fs = require("fs");
 
 const app = express();
 
-const { CSS_THEME_URL, MARKDOWN_RESEARCH_DRAFT_URL, MARKDOWN_TEST_BED_URL } =
-  process.env;
-
 // Serve robots.txt file
 app.get("/robots.txt", (req, res) => {
   res.sendFile(path.join(__dirname, "robots.txt"));
 });
 
 app.get("/", (req, res) => {
-  const docsPath = path.join(__dirname, "..", "docs");
-  fs.readdir(docsPath, (err, files) => {
+  const metadataPath = path.join(__dirname, "..", "metadata.json");
+  fs.readFile(metadataPath, "utf8", (err, data) => {
     if (err) {
-      console.error("Error reading directory:", err);
-      res.status(500).send("Error reading directory");
+      console.error("Error reading metadata file:", err);
+      res.status(500).send("Error reading metadata file");
     } else {
-      const fileList = files.map((file) => {
-        const fileName = path.basename(file);
-        const title = fileName.replace(/-/g, " ").replace(".md", "");
-        return `<li><a href="/docs/${fileName}" target="_blank">${title.toUpperCase()}</a></li>`;
+      const metadata = JSON.parse(data);
+      const fileList = Object.keys(metadata).map((file) => {
+        const { title, desc, createdAt } = metadata[file];
+        return `
+          <li>
+            <a href="/articles/${file}" target="_blank">${title}</a>
+            <p>${desc}</p>
+            <small>Created at: ${new Date(createdAt).toISOString()}</small>
+          </li>`;
       });
       const html = `
         <!DOCTYPE html>
@@ -52,7 +54,7 @@ app.get("/", (req, res) => {
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
           max-width: 600px;
           width: 100%;
-          text-align: center;
+          text-align: left;
         }
         h1 {
           color: #ff6347;
@@ -64,20 +66,26 @@ app.get("/", (req, res) => {
           margin-bottom: 20px;
         }
         ul {
-          list-style-type: none;
-          padding: 0;
+          list-style-type: disc;
+          padding-left: 20px;
           margin: 0;
         }
         li {
           margin-bottom: 10px;
+          color: #1e90ff;
         }
         a {
-          color: #ff6347;
+          color: #1e90ff;
           text-decoration: none;
           font-weight: bold;
         }
         a:hover {
           text-decoration: underline;
+        }
+        small {
+          display: block;
+          margin-top: 5px;
+          color: #666;
         }
           </style>
         </head>
@@ -87,6 +95,12 @@ app.get("/", (req, res) => {
         <p>Explore the fascinating conversations and insights from my interactions with ChatGPT. Dive into the knowledge and fun!</p>
         <ul>${fileList.join("")}</ul>
           </div>
+          <script>
+        document.querySelectorAll('small').forEach((element) => {
+          const date = new Date(element.textContent.replace('Created at: ', ''));
+          element.textContent = 'Created at: ' + date.toLocaleString();
+        });
+          </script>
         </body>
         </html>
       `;
@@ -101,47 +115,76 @@ app.get("/articles/:filename", (req, res) => {
     const filePath = path.join(__dirname, "..", `docs/${fileName}`);
     const fileContent = fs.readFileSync(filePath, "utf8");
     const htmlContent = marked.parse(fileContent);
+
+    // Extract the title from the markdown content
+    const titleMatch = fileContent.match(/^#\s+(.*)/);
+    const title = titleMatch ? titleMatch[1] : fileName;
+
     res.send(`
       <!DOCTYPE html>
       <html lang="en">
       <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>${fileName}</title>
-        <style>
-          body {
-            font-family: "Times New Roman", Times, serif;
-            font-size: 16px;
-            line-height: 1.6;
-            margin: 40px;
-          }
-          h1, h2, h3, h4, h5, h6 {
-            font-family: Arial, sans-serif;
-            font-weight: bold;
-            margin-top: 20px;
-            margin-bottom: 10px;
-          }
-          p {
-            margin-bottom: 20px;
-          }
-          ul, ol {
-            margin-left: 20px;
-            margin-bottom: 20px;
-          }
-          li {
-            margin-bottom: 10px;
-          }
-          a {
-            color: #007bff;
-            text-decoration: none;
-          }
-          a:hover {
-            text-decoration: underline;
-          }
-        </style>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>${title}</title>
+      <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
+      <style>
+      body {
+      font-family: 'Calibri', sans-serif;
+      background-color: #f0f8ff;
+      color: #333;
+      margin: 20px;
+      padding: 20px;
+      line-height: 1.6;
+      }
+      h1, h2, h3, h4, h5, h6 {
+      font-family: 'Calibri', sans-serif;
+      color: #ff4500;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      }
+      p {
+      margin-bottom: 20px;
+      font-size: 18px;
+      }
+      ul, ol {
+      margin-left: 20px;
+      margin-bottom: 20px;
+      }
+      li {
+      margin-bottom: 10px;
+      }
+      a {
+      color: #1e90ff;
+      text-decoration: none;
+      font-weight: bold;
+      }
+      a:hover {
+      text-decoration: underline;
+      }
+      blockquote {
+      margin: 20px 0;
+      padding: 10px 20px;
+      background-color: #f9f9f9;
+      border-left: 5px solid #ccc;
+      font-style: italic;
+      }
+      code {
+      background-color: #f4f4f4;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-family: 'Courier New', Courier, monospace;
+      }
+      pre {
+      background-color: #f4f4f4;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      }
+      </style>
       </head>
       <body>
-        ${htmlContent}
+      ${htmlContent}
       </body>
       </html>
     `);

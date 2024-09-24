@@ -1,0 +1,7 @@
+{
+  "step-by-step-guide-installing-and-configuring-redis-as-a-php-session-handler-on-ubuntu-with-php-8-3.md": {
+    "title": "Step-by-Step Guide: Installing and Configuring Redis as a PHP Session Handler on Ubuntu with PHP 8.3",
+    "desc": "Here is a step-by-step guide to installing Redis and setting it up as a session handler for a PHP application on an Ubuntu machine running PHP 8.3....",
+    "createdAt": "2024-09-24T15:07:07.250Z"
+  }
+}
