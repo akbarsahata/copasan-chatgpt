@@ -3,7 +3,7 @@ const path = require('path');
 
 // Paths to the files
 const metadataPath = path.join(__dirname, '../metadata.json');
-const sitemapPath = path.join(__dirname, '../api/sitemap.xml');
+const sitemapPath = path.join(__dirname, '../public/sitemap.xml');
 
 // Read metadata.json
 fs.readFile(metadataPath, 'utf8', (err, data) => {

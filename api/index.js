@@ -6,12 +6,7 @@ const fs = require("fs");
 
 const app = express();
 
-// Serve robots.txt file
-app.get("/robots.txt", (req, res) => {
-  res.sendFile(path.join(__dirname, "robots.txt"));
-});
-
-// Serve favicon
+// serve static files
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.get("/", (req, res) => {
