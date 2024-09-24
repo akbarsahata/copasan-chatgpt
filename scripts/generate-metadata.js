@@ -13,7 +13,7 @@ function extractMetadata(content) {
     for (let line of lines) {
         if (line.startsWith("# ")) {
             title = line.replace("# ", "").trim();
-        } else if (title && line.trim() && !line.startsWith("#")) {
+        } else if (title && line.trim() && !line.startsWith("#") && !line.startsWith("-") && !line.startsWith("*") && !line.startsWith(">") && !line.startsWith("```")) {
             desc = line.trim().slice(0, 150) + "...";
             break;
         }

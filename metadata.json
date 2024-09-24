@@ -13,5 +13,10 @@
     "title": "Building Your Own Simple Edge Runtime Environment: A Step-by-Step Guide",
     "desc": "In today’s increasingly decentralized digital landscape, edge computing has become a crucial architecture for reducing latency and improving performan...",
     "createdAt": "2024-09-24T15:54:10.939Z"
+  },
+  "common-forms-of-authentication-ensuring-secure-access-to-applications.md": {
+    "title": "Common Forms of Authentication: Ensuring Secure Access to Applications",
+    "desc": "In today’s digital world, securing user and system identities is crucial for protecting sensitive information and ensuring safe online interactions....",
+    "createdAt": "2024-09-24T16:44:36.335Z"
   }
 }
