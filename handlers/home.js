@@ -44,15 +44,16 @@ module.exports = (req, res) => {
             color: #333;
             margin: 0;
             padding: 0;
-            width: 100vw;
+            width: 100%;
             height: 100vh;
-            max-width: 100%;
+            overflow-x: hidden; /* Prevent horizontal overflow */
           }
           .container {
-            padding: 20px 40px;
+            padding: 20px;
             max-width: 100%;
             width: 100%;
             text-align: left;
+            box-sizing: border-box; /* Include padding in width calculation */
           }
           h1 {
             color: #007acc;
