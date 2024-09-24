@@ -23,7 +23,8 @@ app.get("/", (req, res) => {
     } else {
       const fileList = files.map((file) => {
         const fileName = path.basename(file);
-        return `<li><a href="/docs/${fileName}">${fileName}</a></li>`;
+        const title = fileName.replace(/-/g, " ").replace(".md", "");
+        return `<li><a href="/docs/${fileName}" target="_blank">${title.toUpperCase()}</a></li>`;
       });
       const html = `
         <!DOCTYPE html>
@@ -31,29 +32,49 @@ app.get("/", (req, res) => {
         <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Copasan ChatGPT</title>
+          <title>Copasan ChatGPT Archives</title>
           <style>
         body {
           font-family: Arial, sans-serif;
-          background-color: #f8f8f8;
-          padding: 20px;
+          background-color: #f0f2f5;
+          color: #333;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
+        .container {
+          background: #fff;
+          padding: 20px 40px;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          max-width: 600px;
+          width: 100%;
+          text-align: center;
         }
         h1 {
-          color: #333333;
-          font-size: 24px;
+          color: #ff6347;
+          font-size: 32px;
+          margin-bottom: 20px;
+        }
+        p {
+          font-size: 18px;
           margin-bottom: 20px;
         }
         ul {
           list-style-type: none;
           padding: 0;
-          margin-bottom: 20px;
+          margin: 0;
         }
         li {
           margin-bottom: 10px;
         }
         a {
-          color: #007bff;
+          color: #ff6347;
           text-decoration: none;
+          font-weight: bold;
         }
         a:hover {
           text-decoration: underline;
@@ -61,9 +82,11 @@ app.get("/", (req, res) => {
           </style>
         </head>
         <body>
-          <h1>Copasan ChatGPT</h1>
-          <p>Here are the list of my conversation with ChatGPT that may be useful to read later:</p>
-          <ul>${fileList.join("")}</ul>
+          <div class="container">
+        <h1>Welcome to Copasan ChatGPT Archives!</h1>
+        <p>Explore the fascinating conversations and insights from my interactions with ChatGPT. Dive into the knowledge and fun!</p>
+        <ul>${fileList.join("")}</ul>
+          </div>
         </body>
         </html>
       `;
