@@ -96,6 +96,21 @@ app.get("/", (req, res) => {
         a:hover {
           text-decoration: underline;
         }
+        @media (min-width: 768px) {
+          .container {
+        max-width: 750px;
+          }
+        }
+        @media (min-width: 992px) {
+          .container {
+        max-width: 970px;
+          }
+        }
+        @media (min-width: 1200px) {
+          .container {
+        max-width: 1170px;
+          }
+        }
           </style>
         </head>
         <body>
