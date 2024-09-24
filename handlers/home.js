@@ -30,12 +30,22 @@ module.exports = (req, res) => {
             <small>Created at: ${createdAt.toISOString()}</small>
           </div>`;
         });
+      
+      const description = "Explore the fascinating conversations and insights from my interactions with ChatGPT. Dive into the knowledge and fun!";
+      const title = "Copasan ChatGPT Archives";
+      const imageUrl = "/image.webp";
+      const pageUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
       const html = `
           <!DOCTYPE html>
           <html lang="en">
           <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="description" content="${description}">
+            <meta property="og:title" content="${title}">
+            <meta property="og:description" content="${description}">
+            <meta property="og:image" content="${imageUrl}">
+            <meta property="og:url" content="${pageUrl}">
             <title>Copasan ChatGPT Archives</title>
             <style>
           body {
