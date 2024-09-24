@@ -14,7 +14,7 @@ module.exports = (req, res) => {
     const title = titleMatch ? titleMatch[1] : fileName;
 
     // Extract the first paragraph for the meta description
-    const descriptionMatch = fileContent.match(/^[^#\n][^\n]*\n/);
+    const descriptionMatch = fileContent.match(/^(?![#*>\-]).+[^\n]*\n/);
     const description = descriptionMatch
       ? descriptionMatch[0].slice(0, 300)
       : "";
