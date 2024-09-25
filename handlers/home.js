@@ -128,7 +128,7 @@ module.exports = (req, res) => {
             element.textContent = 'Created at: ' + date.toLocaleString();
           });
             </script>
-            <script id="dsq-count-scr" src="//copasan-chatgpt.disqus.com/count.js" async></script>
+            <script id="dsq-count-scr" src="//copasan-chatgpt.disqus.com/count.js" onload="DISQUSWIDGETS.getCount({reset: true});" async></script>
           </body>
           </html>
         `;
