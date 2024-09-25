@@ -9,15 +9,14 @@ module.exports = (req, res) => {
     const fileContent = fs.readFileSync(filePath, "utf8");
     const htmlContent = marked.parse(fileContent);
 
-    // Extract the title from the markdown content
-    const titleMatch = fileContent.match(/^#\s+(.*)/);
-    const title = titleMatch ? titleMatch[1] : fileName;
+    // Read metadata from the JSON file
+    const metadataPath = path.join(__dirname, "..", "metadata.json");
+    const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf8"));
 
-    // Extract the first paragraph for the meta description
-    const descriptionMatch = fileContent.match(/^(?![#*>\-]).+[^\n]*\n/);
-    const description = descriptionMatch
-      ? descriptionMatch[0].slice(0, 300)
-      : "";
+    // Extract the title and description from the metadata
+    const fileMetadata = metadata[fileName];
+    const title = fileMetadata ? fileMetadata.title : fileName;
+    const description = fileMetadata ? fileMetadata.desc : "";
 
     // Define the URL to your image and page
     const imageMatch = htmlContent.match(/<img[^>]+src="([^">]+)"/);
