@@ -28,8 +28,8 @@ module.exports = (req, res) => {
             </a>
             <p>${desc}</p>
             <div class="card-footer">
-              <small>Created at: ${createdAt.toISOString()}</small>
-              <small><a href="/articles/${file}#disqus_thread" target="_blank" data-disqus-identifier="${file}">0 Comment</a></small>
+              <small class="date">Created at: ${createdAt.toISOString()}</small>
+              <small class"comment-count"><a href="/articles/${file}#disqus_thread" target="_blank" data-disqus-identifier="${file}">0 Comment</a></small>
             </div>
           </div>`;
         });
@@ -123,7 +123,7 @@ module.exports = (req, res) => {
           <div class="card-container">${fileList.join("")}</div>
             </div>
             <script>
-          document.querySelectorAll('small').forEach((element) => {
+          document.querySelectorAll('small.date').forEach((element) => {
             const date = new Date(element.textContent.replace('Created at: ', ''));
             element.textContent = 'Created at: ' + date.toLocaleString();
           });
