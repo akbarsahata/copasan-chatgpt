@@ -123,6 +123,11 @@ module.exports = (req, res) => {
       width: 40px;
       height: 40px;
       }
+      #disqus_thread {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #ccc;
+      }
       </style>
       </head>
       <body>
@@ -133,6 +138,20 @@ module.exports = (req, res) => {
       <button class="share-button" onclick="shareToWhatsApp()">W</button>
       <button class="share-button" onclick="copyLink()">C</button>
       </div>
+      <div id="disqus_thread"></div>
+      <script>
+      var disqus_config = function () {
+      this.page.url = "${pageUrl}"
+      this.page.identifier = "${fileName}";
+      };
+      (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+      })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
       <script>
       function shareToFacebook() {
       const url = encodeURIComponent("${pageUrl}");
@@ -149,7 +168,7 @@ module.exports = (req, res) => {
       }
       function copyLink() {
       navigator.clipboard.writeText("${pageUrl}").then(() => {
-        alert('Link copied to clipboard');
+      alert('Link copied to clipboard');
       });
       }
       document.querySelectorAll('pre').forEach((pre) => {
@@ -161,7 +180,7 @@ module.exports = (req, res) => {
       navigator.clipboard.writeText(code).then(() => {
       button.innerText = 'Copied!';
       setTimeout(() => {
-        button.innerText = 'Copy';
+      button.innerText = 'Copy';
       }, 2000);
       });
       });
