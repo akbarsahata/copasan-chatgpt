@@ -18,5 +18,10 @@
     "title": "Common Forms of Authentication: Ensuring Secure Access to Applications",
     "desc": "In today’s digital world, securing user and system identities is crucial for protecting sensitive information and ensuring safe online interactions....",
     "createdAt": "2024-09-24T16:44:36.335Z"
+  },
+  "automated-detection-of-misconfigurations-in-ansible-aws-vpc-playbooks-using-support-vector-machines.md": {
+    "title": "Automated Detection of Misconfigurations in Ansible AWS VPC Playbooks Using Support Vector Machines",
+    "desc": "Network misconfigurations are a primary source of network outages and security vulnerabilities. With the increasing complexity of cloud infrastructure...",
+    "createdAt": "2024-09-25T05:23:50.382Z"
   }
 }
