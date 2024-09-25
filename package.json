@@ -7,6 +7,7 @@
     "start": "node api/index.js",
     "generate:metadata": "node scripts/generate-metadata.js",
     "generate:sitemap": "node scripts/generate-sitemap.js",
+    "title": "node scripts/title.js",
     "prepare": "husky install"
   },
   "keywords": [],
