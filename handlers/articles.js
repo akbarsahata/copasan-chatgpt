@@ -4,7 +4,7 @@ const fs = require("fs");
 
 module.exports = (req, res) => {
   try {
-    const fileName = req.params.filename;
+    const fileName = req.params.filename.split("#")[0];
     const filePath = path.join(__dirname, "..", `docs/${fileName}`);
     const fileContent = fs.readFileSync(filePath, "utf8");
     const htmlContent = marked.parse(fileContent);

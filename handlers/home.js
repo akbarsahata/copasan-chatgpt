@@ -23,7 +23,7 @@ module.exports = (req, res) => {
         .map(({ file, title, desc, createdAt }) => {
           return `
           <div class="card">
-            <a href="/articles/${file}" target="_blank">
+            <a href="/articles/${file}#disqus_thread" target="_blank">
               <h2>${title}</h2>
             </a>
             <p>${desc}</p>
@@ -119,6 +119,7 @@ module.exports = (req, res) => {
             element.textContent = 'Created at: ' + date.toLocaleString();
           });
             </script>
+            <script id="dsq-count-scr" src="//copasan-chatgpt.disqus.com/count.js" async></script>
           </body>
           </html>
         `;
