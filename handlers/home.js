@@ -23,11 +23,14 @@ module.exports = (req, res) => {
         .map(({ file, title, desc, createdAt }) => {
           return `
           <div class="card">
-            <a href="/articles/${file}" target="_blank" data-disqus-identifier="${file}">
+            <a href="/articles/${file}" target="_blank">
               <h2>${title}</h2>
             </a>
             <p>${desc}</p>
-            <small>Created at: ${createdAt.toISOString()}</small>
+            <div class="card-footer">
+              <small>Created at: ${createdAt.toISOString()}</small>
+              <small><a href="/articles/${file}#disqus_thread" target="_blank" data-disqus-identifier="${file}">0 Comment</a></small>
+            </div>
           </div>`;
         });
       
@@ -92,11 +95,6 @@ module.exports = (req, res) => {
             color: #333;
             margin: 0 0 10px 0;
           }
-          .card small {
-            display: block;
-            margin-top: 10px;
-            color: #666;
-          }
           a {
             color: #1e90ff;
             text-decoration: none;
@@ -104,6 +102,17 @@ module.exports = (req, res) => {
           }
           a:hover {
             text-decoration: underline;
+          }
+          .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+          }
+          .card-footer small {
+            display: block;
+            margin-top: 10px;
+            color: #666;
           }
             </style>
           </head>
