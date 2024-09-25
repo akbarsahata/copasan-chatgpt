@@ -102,23 +102,68 @@ module.exports = (req, res) => {
       cursor: pointer;
       border-radius: 4px;
       }
+      .share-buttons {
+      position: fixed;
+      top: 50%;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      }
+      .share-button {
+      background-color: #007acc;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      }
       </style>
       </head>
       <body>
       ${htmlContent}
+      <div class="share-buttons">
+      <button class="share-button" onclick="shareToFacebook()">F</button>
+      <button class="share-button" onclick="shareToTwitter()">X</button>
+      <button class="share-button" onclick="shareToWhatsApp()">W</button>
+      <button class="share-button" onclick="copyLink()">C</button>
+      </div>
       <script>
+      function shareToFacebook() {
+      const url = encodeURIComponent("${pageUrl}");
+      window.open(\`https://www.facebook.com/sharer/sharer.php?u=\${url}\`, '_blank');
+      }
+      function shareToTwitter() {
+      const url = encodeURIComponent("${pageUrl}");
+      const text = encodeURIComponent("${title}");
+      window.open(\`https://twitter.com/intent/tweet?url=\${url}&text=\${text}\`, '_blank');
+      }
+      function shareToWhatsApp() {
+      const url = encodeURIComponent("${pageUrl}");
+      window.open(\`https://wa.me/?text=\${url}\`, '_blank');
+      }
+      function copyLink() {
+      navigator.clipboard.writeText("${pageUrl}").then(() => {
+        alert('Link copied to clipboard');
+      });
+      }
       document.querySelectorAll('pre').forEach((pre) => {
       const button = document.createElement('button');
       button.className = 'copy-button';
       button.innerText = 'Copy';
       button.addEventListener('click', () => {
-        const code = pre.querySelector('code').innerText;
-        navigator.clipboard.writeText(code).then(() => {
-        button.innerText = 'Copied!';
-        setTimeout(() => {
-          button.innerText = 'Copy';
-        }, 2000);
-        });
+      const code = pre.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+      button.innerText = 'Copied!';
+      setTimeout(() => {
+        button.innerText = 'Copy';
+      }, 2000);
+      });
       });
       pre.appendChild(button);
       });
