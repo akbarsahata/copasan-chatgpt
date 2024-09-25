@@ -23,7 +23,7 @@ module.exports = (req, res) => {
         .map(({ file, title, desc, createdAt }) => {
           return `
           <div class="card">
-            <a href="/articles/${file}#disqus_thread" target="_blank">
+            <a href="/articles/${file}" target="_blank" data-disqus-identifier="${file}">
               <h2>${title}</h2>
             </a>
             <p>${desc}</p>
