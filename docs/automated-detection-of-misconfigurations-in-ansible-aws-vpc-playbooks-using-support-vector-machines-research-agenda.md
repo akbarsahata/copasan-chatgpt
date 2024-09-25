@@ -1,4 +1,4 @@
-# **Research Project Agenda**
+# Research Project Agenda
 
 **Title:** Automated Detection of Misconfigurations in Ansible AWS VPC Playbooks Using Support Vector Machines (SVM)
 
