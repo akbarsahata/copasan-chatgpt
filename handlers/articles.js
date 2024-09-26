@@ -96,6 +96,8 @@ module.exports = (req, res) => {
       display: block;
       margin: 20px auto;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 100%;
+      height: auto;
       }
       .copy-button {
       position: absolute;
