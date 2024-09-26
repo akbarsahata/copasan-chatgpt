@@ -92,6 +92,11 @@ module.exports = (req, res) => {
       overflow-x: auto;
       position: relative;
       }
+      img {
+      display: block;
+      margin: 20px auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
       .copy-button {
       position: absolute;
       top: 10px;

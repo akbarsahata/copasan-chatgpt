@@ -2,8 +2,12 @@
 
 ---
 
-In modern web development, managing your database efficiently and ensuring optimized connections are crucial for building robust applications. This tutorial will guide you step-by-step through integrating Drizzle ORM into your Node.js project, while also establishing a connection to a Supabase database using pgBounce. By the end of this post, you'll have a clear understanding of setting up a performant database connection, which can improve the efficiency and scalability of your application.
+![code-sql](https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1)
 
+---
+
+In modern web development, managing your database efficiently and ensuring optimized connections are crucial for building robust applications. This tutorial will guide you step-by-step through integrating Drizzle ORM into your Node.js project, while also establishing a connection to a Supabase database using pgBounce. By the end of this post, you'll have a clear understanding of setting up a performant database connection, which can improve the efficiency and scalability of your application.
+ 
 ### **What is Drizzle ORM?**
 
 Drizzle ORM is a lightweight and type-safe ORM (Object-Relational Mapping) tool for JavaScript and TypeScript that simplifies database queries. Its flexibility, paired with its type safety, makes it an excellent choice for handling database operations in modern web applications.
