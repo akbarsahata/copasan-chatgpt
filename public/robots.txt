@@ -3,4 +3,4 @@ Disallow: /private/
 Disallow: /tmp/
 Disallow: /admin/
 
-Sitemap: https://copas-chatgpt.akbarsahata.id/sitemap.xml
+Sitemap: https://blog.akbarsahata.id/sitemap.xml
