@@ -34,8 +34,8 @@ module.exports = (req, res) => {
           </div>`;
         });
       
-      const description = "Explore the fascinating conversations and insights from my interactions with ChatGPT. Dive into the knowledge and fun!";
-      const title = "Copasan ChatGPT Archives";
+      const title = "Akbar Sahata's Blog";
+      const description = "Welcome to my personal blog where I share my thoughts, opinions, and a comprehensive archive of my interactions with ChatGPT. Dive into the knowledge and fun!";
       const imageUrl = "/image.webp";
       const pageUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
       const html = `
@@ -118,8 +118,8 @@ module.exports = (req, res) => {
           </head>
           <body>
             <div class="container">
-          <h1>Welcome to Copasan ChatGPT Archives!</h1>
-          <p>Explore the fascinating conversations and insights from my interactions with ChatGPT. Dive into the knowledge and fun!</p>
+          <h1>Welcome to ${title}!</h1>
+          <p>${description}</p>
           <div class="card-container">${fileList.join("")}</div>
             </div>
             <script>
