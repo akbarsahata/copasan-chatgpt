@@ -49,7 +49,7 @@ module.exports = (req, res) => {
             <meta property="og:description" content="${description}">
             <meta property="og:image" content="${imageUrl}">
             <meta property="og:url" content="${pageUrl}">
-            <title>Copasan ChatGPT Archives</title>
+            <title>${title}</title>
             <style>
           body {
             font-family: Arial, sans-serif;

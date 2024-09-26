@@ -14,14 +14,14 @@ fs.readFile(metadataPath, 'utf8', (err, data) => {
 
     const metadata = JSON.parse(data);
     const urls = Object.keys(metadata).map(key => ({
-        loc: `https://copasan-chatgpt.akbarsahata.id/articles/${key}`,
+        loc: `https://blog.akbarsahata.id/articles/${key}`,
         lastmod: new Date(metadata[key].createdAt).toISOString().split('T')[0]
     }));
 
     // Add the specified URL as the first record
     const currentDate = new Date().toISOString().split('T')[0];
     urls.unshift({
-        loc: 'https://copasan-chatgpt.akbarsahata.id',
+        loc: 'https://blog.akbarsahata.id',
         lastmod: currentDate,
         changefreq: 'daily',
         priority: '1.0'
