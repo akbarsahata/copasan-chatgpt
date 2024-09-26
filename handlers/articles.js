@@ -1,6 +1,18 @@
-const marked = require("marked");
+const { Marked } = require("marked");
+const { markedHighlight } = require("marked-highlight");
+const hljs = require("highlight.js");
 const path = require("path");
 const fs = require("fs");
+
+const marked = new Marked(
+  markedHighlight({
+    langPrefix: 'hljs language-',
+    highlight(code, lang, info) {
+      const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+      return hljs.highlight(code, { language }).value;
+    }
+  })
+);
 
 module.exports = (req, res) => {
   try {
@@ -37,7 +49,6 @@ module.exports = (req, res) => {
       <meta property="og:type" content="article">
       <title>${title}</title>
       <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet">
       <style>
       body {
       font-family: 'Calibri', sans-serif;
@@ -145,7 +156,6 @@ module.exports = (req, res) => {
       <button class="share-button" onclick="copyLink()">C</button>
       </div>
       <div id="disqus_thread"></div>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
       <script>
       var disqus_config = function () {
       this.page.url = "${pageUrl}"
