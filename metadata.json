@@ -33,5 +33,10 @@
     "title": "Advancements and Research Directions in Cybersecurity Penetration Testing",
     "desc": "In today’s digital age, cybersecurity threats have evolved in complexity and scope. As highlighted in the 2021 Cybersecurity Threat Landscape report b...",
     "createdAt": "2024-09-25T15:20:11.595Z"
+  },
+  "how-to-use-drizzle-orm-in-your-node-js-project-and-connect-to-a-supabase-database-with-pgbounce.md": {
+    "title": "How to Use Drizzle ORM in Your Node.js Project and Connect to a Supabase Database with pgBouncer",
+    "desc": "In modern web development, managing your database efficiently and ensuring optimized connections are crucial for building robust applications. This tu...",
+    "createdAt": "2024-09-26T10:28:47.728Z"
   }
 }
