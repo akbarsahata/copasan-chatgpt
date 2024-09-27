@@ -4,6 +4,10 @@
 
 ---
 
+![termina](https://images.pexels.com/photos/207580/pexels-photo-207580.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1)
+
+---
+
 ### Introduction
 
 In today’s digital age, cybersecurity threats have evolved in complexity and scope. As highlighted in the 2021 Cybersecurity Threat Landscape report by the European Union Agency for Cybersecurity (ENISA), the growing sophistication of cyber attacks, particularly ransomware and advanced persistent threats (APTs), presents serious risks to organizations globally [[1]](https://www.enisa.europa.eu/publications/enisa-threat-landscape-2021). This has spurred significant advancements in cybersecurity practices, particularly in **Red Teaming and Adversarial Testing** and **Penetration Testing in Cloud and IoT Environments**.
