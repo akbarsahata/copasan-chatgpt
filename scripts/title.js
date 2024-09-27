@@ -11,7 +11,11 @@ const normalizeTitle = (title) => {
     title = title.replace(/[^a-z0-9\s-]/g, '-');
 
     // Replace spaces with dashes and return the normalized title
-    return title.replace(/\s+/g, '-');
+    // Replace spaces with dashes
+    title = title.replace(/\s+/g, '-');
+
+    // Replace multiple dashes with a single dash
+    return title.replace(/-+/g, '-');
 };
 
 // Read the command line argument
