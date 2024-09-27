@@ -38,5 +38,10 @@
     "title": "How to Use Drizzle ORM in Your Node.js Project and Connect to a Supabase Database with pgBouncer",
     "desc": "In modern web development, managing your database efficiently and ensuring optimized connections are crucial for building robust applications. This tu...",
     "createdAt": "2024-09-26T10:28:47.728Z"
+  },
+  "mastering-aws-a-beginner-friendly-guide-to-aws-services-with-free-learning-resources.md": {
+    "title": "Mastering AWS: A Beginner-Friendly Guide to AWS Services with Free Learning Resources",
+    "desc": "If you're currently enrolled in the AWS Academy Cloud Foundations Course or simply looking to improve your knowledge of AWS, this guide is designed to...",
+    "createdAt": "2024-09-27T15:13:02.691Z"
   }
 }
