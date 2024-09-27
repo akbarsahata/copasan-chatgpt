@@ -2,6 +2,10 @@
 
 ---
 
+![servers](https://images.pexels.com/photos/2881233/pexels-photo-2881233.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1)
+
+---
+
 ## **Abstract**
 
 Network misconfigurations are a primary source of network outages and security vulnerabilities. With the increasing complexity of cloud infrastructures and the widespread use of automation tools like Ansible for managing configurations, the potential for misconfigurations has grown. This research aims to develop an automated system that classifies Ansible playbooks for AWS Virtual Private Cloud (VPC) configurations as correct or misconfigured using Support Vector Machines (SVM). By leveraging fundamental classification algorithms in computational intelligence, this study seeks to enhance network reliability and security.
