@@ -113,38 +113,38 @@ Misconfigurations have been identified as a significant cause of network vulnera
   - Applied Term Frequency-Inverse Document Frequency to weigh the importance of tokens.
 - **Example Code Snippet**:
 
-  ```python
-  import yaml
-  from sklearn.feature_extraction.text import TfidfVectorizer
+```python
+import yaml
+from sklearn.feature_extraction.text import TfidfVectorizer
 
-  def load_playbook(file_path):
-      with open(file_path, 'r') as file:
-          return yaml.safe_load(file)
+def load_playbook(file_path):
+    with open(file_path, 'r') as file:
+        return yaml.safe_load(file)
 
-  def extract_features(playbook_data):
-      features = []
-      for play in playbook_data:
-          tasks = play.get('tasks', [])
-          for task in tasks:
-              module = list(task.keys())[0]
-              features.append(module)
-              args = task[module]
-              if isinstance(args, dict):
-                  features.extend(args.keys())
-      return ' '.join(features)
+def extract_features(playbook_data):
+    features = []
+    for play in playbook_data:
+        tasks = play.get('tasks', [])
+        for task in tasks:
+            module = list(task.keys())[0]
+            features.append(module)
+            args = task[module]
+            if isinstance(args, dict):
+                features.extend(args.keys())
+    return ' '.join(features)
 
-  texts = []
-  labels = []
+texts = []
+labels = []
 
-  for file_path, label in zip(file_paths, file_labels):
-      playbook = load_playbook(file_path)
-      text = extract_features(playbook)
-      texts.append(text)
-      labels.append(label)
+for file_path, label in zip(file_paths, file_labels):
+    playbook = load_playbook(file_path)
+    text = extract_features(playbook)
+    texts.append(text)
+    labels.append(label)
 
-  vectorizer = TfidfVectorizer()
-  X = vectorizer.fit_transform(texts)
-  ```
+vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform(texts)
+```
 
 ### **3.5 Model Development**
 
