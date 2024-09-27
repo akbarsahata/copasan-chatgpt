@@ -14,7 +14,8 @@ function extractMetadata(content) {
         if (line.startsWith("# ")) {
             title = line.replace("# ", "").trim();
         } else if (title && line.trim() && !line.startsWith("#") && !line.startsWith("-") && !line.startsWith("*") && !line.startsWith(">") && !line.startsWith("```")) {
-            desc = line.trim().slice(0, 150) + "...";
+            // Remove markdown notation from the description line
+            desc = line.replace(/(\*\*|__|~~|`|>|#+|\*|-|\[.*?\]\(.*?\)|!\[.*?\]\(.*?\))/g, "").trim().slice(0, 150) + "...";
             break;
         }
     }
