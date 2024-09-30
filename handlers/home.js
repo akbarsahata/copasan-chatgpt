@@ -160,7 +160,7 @@ module.exports = (req, res) => {
               const searchInput = document.getElementById('search-input');
               const searchResults = document.getElementById('search-results');
 
-              fetch('/public/metadata.json')
+              fetch('/metadata.json')
                 .then(response => response.json())
                 .then(data => {
               const fuse = new Fuse(Object.values(data), {
