@@ -33,9 +33,10 @@ module.exports = (req, res) => {
             </div>
           </div>`;
         });
-      
+
       const title = "Akbar Sahata's Blog";
-      const description = "Welcome to my personal blog where I share my thoughts, opinions, and a comprehensive archive of my interactions with ChatGPT. Dive into the knowledge and fun!";
+      const description =
+        "Welcome to my personal blog where I share my thoughts, opinions, and a comprehensive archive of my interactions with ChatGPT. Dive into the knowledge and fun!";
       const imageUrl = "/image.webp";
       const pageUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
       const html = `
@@ -137,6 +138,10 @@ module.exports = (req, res) => {
             font-size: 18px;
             color: #007acc;
           }
+          .search-results .result-item p {
+            font-size: 14px;
+            color: #333;
+          }
           .search-results .result-item a:hover {
             text-decoration: underline;
           }
@@ -164,27 +169,35 @@ module.exports = (req, res) => {
 
               fetch('/metadata.json')
                 .then(response => response.json())
-                .then(result => Object.keys(result).map(fileName => ({ file: fileName, title: result[fileName].title, desc: result[fileName].desc })))
+                .then(result => Object.keys(result)
+                  .map(fileName => ({
+                    file: fileName,
+                    title: result[fileName].title,
+                    desc: result[fileName].desc
+                  }))
+                )
                 .then(data => {
-              const fuse = new Fuse(data, {
-                keys: ['title', 'desc']
-              });
-            });
+                  console.log(data);
+                  const fuse = new Fuse(data, {
+                    keys: ['title', 'desc']
+                  });
 
-              searchInput.addEventListener('input', () => {
-                const searchTerm = searchInput.value;
-                const results = fuse.search(searchTerm);
+                  searchInput.addEventListener('input', () => {
+                    const searchTerm = searchInput.value;
+                    const results = fuse.search(searchTerm);
+                    console.log(results);
 
-                searchResults.innerHTML = results.map(result => {
-                  const { file, title } = result.item;
-                  return \`
-                <div class="result-item">
-                  <a href="/articles/\${file}">\${title}</a>
-                </div>
-                  \`;
-                }).join('');
-              });
-          });
+                    searchResults.innerHTML = results.map(result => {
+                      const { file, title, desc } = result.item;
+                      return \`
+                    <div class="result-item">
+                      <a href="/articles/\${file}">\${title}</a>
+                      <p>\${desc}</p>
+                    </div>
+                      \`;
+                    }).join('');
+                  });
+                });
             </script>
             <script id="dsq-count-scr" src="//copasan-chatgpt.disqus.com/count.js" onload="DISQUSWIDGETS.getCount({reset: true});" async></script>
           </body>
