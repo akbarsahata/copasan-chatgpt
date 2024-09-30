@@ -43,5 +43,10 @@
     "title": "Mastering AWS: A Beginner-Friendly Guide to AWS Services with Free Learning Resources",
     "desc": "If you're currently enrolled in the AWS Academy Cloud Foundations Course or simply looking to improve your knowledge of AWS, this guide is designed to...",
     "createdAt": "2024-09-27T15:13:02.691Z"
+  },
+  "application-failures-due-to-network-problems-caused-by-misconfigurations.md": {
+    "title": "Application Failures Due to Network Problems Caused by Misconfigurations",
+    "desc": "...",
+    "createdAt": "2024-09-30T14:29:23.778Z"
   }
 }

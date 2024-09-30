@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://blog.akbarsahata.id</loc>
-    <lastmod>2024-09-27</lastmod>
+    <lastmod>2024-09-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -41,5 +41,9 @@
   <url>
     <loc>https://blog.akbarsahata.id/articles/mastering-aws-a-beginner-friendly-guide-to-aws-services-with-free-learning-resources.md</loc>
     <lastmod>2024-09-27</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.akbarsahata.id/articles/application-failures-due-to-network-problems-caused-by-misconfigurations.md</loc>
+    <lastmod>2024-09-30</lastmod>
   </url>
 </urlset>
