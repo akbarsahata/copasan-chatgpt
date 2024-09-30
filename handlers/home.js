@@ -119,13 +119,12 @@ module.exports = (req, res) => {
             max-width: 100vw;
           }
           .search-container input {
-            margin: 0 auto;
-            width: 800px;
-            max-width: 100%;
-            padding: 20px;
+            padding: 10px;
             font-size: 16px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            width: 100%; /* Ensure the input takes the full width of its container */
+            box-sizing: border-box; /* Include padding and border in the element's total width */
           }
           .search-results {
             margin-top: 20px;
