@@ -166,7 +166,7 @@ module.exports = (req, res) => {
                 .then(response => response.json())
                 .then(result => Object.keys(result).map(fileName => ({ file: fileName, title: result[fileName].title, desc: result[fileName].desc })))
                 .then(data => {
-              const fuse = new Fuse(Object.values(data), {
+              const fuse = new Fuse(data, {
                 keys: ['title', 'desc']
               });
 
