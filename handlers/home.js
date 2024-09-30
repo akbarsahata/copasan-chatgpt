@@ -178,7 +178,6 @@ module.exports = (req, res) => {
                   }))
                 )
                 .then(data => {
-                  console.log(data);
                   const fuse = new Fuse(data, {
                     keys: ['title', 'desc'],
                     minMatchCharLength: 3,
@@ -188,7 +187,6 @@ module.exports = (req, res) => {
                   searchInput.addEventListener('input', () => {
                     const searchTerm = searchInput.value;
                     const results = fuse.search(searchTerm);
-                    console.log(results);
 
                     searchResults.innerHTML = results.map(result => {
                       const { file, title, desc } = result.item;
