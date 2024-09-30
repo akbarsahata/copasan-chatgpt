@@ -21,6 +21,7 @@ function extractMetadata(content) {
       !line.startsWith("*") &&
       !line.startsWith(">") &&
       !line.startsWith("!") &&
+      !line.startsWith("[") &&
       !line.startsWith("```")
     ) {
       // Remove markdown notation from the description line
