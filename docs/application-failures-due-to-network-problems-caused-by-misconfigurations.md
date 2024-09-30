@@ -6,7 +6,7 @@
 
 ---
 
-Here are documented cases of application failures due to network problems caused by misconfigurations, along with references for each:
+Here are documented cases of application failures due to network problems caused by misconfigurations, along with references for each of cases for further information:
 
 ### 1. **Facebook Outage on October 4, 2021**
 
