@@ -72,6 +72,10 @@ function updateMetadata() {
 
   // Write updated metadata to file
   fs.writeFileSync(metadataFile, JSON.stringify(metadata, null, 2), "utf-8");
+
+  // Write a copy of metadata.json to ../public/metadata.json
+  const publicMetadataFile = path.join(__dirname, "../public/metadata.json");
+  fs.writeFileSync(publicMetadataFile, JSON.stringify(metadata), "utf-8");
 }
 
 // Run the update

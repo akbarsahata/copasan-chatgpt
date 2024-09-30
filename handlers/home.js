@@ -114,18 +114,73 @@ module.exports = (req, res) => {
             margin-top: 10px;
             color: #666;
           }
+          .search-container {
+            margin-bottom: 20px;
+          }
+          .search-container input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+          }
+          .search-results {
+            argin-top: 20px;
+          }
+          .search-results .result-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+          }
+          .search-results .result-item a {
+            font-size: 18px;
+            color: #007acc;
+          }
+          .search-results .result-item a:hover {
+            text-decoration: underline;
+          }
             </style>
           </head>
           <body>
             <div class="container">
           <h1>Welcome to ${title}!</h1>
           <p>${description}</p>
+          <div class="search-container">
+            <input type="text" id="search-input" placeholder="Search posts...">
+          </div>
+          <div class="search-results" id="search-results"></div>
           <div class="card-container">${fileList.join("")}</div>
             </div>
+            <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6"></script>
             <script>
-          document.querySelectorAll('small.date').forEach((element) => {
-            const date = new Date(element.textContent.replace('Created at: ', ''));
-            element.textContent = 'Created at: ' + date.toLocaleString();
+              document.querySelectorAll('small.date').forEach((element) => {
+                const date = new Date(element.textContent.replace('Created at: ', ''));
+                element.textContent = 'Created at: ' + date.toLocaleString();
+              });
+
+              const searchInput = document.getElementById('search-input');
+              const searchResults = document.getElementById('search-results');
+
+              fetch('/public/metadata.json')
+                .then(response => response.json())
+                .then(data => {
+              const fuse = new Fuse(Object.values(data), {
+                keys: ['title', 'desc'],
+                threshold: 0.3
+              });
+
+              searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value;
+                const results = fuse.search(searchTerm);
+
+                searchResults.innerHTML = results.map(result => {
+                  const { file, title } = result.item;
+                  return \`
+                <div class="result-item">
+                  <a href="/articles/\${file}" target="_blank">\${title}</a>
+                </div>
+                  \`;
+                }).join('');
+              });
           });
             </script>
             <script id="dsq-count-scr" src="//copasan-chatgpt.disqus.com/count.js" onload="DISQUSWIDGETS.getCount({reset: true});" async></script>
