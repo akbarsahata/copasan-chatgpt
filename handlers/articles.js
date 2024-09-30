@@ -150,11 +150,25 @@ module.exports = (req, res) => {
       .home-button:hover {
       background-color: #005f99;
       }
+      .back-to-top {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #007acc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 16px;
+      }
       </style>
       </head>
       <body>
       <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
       ${htmlContent}
+      <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
       <div class="share-buttons">
       <button class="share-button" onclick="shareToFacebook()">F</button>
       <button class="share-button" onclick="shareToTwitter()">X</button>
@@ -195,6 +209,17 @@ module.exports = (req, res) => {
       alert('Link copied to clipboard');
       });
       }
+      function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+      backToTopButton.style.display = 'block';
+      } else {
+      backToTopButton.style.display = 'none';
+      }
+      });
       document.querySelectorAll('pre').forEach((pre) => {
       const button = document.createElement('button');
       button.className = 'copy-button';
