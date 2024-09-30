@@ -136,9 +136,24 @@ module.exports = (req, res) => {
       padding-top: 20px;
       border-top: 1px solid #ccc;
       }
+      .home-button {
+      display: block;
+      margin: 20px 0;
+      padding: 10px 20px;
+      background-color: #007acc;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+      }
+      .home-button:hover {
+      background-color: #005f99;
+      }
       </style>
       </head>
       <body>
+      <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
       ${htmlContent}
       <div class="share-buttons">
       <button class="share-button" onclick="shareToFacebook()">F</button>
