@@ -23,13 +23,13 @@ module.exports = (req, res) => {
         .map(({ file, title, desc, createdAt }) => {
           return `
           <div class="card">
-            <a href="/articles/${file}" target="_blank">
+            <a href="/articles/${file}">
               <h2>${title}</h2>
             </a>
             <p>${desc}</p>
             <div class="card-footer">
               <small class="date">Created at: ${createdAt.toISOString()}</small>
-              <small class"comment-count"><a href="/articles/${file}#disqus_thread" target="_blank" data-disqus-identifier="${file}">0 Comment</a></small>
+              <small class"comment-count"><a href="/articles/${file}#disqus_thread" data-disqus-identifier="${file}">0 Comment</a></small>
             </div>
           </div>`;
         });
@@ -178,7 +178,7 @@ module.exports = (req, res) => {
                   const { file, title } = result.item;
                   return \`
                 <div class="result-item">
-                  <a href="/articles/\${file}" target="_blank">\${title}</a>
+                  <a href="/articles/\${file}">\${title}</a>
                 </div>
                   \`;
                 }).join('');
