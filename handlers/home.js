@@ -141,6 +141,7 @@ module.exports = (req, res) => {
           .search-results .result-item p {
             font-size: 14px;
             color: #333;
+            margin: 5px 0 5px 0;
           }
           .search-results .result-item a:hover {
             text-decoration: underline;
