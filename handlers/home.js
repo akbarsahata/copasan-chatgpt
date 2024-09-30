@@ -160,14 +160,14 @@ module.exports = (req, res) => {
               });
 
               const searchInput = document.getElementById('search-input');
-              const searchResults = document.getElementById('search-results');
+              const searchResults = document.getElementById('search-results');m
 
               fetch('/metadata.json')
                 .then(response => response.json())
+                .then(result => Object.keys(result).map(fileName => ({ file: fileName, title: result[fileName].title, desc: result[fileName].desc }))
                 .then(data => {
               const fuse = new Fuse(Object.values(data), {
-                keys: ['title', 'desc'],
-                threshold: 0.4
+                keys: ['title', 'desc']
               });
 
               searchInput.addEventListener('input', () => {
