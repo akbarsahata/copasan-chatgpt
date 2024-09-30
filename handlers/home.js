@@ -119,14 +119,16 @@ module.exports = (req, res) => {
             max-width: 100vw;
           }
           .search-container input {
-            width: 100%;
-            padding: 10px;
+            margin: 0 auto;
+            width: 800px;
+            max-width: 100%;
+            padding: 20px;
             font-size: 16px;
             border: 1px solid #ddd;
             border-radius: 4px;
           }
           .search-results {
-            argin-top: 20px;
+            margin-top: 20px;
           }
           .search-results .result-item {
             padding: 10px;
@@ -166,7 +168,7 @@ module.exports = (req, res) => {
                 .then(data => {
               const fuse = new Fuse(Object.values(data), {
                 keys: ['title', 'desc'],
-                threshold: 0.3
+                threshold: 0.4
               });
 
               searchInput.addEventListener('input', () => {
