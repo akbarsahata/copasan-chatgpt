@@ -169,6 +169,7 @@ module.exports = (req, res) => {
               const fuse = new Fuse(data, {
                 keys: ['title', 'desc']
               });
+            });
 
               searchInput.addEventListener('input', () => {
                 const searchTerm = searchInput.value;
