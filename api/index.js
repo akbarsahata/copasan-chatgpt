@@ -18,7 +18,7 @@ function checkSameDomain(req, res, next) {
     }
 }
 
-app.use(checkSameDomain, express.static(path.join(__dirname, "..", "public")));
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 app.get("/", handlers.home);
 
