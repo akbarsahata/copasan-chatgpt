@@ -164,7 +164,7 @@ module.exports = (req, res) => {
 
               fetch('/metadata.json')
                 .then(response => response.json())
-                .then(result => Object.keys(result).map(fileName => ({ file: fileName, title: result[fileName].title, desc: result[fileName].desc }))
+                .then(result => Object.keys(result).map(fileName => ({ file: fileName, title: result[fileName].title, desc: result[fileName].desc })))
                 .then(data => {
               const fuse = new Fuse(Object.values(data), {
                 keys: ['title', 'desc']
