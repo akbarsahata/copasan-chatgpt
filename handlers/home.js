@@ -115,7 +115,8 @@ module.exports = (req, res) => {
             color: #666;
           }
           .search-container {
-            margin-bottom: 20px;
+            margin: 20px auto;
+            max-width: 100vw;
           }
           .search-container input {
             width: 100%;
