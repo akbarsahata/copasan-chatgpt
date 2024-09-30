@@ -180,7 +180,9 @@ module.exports = (req, res) => {
                 .then(data => {
                   console.log(data);
                   const fuse = new Fuse(data, {
-                    keys: ['title', 'desc']
+                    keys: ['title', 'desc'],
+                    minMatchCharLength: 3,
+                    distance: 500,
                   });
 
                   searchInput.addEventListener('input', () => {
