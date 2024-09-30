@@ -165,7 +165,7 @@ module.exports = (req, res) => {
               });
 
               const searchInput = document.getElementById('search-input');
-              const searchResults = document.getElementById('search-results');m
+              const searchResults = document.getElementById('search-results');
 
               fetch('/metadata.json')
                 .then(response => response.json())
