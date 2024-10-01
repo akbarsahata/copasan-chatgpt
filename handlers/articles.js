@@ -3,17 +3,9 @@ const markedKatex = require("marked-katex-extension");
 const path = require("path");
 const fs = require("fs");
 
-marked.use({
-  renderer: markedKatex({
-    throwOnError: false,
-    // errorColor: "#f00",
-    // delimiters: [
-    //   { left: "$$", right: "$$", display: true },
-    //   { left: "\\[", right: "\\]", display: true },
-    //   { left: "\\(", right: "\\)", display: false },
-    // ],
-  }),
-});
+marked.use(markedKatex({
+  throwOnError: false,
+}));
 
 module.exports = (req, res) => {
   try {
