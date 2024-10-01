@@ -48,5 +48,10 @@
     "title": "Application Failures Due to Network Problems Caused by Misconfigurations",
     "desc": "Here are documented cases of application failures due to network problems caused by misconfigurations, along with references for each of cases for fur...",
     "createdAt": "2024-09-30T14:38:56.285Z"
+  },
+  "understanding-decision-tree-classification-and-the-gini-index.md": {
+    "title": "Understanding Decision Tree Classification and the Gini Index",
+    "desc": "In this blog post, we will explore how decision tree classification works, focusing on how to split data using the Gini Index. We'll also walk through...",
+    "createdAt": "2024-10-01T13:34:23.381Z"
   }
 }
