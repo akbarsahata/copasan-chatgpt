@@ -53,5 +53,10 @@
     "title": "Understanding Decision Tree Classification and the Gini Index",
     "desc": "In this blog post, we will explore how decision tree classification works, focusing on how to split data using the Gini Index. We'll also walk through...",
     "createdAt": "2024-10-01T13:34:23.381Z"
+  },
+  "several-common-errors-on-ansible-playbook-to-deploy-and-configure-aws-virtual-private-cloud.md": {
+    "title": "Several Common Errors on Ansible Playbook to Deploy and Configure AWS Virtual Private Cloud",
+    "desc": "When using an Ansible playbook to deploy and configure an AWS Virtual Private Cloud (VPC), several logical errors may arise due to incorrect parameter...",
+    "createdAt": "2024-10-01T23:39:40.791Z"
   }
 }
