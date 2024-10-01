@@ -3,6 +3,10 @@ const markedKatex = require("marked-katex-extension");
 const path = require("path");
 const fs = require("fs");
 
+marked.use({
+  gfm: true,
+})
+
 marked.use(markedKatex({
   throwOnError: false,
   output: 'mathml',
