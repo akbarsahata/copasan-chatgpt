@@ -38,6 +38,7 @@ We can calculate the Gini Index for the initial (parent) node:
 - **No**: 2 instances
 
 Using the formula:
+
 $$
 Gini(\text{Parent}) = 1 - (p(Yes)^2 + p(No)^2) = 1 - \left(\frac{3}{5}\right)^2 - \left(\frac{2}{5}\right)^2 = 1 - 0.36 - 0.16 = 0.48
 $$
@@ -53,9 +54,11 @@ For example, splitting on **Age ≤ 32.5** would create two groups:
 - **Group 2 (Age > 32.5)**: [35, 45, 50] → No, No, Yes (Gini = 0.444)
 
 The weighted Gini Index for this split is calculated as:
+
 $$
 \text{Gini for split} = \frac{2}{5} \times 0 + \frac{3}{5} \times 0.444 = 0.266
 $$
+
 This reduction in Gini Index means that this split is an improvement, leading to a more pure division of data.
 
 #### **Coding Example Using scikit-learn**
