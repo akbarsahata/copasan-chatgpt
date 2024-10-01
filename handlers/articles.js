@@ -5,6 +5,7 @@ const fs = require("fs");
 
 marked.use(markedKatex({
   throwOnError: false,
+  output: 'mathml',
 }));
 
 module.exports = (req, res) => {
@@ -103,6 +104,23 @@ module.exports = (req, res) => {
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       max-width: 100%;
       height: auto;
+      }
+      table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      }
+      th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      }
+      th {
+      background-color: #007acc;
+      color: white;
+      font-weight: bold;
+      }
+      tr:nth-child(even) {
+      background-color: #f2f2f2;
       }
       .copy-button {
       position: absolute;
