@@ -110,7 +110,6 @@ module.exports = (req, res) => {
       height: auto;
       }
       table {
-      width: 100%;
       border-collapse: collapse;
       margin-bottom: 20px;
       }
