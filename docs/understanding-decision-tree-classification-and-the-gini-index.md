@@ -10,13 +10,13 @@ A decision tree is a machine learning algorithm that splits data into subsets ba
 
 The **Gini Index** is a metric that evaluates the impurity of a dataset. It measures how often a randomly chosen element would be incorrectly classified if it were randomly labeled according to the distribution of labels in the dataset. The formula for the Gini Index is:
 
-\[
+$$
 Gini(S) = 1 - \sum_{i=1}^{n} p_i^2
-\]
+$$
 
 Where:
-- \( p_i \) is the proportion of data points belonging to class \( i \),
-- \( n \) is the number of classes in the dataset.
+- $ p_i $ is the proportion of data points belonging to class $ i $,
+- $ n $ is the number of classes in the dataset.
 
 A **Gini Index** of 0 indicates perfect purity, where all elements belong to the same class, and a Gini Index close to 1 indicates high impurity.
 
@@ -38,9 +38,9 @@ We can calculate the Gini Index for the initial (parent) node:
 - **No**: 2 instances
 
 Using the formula:
-\[
+$$
 Gini(\text{Parent}) = 1 - (p(Yes)^2 + p(No)^2) = 1 - \left(\frac{3}{5}\right)^2 - \left(\frac{2}{5}\right)^2 = 1 - 0.36 - 0.16 = 0.48
-\]
+$$
 
 The Gini Index of the parent node is 0.48, indicating some impurity.
 
@@ -53,9 +53,9 @@ For example, splitting on **Age ≤ 32.5** would create two groups:
 - **Group 2 (Age > 32.5)**: [35, 45, 50] → No, No, Yes (Gini = 0.444)
 
 The weighted Gini Index for this split is calculated as:
-\[
+$$
 \text{Gini for split} = \frac{2}{5} \times 0 + \frac{3}{5} \times 0.444 = 0.266
-\]
+$$
 This reduction in Gini Index means that this split is an improvement, leading to a more pure division of data.
 
 #### **Coding Example Using scikit-learn**
