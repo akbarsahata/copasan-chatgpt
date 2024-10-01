@@ -5,12 +5,12 @@ const fs = require("fs");
 
 marked.use({ renderer: markedKatex({
   throwOnError: false,
-  // errorColor: "#f00",
-  // delimiters: [
-  //   { left: "$$", right: "$$", display: true },
-  //   { left: "\\[", right: "\\]", display: true },
-  //   { left: "\\(", right: "\\)", display: false },
-  // ],
+  errorColor: "#f00",
+  delimiters: [
+    { left: "$$", right: "$$", display: true },
+    { left: "\\[", right: "\\]", display: true },
+    { left: "\\(", right: "\\)", display: false },
+  ],
 }) });
 
 module.exports = (req, res) => {
