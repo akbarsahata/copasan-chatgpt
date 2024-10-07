@@ -58,5 +58,10 @@
     "title": "Several Common Errors on Ansible Playbook to Deploy and Configure AWS Virtual Private Cloud",
     "desc": "When using an Ansible playbook to deploy and configure an AWS Virtual Private Cloud (VPC), several logical errors may arise due to incorrect parameter...",
     "createdAt": "2024-10-01T23:39:40.791Z"
+  },
+  "panduan-melindungi-data-sensitif-di-rest-api-enkripsi-end-to-end-dan-persetujuan-eksplisit.md": {
+    "title": "Panduan Melindungi Data Sensitif di REST API: Enkripsi End-to-End dan Persetujuan Eksplisit",
+    "desc": "Di era digital saat ini, perlindungan data pribadi adalah hal yang sangat penting. Banyak regulasi di seluruh dunia, termasuk UndangUndang Perlindunga...",
+    "createdAt": "2024-10-07T10:08:07.526Z"
   }
 }
