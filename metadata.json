@@ -63,5 +63,10 @@
     "title": "Panduan Melindungi Data Sensitif di REST API: Enkripsi End-to-End dan Persetujuan Eksplisit",
     "desc": "Di era digital saat ini, perlindungan data pribadi adalah hal yang sangat penting. Banyak regulasi di seluruh dunia, termasuk UndangUndang Perlindunga...",
     "createdAt": "2024-10-07T10:08:07.526Z"
+  },
+  "integrating-aws-lambda-with-amazon-comprehend-s-pre-trained-models-for-real-time-text-classification-and-pii-detection.md": {
+    "title": "Integrating AWS Lambda with Amazon Comprehend's Pre-trained Models for Real-Time Text Classification and PII Detection",
+    "desc": "By leveraging Amazon Comprehend's pretrained models, you can quickly build a scalable, serverless application for realtime text classification and PII...",
+    "createdAt": "2024-10-31T03:27:12.696Z"
   }
 }
