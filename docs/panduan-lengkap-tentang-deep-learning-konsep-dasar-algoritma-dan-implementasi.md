@@ -1,4 +1,4 @@
-**Panduan Lengkap Tentang Deep Learning: Konsep Dasar, Algoritma, dan Implementasi**
+# Panduan Lengkap Tentang Deep Learning: Konsep Dasar, Algoritma, dan Implementasi
 
 ---
 ![neural networks](https://images.pexels.com/photos/14314636/pexels-photo-14314636.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1)

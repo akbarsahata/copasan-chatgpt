@@ -70,8 +70,8 @@
     "createdAt": "2024-10-31T03:27:12.696Z"
   },
   "panduan-lengkap-tentang-deep-learning-konsep-dasar-algoritma-dan-implementasi.md": {
-    "title": "Perceptron sederhana dalam Python",
-    "desc": "def perceptron(X, y, learning_rate=0.1, epochs=100):...",
-    "createdAt": "2024-11-12T12:19:36.223Z"
+    "title": "Panduan Lengkap Tentang Deep Learning: Konsep Dasar, Algoritma, dan Implementasi",
+    "desc": "Deep learning adalah salah satu metode machine learning yang mampu menangani data kompleks dengan mempelajari representasi fitur secara otomatis melal...",
+    "createdAt": "2024-11-12T12:22:15.356Z"
   }
 }
