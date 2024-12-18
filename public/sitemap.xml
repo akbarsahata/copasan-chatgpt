@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://blog.akbarsahata.id</loc>
-    <lastmod>2024-12-09</lastmod>
+    <lastmod>2024-12-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -69,5 +69,9 @@
   <url>
     <loc>https://blog.akbarsahata.id/articles/what-is-seo-spam-or-injection.md</loc>
     <lastmod>2024-12-09</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.akbarsahata.id/articles/singleton-pattern-in-node-js-a-simple-and-efficient-implementation.md</loc>
+    <lastmod>2024-12-18</lastmod>
   </url>
 </urlset>

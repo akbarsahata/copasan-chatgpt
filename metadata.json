@@ -78,5 +78,10 @@
     "title": "SEO Spam Injection: How Hackers Hijack Your Website’s Traffic and How to Fight Back",
     "desc": "Your website is your digital identity, and maintaining its security is crucial. But what if one day you notice strange search engine results showing s...",
     "createdAt": "2024-12-09T04:17:50.739Z"
+  },
+  "singleton-pattern-in-node-js-a-simple-and-efficient-implementation.md": {
+    "title": "Singleton Pattern in Node.js: A Simple and Efficient Implementation",
+    "desc": "In this post, we'll explore a straightforward implementation of the singleton pattern in Node.js, designed to ensure a single instance of a resource i...",
+    "createdAt": "2024-12-18T09:55:30.603Z"
   }
 }
