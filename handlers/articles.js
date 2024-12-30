@@ -189,6 +189,27 @@ module.exports = (req, res) => {
       border-radius: 4px;
       font-size: 16px;
       }
+      .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      z-index: 1000;
+      text-align: center;
+      }
+      .popup button {
+      background-color: #007acc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-top: 10px;
+      }
       </style>
       </head>
       <body>
@@ -202,6 +223,10 @@ module.exports = (req, res) => {
       <button class="share-button" onclick="copyLink()">C</button>
       </div>
       <div id="disqus_thread"></div>
+      <div class="popup" id="popup">
+      <p>This page content is most likely AI generated. Use it with caution.</p>
+      <button onclick="closePopup()">Close</button>
+      </div>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
       <script>
@@ -262,6 +287,10 @@ module.exports = (req, res) => {
       });
       pre.appendChild(button);
       });
+      function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+      }
+      setTimeout(closePopup, 5000);
       </script>
       </body>
       </html>
