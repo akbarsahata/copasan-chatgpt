@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://blog.akbarsahata.id</loc>
-    <lastmod>2024-12-30</lastmod>
+    <lastmod>2025-02-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -73,5 +73,9 @@
   <url>
     <loc>https://blog.akbarsahata.id/articles/singleton-pattern-in-node-js-a-simple-and-efficient-implementation.md</loc>
     <lastmod>2024-12-18</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.akbarsahata.id/articles/end-to-end-testing-in-a-next-js-monorepo-with-playwright-and-turborepo.md</loc>
+    <lastmod>2025-02-20</lastmod>
   </url>
 </urlset>

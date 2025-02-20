@@ -83,5 +83,10 @@
     "title": "Singleton Pattern in Node.js: A Simple and Efficient Implementation",
     "desc": "In this post, we'll explore a straightforward implementation of the singleton pattern in Node.js, designed to ensure a single instance of a resource i...",
     "createdAt": "2024-12-18T09:55:30.603Z"
+  },
+  "end-to-end-testing-in-a-next-js-monorepo-with-playwright-and-turborepo.md": {
+    "title": "End-to-End Testing in a Next.js Monorepo with Playwright and Turborepo",
+    "desc": "Endtoend (E2E) testing is a crucial part of ensuring a web application functions correctly. If you’re using Next.js inside a monorepo managed with Tur...",
+    "createdAt": "2025-02-20T07:17:34.631Z"
   }
 }
