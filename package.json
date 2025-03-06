@@ -16,7 +16,7 @@
   "description": "",
   "dependencies": {
     "express": "^4.19.2",
-    "marked": "^13.0.0",
+    "marked": "^14.1.4",
     "marked-katex-extension": "^5.1.2"
   },
   "devDependencies": {
