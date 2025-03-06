@@ -1,4 +1,4 @@
-### **In Search of Love: Why Having More Options is the Best Strategy (But Don’t Get Greedy) 🤣**
+# In Search of Love: Why Having More Options is the Best Strategy (But Don’t Get Greedy) 🤣
 
 So, you’ve got a crush (or three), and you’re thinking about making a move. What are the chances that at least one of them likes you back? Let’s break it down with some probability, a little math, and a fun conclusion about dating strategy.
 
