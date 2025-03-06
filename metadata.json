@@ -88,5 +88,10 @@
     "title": "End-to-End Testing in a Next.js Monorepo with Playwright and Turborepo",
     "desc": "Endtoend (E2E) testing is a crucial part of ensuring a web application functions correctly. If you’re using Next.js inside a monorepo managed with Tur...",
     "createdAt": "2025-02-20T07:17:34.631Z"
+  },
+  "in-search-of-love-why-having-more-options-is-the-best-strategy-but-don-t-get-greedy.md": {
+    "title": "",
+    "desc": "",
+    "createdAt": "2025-03-06T03:35:46.656Z"
   }
 }
