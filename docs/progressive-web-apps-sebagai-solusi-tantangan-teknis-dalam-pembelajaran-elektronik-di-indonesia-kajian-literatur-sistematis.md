@@ -72,13 +72,13 @@ Database ini dipilih untuk memastikan bahwa **studi yang digunakan memiliki stan
 
 Untuk memastikan bahwa artikel yang dikaji sesuai dengan ruang lingkup penelitian ini, diterapkan **kriteria inklusi dan eksklusi** sebagai berikut:  
 
-### **2.3.1 Kriteria Inklusi**:  
+#### **2.3.1 Kriteria Inklusi**:  
 - Studi yang membahas **implementasi PWA di wilayah dengan akses internet terbatas**.  
 - Artikel yang menganalisis **performa teknis PWA**, seperti kecepatan muat halaman, efisiensi penggunaan bandwidth, dan caching.  
 - Studi tentang **usability PWA**, terutama dalam konteks pembelajaran daring.  
 - Artikel yang membahas **Service Worker dalam PWA**, yang menjadi komponen kunci dalam efisiensi caching dan mode offline.  
 
-### **2.3.2 Kriteria Eksklusi**:  
+#### **2.3.2 Kriteria Eksklusi**:  
 - Studi tentang implementasi PWA dalam **sektor industri lain**, seperti **e-commerce, kesehatan, atau bisnis**, yang tidak berkaitan dengan **pendidikan atau daerah dengan keterbatasan infrastruktur**.  
 - Artikel yang hanya membahas **teori umum tentang PWA tanpa analisis teknis atau studi kasus dalam e-learning**.  
 - Studi yang diterbitkan **sebelum 10 tahun terakhir** untuk memastikan kesesuaian dengan perkembangan teknologi terbaru.  
