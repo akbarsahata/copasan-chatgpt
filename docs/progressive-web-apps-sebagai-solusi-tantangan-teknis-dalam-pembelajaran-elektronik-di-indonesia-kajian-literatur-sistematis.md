@@ -122,70 +122,72 @@ Meskipun demikian, **hasil analisis ini tetap memberikan wawasan penting mengena
 
 ---
 
-## 3.1 Masalah Teknis dan Infrastruktur dalam Penyelenggaraan Pembelajaran Elektronik di Indonesia  
+## 3. Pembahasan & Diskusi
+
+### 3.1 Masalah Teknis dan Infrastruktur dalam Penyelenggaraan Pembelajaran Elektronik di Indonesia  
 
 Dalam kajian literatur ini, ditemukan berbagai permasalahan teknis dan infrastruktur yang menjadi kendala utama dalam penyelenggaraan pembelajaran elektronik di Indonesia. Permasalahan tersebut dapat dikategorikan menjadi lima aspek utama: **keterbatasan infrastruktur jaringan internet**, **keterbatasan perangkat dan fasilitas pendukung**, **masalah teknis pada aplikasi pembelajaran**, **keterbatasan teknologi web tradisional**, serta **kendala pengembangan dan pemeliharaan aplikasi**.
 
-### 3.1.1 Permasalahan Infrastruktur Jaringan Internet  
+#### 3.1.1 Permasalahan Infrastruktur Jaringan Internet  
 Salah satu hambatan terbesar dalam penyelenggaraan pembelajaran daring adalah **terbatasnya infrastruktur jaringan internet**, terutama di daerah terpencil. Kurnia (2022) menyebutkan bahwa keterbatasan akses internet menjadi faktor utama yang menghambat efektivitas pembelajaran elektronik. Tanpa konektivitas yang memadai, siswa dan guru mengalami kesulitan dalam mengakses materi pembelajaran, menghadiri kelas daring, dan berpartisipasi dalam diskusi interaktif secara real-time.  
 
 Selain itu, Rica (2019) menambahkan bahwa lemahnya konektivitas internet, bahkan di daerah perkotaan dengan infrastruktur yang lebih baik, masih menjadi kendala utama dalam implementasi pembelajaran berbasis teknologi. Dalam konteks portal edukasi seperti **Rumah Belajar**, tantangan terbesar adalah ketidakstabilan jaringan yang menyebabkan siswa sulit mengakses konten pembelajaran secara berkelanjutan. Masalah ini diperparah dengan tingginya biaya akses internet bagi sebagian besar pengguna di Indonesia.  
 
-### 3.1.2 Keterbatasan Perangkat dan Fasilitas Pendukung  
+#### 3.1.2 Keterbatasan Perangkat dan Fasilitas Pendukung  
 Selain masalah konektivitas, **keterbatasan perangkat dan infrastruktur teknologi** juga menjadi hambatan signifikan dalam pembelajaran daring. Menurut Azzahra, Abidin, dan Wulandari (2021), banyak guru di SMA yang menghadapi kendala akibat keterbatasan perangkat yang mereka miliki. Sebagian besar guru dan siswa masih menggunakan perangkat dengan spesifikasi rendah yang kurang mendukung aplikasi pembelajaran berbasis internet.  
 
 Hal yang sama juga ditemukan dalam penelitian Hamela, Situmorang, dan Efendi (2022), yang mengungkapkan bahwa keterbatasan perangkat pendukung, seperti laptop dan tablet, menjadi tantangan utama dalam pemanfaatan Learning Management Systems (LMS). Selain perangkat, fasilitas pendukung seperti **laboratorium komputer, akses listrik yang stabil, dan ruang belajar yang memadai** juga menjadi faktor yang sering diabaikan dalam implementasi pembelajaran daring, terutama di sekolah-sekolah yang memiliki keterbatasan anggaran.  
 
-### 3.1.3 Masalah Teknis pada Aplikasi Pembelajaran  
+#### 3.1.3 Masalah Teknis pada Aplikasi Pembelajaran  
 Banyaknya platform pembelajaran daring yang digunakan di Indonesia tidak selalu berarti solusi yang mudah diakses oleh semua pengguna. Sebaliknya, beberapa penelitian menunjukkan bahwa kompleksitas teknis dari aplikasi pembelajaran justru menjadi hambatan tersendiri.  
 
 Ningsih (2024) menyoroti bahwa implementasi teknologi digital dalam pembelajaran sering kali terkendala oleh **kerumitan antarmuka aplikasi**, yang menyebabkan pengguna mengalami kesulitan dalam navigasi dan penggunaan fitur-fitur yang tersedia. Selain itu, beberapa platform juga mengalami **masalah kompatibilitas dengan berbagai perangkat**, terutama bagi pengguna yang masih menggunakan ponsel atau komputer dengan sistem operasi lama.  
 
 Masalah serupa juga disampaikan dalam penelitian lain (Rica, 2019; Azzahra et al., 2021), yang menyebutkan bahwa beberapa aplikasi pembelajaran daring memiliki **kurangnya fitur aksesibilitas**, seperti mode akses untuk pengguna dengan keterbatasan fisik atau pilihan mode hemat data bagi pengguna dengan koneksi terbatas. Hal ini menunjukkan bahwa masih ada celah dalam pengembangan aplikasi pembelajaran yang perlu diperbaiki untuk memastikan aksesibilitas yang lebih luas.  
 
-### 3.1.4 Keterbatasan Teknologi Web Tradisional  
+#### 3.1.4 Keterbatasan Teknologi Web Tradisional  
 Beberapa penelitian juga menyoroti keterbatasan aplikasi web tradisional yang masih banyak digunakan dalam pembelajaran daring. Menurut Hamela, Situmorang, dan Efendi (2022), aplikasi berbasis web yang tidak dioptimalkan sering kali menghadapi **masalah performa dan latensi tinggi**, terutama ketika digunakan dalam kondisi koneksi internet yang tidak stabil.  
 
 Kelemahan utama dari web tradisional adalah ketergantungannya pada **koneksi internet yang terus-menerus**, sehingga ketika pengguna mengalami gangguan jaringan, aplikasi menjadi tidak responsif atau bahkan tidak dapat diakses sama sekali. Ini menyebabkan pengalaman pengguna yang buruk, terutama dalam pembelajaran daring yang membutuhkan akses cepat dan tanpa hambatan ke berbagai materi pembelajaran.  
 
 Selain itu, beberapa aplikasi web tradisional masih menggunakan **arsitektur lama** yang tidak mendukung caching data yang efisien, sehingga tidak dapat memberikan pengalaman yang optimal dalam mode offline. Hal ini menjadi tantangan besar bagi siswa dan guru di daerah dengan infrastruktur jaringan yang tidak dapat diandalkan.  
 
-### 3.1.5 Kendala Pengembangan dan Pemeliharaan Aplikasi  
+#### 3.1.5 Kendala Pengembangan dan Pemeliharaan Aplikasi  
 Selain masalah pada aplikasi yang telah digunakan, tantangan lain yang ditemukan dalam literatur adalah **keterbatasan sumber daya dalam pengembangan dan pemeliharaan aplikasi pembelajaran daring**. Hamela, Situmorang, dan Efendi (2022) mengungkapkan bahwa banyak institusi pendidikan, terutama di tingkat sekolah, tidak memiliki tenaga teknis yang cukup untuk menangani pembaruan dan pemeliharaan sistem pembelajaran daring mereka.  
 
 Karena keterbatasan sumber daya ini, banyak aplikasi mengalami **penurunan performa seiring waktu** akibat kurangnya pemeliharaan yang optimal. Dalam beberapa kasus, pengguna juga mengalami masalah dalam mendapatkan **dukungan teknis**, baik karena kurangnya dokumentasi yang jelas maupun terbatasnya tenaga ahli di sekolah dan universitas yang dapat membantu menyelesaikan kendala teknis yang mereka hadapi.  
 
 Kondisi ini menunjukkan bahwa tantangan dalam implementasi pembelajaran daring tidak hanya berkaitan dengan infrastruktur jaringan dan perangkat keras, tetapi juga melibatkan aspek pemeliharaan jangka panjang dari sistem yang digunakan.  
 
-## **3.2 Progressive Web Apps (PWA) dalam Konteks Pembelajaran Elektronik**
+### **3.2 Progressive Web Apps (PWA) dalam Konteks Pembelajaran Elektronik**
 
 Literatur dalam kajian ini secara khusus membahas bagaimana **Progressive Web Apps (PWA)** digunakan untuk mengatasi permasalahan teknis dan infrastruktur dalam penyelenggaraan pembelajaran elektronik. Sejumlah penelitian menunjukkan bahwa PWA menawarkan berbagai keunggulan dalam hal **aksesibilitas, efisiensi, dan pengalaman pengguna**, yang menjadikannya solusi potensial bagi pembelajaran elektronik, terutama di wilayah dengan keterbatasan infrastruktur digital.
 
-### **3.2.1 Kemampuan PWA dalam Mengatasi Kendala Konektivitas dan Mode Offline**  
+#### **3.2.1 Kemampuan PWA dalam Mengatasi Kendala Konektivitas dan Mode Offline**  
 Salah satu permasalahan utama dalam implementasi pembelajaran elektronik di Indonesia adalah **keterbatasan akses internet yang stabil dan andal**, terutama di daerah terpencil. Sejumlah penelitian menegaskan bahwa PWA dapat menjadi solusi efektif untuk mengatasi masalah ini melalui **fitur caching** yang memungkinkan aplikasi tetap dapat diakses meskipun tanpa koneksi internet (Roumeliotis & Tselikas, 2022; Correia et al., 2021).  
 Teknologi **Service Worker** dalam PWA memainkan peran penting dalam memungkinkan aplikasi **beroperasi secara offline**, dengan menyimpan sumber daya aplikasi secara lokal. Fitur ini memastikan bahwa konten pembelajaran tetap tersedia bagi pengguna meskipun koneksi internet terputus (Tahir et al., 2021). Selain itu, mekanisme **sinkronisasi latar belakang (background synchronization)** memungkinkan data yang dibuat saat offline secara otomatis dikirim ke server begitu koneksi kembali tersedia, menjaga kesinambungan proses pembelajaran daring (Josephe et al., 2023).  
 Beberapa penelitian bahkan mengusulkan **jalur komunikasi alternatif** seperti pengiriman data melalui SMS dalam kondisi tanpa koneksi internet sama sekali, yang dapat menjadi solusi inovatif bagi pembelajaran di daerah dengan infrastruktur jaringan yang sangat terbatas (Josephe et al., 2023).
 
-### **3.2.2 Efisiensi dan Kinerja PWA dalam Pembelajaran Elektronik**  
+#### **3.2.2 Efisiensi dan Kinerja PWA dalam Pembelajaran Elektronik**  
 Sejumlah studi mengungkapkan bahwa **PWA menawarkan peningkatan performa dibandingkan aplikasi web tradisional**, terutama dalam aspek **waktu muat (loading time), latensi, dan throughput** (Tahir et al., 2021; Pande et al., 2018).  
 Caching yang lebih efisien dalam PWA memungkinkan pengurangan lalu lintas data hingga **25%**, menjadikannya solusi yang lebih ringan dibandingkan aplikasi web konvensional dalam kondisi jaringan yang lemah (Pande et al., 2018; Correia et al., 2021).  
 Selain itu, penelitian lain menyoroti bahwa **efisiensi PWA juga terkait dengan konsumsi energi perangkat pengguna**. Meskipun fitur caching meningkatkan performa aplikasi, terdapat hubungan antara **peningkatan cache dan konsumsi energi perangkat**, yang dapat menjadi faktor penting dalam implementasi PWA untuk pembelajaran elektronik di perangkat dengan spesifikasi rendah (Malavolta et al., 2020; Kurniawan et al., 2022).
 
-### **3.2.3 Kemudahan Implementasi dan Keunggulan PWA dibandingkan Aplikasi Native**  
+#### **3.2.3 Kemudahan Implementasi dan Keunggulan PWA dibandingkan Aplikasi Native**  
 Salah satu keunggulan utama PWA adalah kemudahannya dalam **distribusi dan instalasi**, karena aplikasi dapat diakses langsung melalui browser tanpa perlu diunduh dari toko aplikasi seperti Google Play Store atau Apple App Store (Cuenca-Enrique et al., 2024; Behl & Raj, 2018).  
 Dibandingkan dengan aplikasi native, **PWA memiliki biaya pengembangan yang lebih rendah, lebih mudah diperbarui, serta lebih ringan dalam penggunaan sumber daya perangkat** (Huber et al., 2021).  
 Studi menunjukkan bahwa implementasi PWA menggunakan **framework seperti Angular dan pemanfaatan Service Worker** dapat meningkatkan performa aplikasi secara signifikan, mendekati pengalaman aplikasi native (Tahir et al., 2021). Hal ini menjadikan PWA sebagai alternatif yang menarik untuk pengembangan sistem pembelajaran elektronik yang **fleksibel, hemat biaya, dan tidak bergantung pada ekosistem aplikasi tertentu**.
 
-### **3.2.4 Dampak PWA terhadap Pengalaman dan Aksesibilitas Pengguna**  
+#### **3.2.4 Dampak PWA terhadap Pengalaman dan Aksesibilitas Pengguna**  
 PWA juga membawa dampak positif terhadap **pengalaman dan aksesibilitas pengguna dalam pembelajaran elektronik**. Studi menunjukkan bahwa **fitur push notifications** dalam PWA dapat meningkatkan keterlibatan pengguna, memungkinkan interaksi yang lebih aktif dalam proses pembelajaran daring (Jeong & Hur, 2022).  
 Selain itu, PWA dinilai **lebih aksesibel dibandingkan aplikasi web konvensional**, terutama bagi pengguna dengan disabilitas. Namun, masih diperlukan **audit aksesibilitas secara berkala** agar aplikasi PWA benar-benar sesuai dengan standar WCAG (Web Content Accessibility Guidelines) dan dapat diakses secara optimal oleh semua kelompok pengguna (Roumeliotis & Tselikas, 2022).  
 Sebagai bukti keberhasilan implementasi, sebuah studi kasus di komunitas pedesaan **Ngäbe Buglé, Panama** menunjukkan bahwa penggunaan PWA dapat meningkatkan akses pendidikan secara signifikan di daerah dengan keterbatasan infrastruktur teknologi, yang dapat menjadi referensi bagi daerah pedesaan di Indonesia (Cuenca-Enrique et al., 2024).
 
-### **3.2.5 Keamanan dan Tantangan Implementasi PWA**  
+#### **3.2.5 Keamanan dan Tantangan Implementasi PWA**  
 Meskipun memiliki banyak keunggulan, beberapa penelitian menyoroti **potensi risiko keamanan dalam implementasi PWA**. Penggunaan **Service Worker** memungkinkan fitur seperti push notifications dan caching, tetapi juga membuka peluang eksploitasi untuk serangan **phishing, penyadapan informasi lokasi, serta penyalahgunaan cache untuk script injection dan mining cryptocurrency** (Jeong & Hur, 2022).  
 Oleh karena itu, pengembang yang menerapkan PWA untuk pembelajaran elektronik harus memperhatikan aspek **keamanan aplikasi**, termasuk perlindungan terhadap serangan siber yang dapat merugikan pengguna.
 
-### **3.2.6 Gap Penelitian yang Ditemukan**  
+#### **3.2.6 Gap Penelitian yang Ditemukan**  
 
 Meskipun penelitian sebelumnya telah mengidentifikasi **keunggulan arsitektural dan fungsional PWA**, masih terdapat **gap dalam evaluasi teknis yang lebih mendalam**, terutama dalam konteks rekayasa perangkat lunak untuk pendidikan daring di daerah dengan akses terbatas. Sebagian besar literatur lebih menyoroti aspek konseptual dan manfaat umum PWA (Roumeliotis & Tselikas, 2022; Correia et al., 2021), tetapi belum banyak studi yang **mengukur performa PWA secara empiris dalam kondisi infrastruktur terbatas**, termasuk dalam aspek **efisiensi caching, latensi jaringan, dan manajemen sumber daya perangkat dengan spesifikasi rendah**. Meskipun Service Worker telah diidentifikasi sebagai komponen utama yang memungkinkan mode offline (Tahir et al., 2021), penelitian yang mengeksplorasi **strategi optimasi caching untuk konten pembelajaran interaktif seperti video atau simulasi berbasis web** masih terbatas. Padahal, dalam konteks pembelajaran daring, strategi caching yang efisien dapat berkontribusi pada **pengurangan beban jaringan serta peningkatan pengalaman pengguna**, terutama di wilayah dengan keterbatasan infrastruktur (Correia et al., 2021).  
 
@@ -193,23 +195,23 @@ Selain performa teknis, **evaluasi komparatif terhadap efisiensi konsumsi energi
 
 Aspek lain yang masih kurang dieksplorasi adalah **keamanan arsitektur PWA dalam lingkungan pembelajaran daring**. Beberapa penelitian telah mengidentifikasi potensi risiko keamanan, seperti **serangan melalui push notifications, eksploitasi caching untuk menyisipkan skrip berbahaya, serta penyalahgunaan sinkronisasi latar belakang untuk mengakses data pengguna secara tidak sah** (Jeong & Hur, 2022). Namun, belum banyak studi yang secara spesifik membahas **model mitigasi risiko untuk PWA dalam sistem pendidikan berbasis cloud**. Dalam rekayasa perangkat lunak, diperlukan **strategi keamanan berbasis enkripsi, otentikasi multi-faktor, serta mekanisme deteksi anomali dalam Service Worker** guna memastikan bahwa PWA tetap aman digunakan dalam ekosistem pembelajaran daring (Jeong & Hur, 2022). Oleh karena itu, penelitian lebih lanjut diperlukan dalam aspek **performa, efisiensi sumber daya, dan keamanan PWA**, guna memastikan bahwa teknologi ini dapat diterapkan secara optimal sebagai solusi pembelajaran daring yang berkelanjutan, terutama dalam kondisi infrastruktur yang terbatas.
 
-## 3.3 Alternatif Solusi Teknologi untuk Penyampaian Pembelajaran Elektronik
+### 3.3 Alternatif Solusi Teknologi untuk Penyampaian Pembelajaran Elektronik
 
 Selain penggunaan Progressive Web Apps (PWA), literatur juga mengidentifikasi berbagai alternatif solusi teknologi yang digunakan dalam penyampaian pembelajaran elektronik.
 
-### 3.3.1 Learning Management System (LMS) Tradisional
+#### 3.3.1 Learning Management System (LMS) Tradisional
 
 Beberapa referensi mengkaji penggunaan Learning Management System (LMS) sebagai solusi utama dalam penyelenggaraan pembelajaran elektronik. LMS seperti Moodle, Google Classroom, dan Edmodo banyak digunakan karena memiliki fitur lengkap yang mendukung interaksi guru-siswa secara terstruktur. Hamela, Situmorang, dan Efendi (2022) menekankan bahwa LMS memberikan manfaat dalam pengelolaan kelas daring secara efisien, termasuk dalam pengelolaan tugas, ujian, dan komunikasi antara guru serta siswa. Namun, LMS juga memiliki keterbatasan, terutama dalam hal kebutuhan konektivitas internet yang stabil dan ketergantungan pada infrastruktur teknologi yang memadai (Ningsih, 2024).
 
-### 3.3.2 Aplikasi Mobile Native
+#### 3.3.2 Aplikasi Mobile Native
 
 Referensi lainnya menyoroti penggunaan aplikasi mobile native sebagai alternatif yang umum digunakan, khususnya di daerah dengan akses internet yang lebih stabil. Aplikasi mobile native, yang dikembangkan secara khusus untuk platform Android atau iOS, menawarkan performa yang lebih baik dibandingkan aplikasi berbasis web. Kelebihan aplikasi native meliputi pengalaman pengguna yang lebih responsif serta optimalisasi penggunaan perangkat keras, seperti kamera dan sensor perangkat (Kurnia, 2022). Namun, pengembangan aplikasi native memerlukan biaya lebih tinggi serta proses distribusi yang lebih kompleks melalui platform seperti Google Play Store dan Apple App Store (Rica, 2019).
 
-### 3.3.3 Aplikasi Hybrid dan Cross-platform
+#### 3.3.3 Aplikasi Hybrid dan Cross-platform
 
 Meskipun tidak ditemukan referensi eksplisit dalam literatur yang dianalisis terkait penggunaan aplikasi hybrid atau cross-platform dalam pembelajaran elektronik, solusi ini sering kali digunakan sebagai pendekatan alternatif. Aplikasi hybrid menggabungkan keunggulan aplikasi berbasis web dan aplikasi native, dengan kelebihan dalam pengembangan yang lebih cepat serta kemudahan dalam pembaruan. Teknologi seperti Flutter dan React Native umumnya digunakan untuk memungkinkan aplikasi berjalan di berbagai sistem operasi tanpa memerlukan pengembangan terpisah untuk setiap platform.
 
-### 3.3.4 Teknologi Alternatif Lainnya
+#### 3.3.4 Teknologi Alternatif Lainnya
 
 Selain LMS dan aplikasi mobile native, beberapa referensi membahas alternatif teknologi lainnya dalam penyampaian pembelajaran elektronik. Contohnya, teknologi berbasis cloud yang memungkinkan penyimpanan dan akses materi secara fleksibel melalui berbagai perangkat (Ningsih, 2024). Selain itu, ada pula pendekatan berbasis Single Page Application (SPA), yang memungkinkan pengalaman aplikasi web yang lebih interaktif dengan pemuatan halaman yang lebih cepat dan efisien. Pendekatan ini dianggap sebagai solusi potensial dalam mengatasi kendala teknis yang sering dihadapi dalam pembelajaran daring (Selly Puspita Azzahra et al., 2021).
 
