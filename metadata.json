@@ -103,5 +103,10 @@
     "title": "🔍 Your Roadmap to Learn Fullstack JavaScript and Go Global (For Free!)",
     "desc": "In today’s competitive job market—especially in Indonesia—finding software engineering roles can be tough. But what if I told you that the global job ...",
     "createdAt": "2025-05-08T10:36:55.856Z"
+  },
+  "build-an-ai-powered-pr-description-generator-with-git-openai-and-cloudflare-workers.md": {
+    "title": "Build an AI-Powered PR Description Generator with Git, OpenAI, and Cloudflare Workers",
+    "desc": "If you've ever stared at a GitHub PR wondering how to summarize your recent commits, this project is for you. In this post, I'll walk you through how ...",
+    "createdAt": "2025-06-21T06:57:42.415Z"
   }
 }
