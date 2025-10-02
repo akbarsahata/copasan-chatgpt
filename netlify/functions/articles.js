@@ -27,27 +27,19 @@ exports.handler = async (event, context) => {
     // Try to read from the local file system first (for local development)
     let fileContent, metadata;
 
+    // If local files don't exist, fetch from the deployed site
+    const baseUrl = `https://${event.headers.host}`;
+
     try {
-      const filePath = path.join(process.cwd(), `docs/${fileName}`);
-      fileContent = fs.readFileSync(filePath, "utf8");
+      const docResponse = await fetch(`${baseUrl}/docs/${fileName}`);
+      if (!docResponse.ok) throw new Error(`Document not found: ${fileName}`);
+      fileContent = await docResponse.text();
 
-      const metadataPath = path.join(process.cwd(), "metadata.json");
-      metadata = JSON.parse(fs.readFileSync(metadataPath, "utf8"));
-    } catch (localError) {
-      // If local files don't exist, fetch from the deployed site
-      const baseUrl = `https://${event.headers.host}`;
-
-      try {
-        const docResponse = await fetch(`${baseUrl}/docs/${fileName}`);
-        if (!docResponse.ok) throw new Error(`Document not found: ${fileName}`);
-        fileContent = await docResponse.text();
-
-        const metaResponse = await fetch(`${baseUrl}/metadata.json`);
-        if (!metaResponse.ok) throw new Error("Metadata not found");
-        metadata = await metaResponse.json();
-      } catch (fetchError) {
-        throw new Error(`Failed to load content: ${fetchError.message}`);
-      }
+      const metaResponse = await fetch(`${baseUrl}/metadata.json`);
+      if (!metaResponse.ok) throw new Error("Metadata not found");
+      metadata = await metaResponse.json();
+    } catch (fetchError) {
+      throw new Error(`Failed to load content: ${fetchError.message}`);
     }
 
     const htmlContent = marked.parse(fileContent);
