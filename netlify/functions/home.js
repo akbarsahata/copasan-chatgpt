@@ -13,11 +13,13 @@ exports.handler = async (event, context) => {
     // Try to read from the local file system first (for local development)
     try {
       const metadataPath = path.join(process.cwd(), "metadata.json");
+      console.log("Reading metadata from:", metadataPath);
       const data = fs.readFileSync(metadataPath, "utf8");
       metadata = JSON.parse(data);
     } catch (localError) {
       // If local file doesn't exist, fetch from the deployed site
       const baseUrl = process.env.URL || `https://${event.headers.host}`;
+      console.log("Fetching metadata from:", `${baseUrl}/metadata.json`);
       const response = await fetch(`${baseUrl}/metadata.json`);
       if (!response.ok) throw new Error("Metadata not found");
       metadata = await response.json();
