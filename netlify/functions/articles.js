@@ -3,6 +3,11 @@ const markedKatex = require("marked-katex-extension");
 const path = require("path");
 const fs = require("fs");
 
+// Add fetch polyfill for Node.js environments that don't have it
+if (!global.fetch) {
+  global.fetch = require('node-fetch');
+}
+
 marked.use({
   gfm: true,
 })
@@ -17,13 +22,33 @@ exports.handler = async (event, context) => {
     const pathSegments = event.path.split('/');
     const fileName = pathSegments[pathSegments.length - 1].split("#")[0];
     
-    const filePath = path.join(__dirname, "..", "..", `docs/${fileName}`);
-    const fileContent = fs.readFileSync(filePath, "utf8");
-    const htmlContent = marked.parse(fileContent);
+    // Try to read from the local file system first (for local development)
+    let fileContent, metadata;
+    
+    try {
+      const filePath = path.join(process.cwd(), `docs/${fileName}`);
+      fileContent = fs.readFileSync(filePath, "utf8");
+      
+      const metadataPath = path.join(process.cwd(), "metadata.json");
+      metadata = JSON.parse(fs.readFileSync(metadataPath, "utf8"));
+    } catch (localError) {
+      // If local files don't exist, fetch from the deployed site
+      const baseUrl = `https://${event.headers.host}`;
+      
+      try {
+        const docResponse = await fetch(`${baseUrl}/docs/${fileName}`);
+        if (!docResponse.ok) throw new Error(`Document not found: ${fileName}`);
+        fileContent = await docResponse.text();
+        
+        const metaResponse = await fetch(`${baseUrl}/metadata.json`);
+        if (!metaResponse.ok) throw new Error('Metadata not found');
+        metadata = await metaResponse.json();
+      } catch (fetchError) {
+        throw new Error(`Failed to load content: ${fetchError.message}`);
+      }
+    }
 
-    // Read metadata from the JSON file
-    const metadataPath = path.join(__dirname, "..", "..", "metadata.json");
-    const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf8"));
+    const htmlContent = marked.parse(fileContent);
 
     // Extract the title and description from the metadata
     const fileMetadata = metadata[fileName];

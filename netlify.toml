@@ -1,5 +1,5 @@
 [build]
-  command = "npm run generate:metadata && npm run generate:sitemap"
+  command = "npm run generate:metadata && npm run generate:sitemap && cp -r docs public/ && cp metadata.json public/"
   functions = "netlify/functions"
   publish = "public"
 

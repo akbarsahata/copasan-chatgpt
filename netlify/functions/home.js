@@ -1,10 +1,27 @@
 const path = require("path");
 const fs = require("fs");
 
+// Add fetch polyfill for Node.js environments that don't have it
+if (!global.fetch) {
+  global.fetch = require('node-fetch');
+}
+
 exports.handler = async (event, context) => {
   try {
-    const data = await fetch(process.env.URL + "/metadata.json").then(res => res.text());
-    const metadata = JSON.parse(data);
+    let metadata;
+    
+    // Try to read from the local file system first (for local development)
+    try {
+      const metadataPath = path.join(process.cwd(), "metadata.json");
+      const data = fs.readFileSync(metadataPath, "utf8");
+      metadata = JSON.parse(data);
+    } catch (localError) {
+      // If local file doesn't exist, fetch from the deployed site
+      const baseUrl = process.env.URL || `https://${event.headers.host}`;
+      const response = await fetch(`${baseUrl}/metadata.json`);
+      if (!response.ok) throw new Error('Metadata not found');
+      metadata = await response.json();
+    }
     
     const fileList = Object.keys(metadata)
       .map((file) => {
