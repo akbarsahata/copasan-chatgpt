@@ -23,6 +23,8 @@ exports.handler = async (event, context) => {
       metadata = await response.json();
     }
 
+    console.log("Metadata loaded:", metadata);
+
     const fileList = Object.keys(metadata)
       .map((file) => {
         const { title, desc, createdAt } = metadata[file];
