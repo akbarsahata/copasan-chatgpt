@@ -1,0 +1,22 @@
+[build]
+  command = "npm run generate:metadata && npm run generate:sitemap"
+  functions = "netlify/functions"
+  publish = "public"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/articles/*"
+  to = "/.netlify/functions/articles"
+  status = 200
+
+[[redirects]]
+  from = "/"
+  to = "/.netlify/functions/home"
+  status = 200
