@@ -5,43 +5,45 @@ const fs = require("fs");
 
 // Add fetch polyfill for Node.js environments that don't have it
 if (!global.fetch) {
-  global.fetch = require('node-fetch');
+  global.fetch = require("node-fetch");
 }
 
 marked.use({
   gfm: true,
-})
+});
 
-marked.use(markedKatex({
-  throwOnError: false,
-  output: 'mathml',
-}));
+marked.use(
+  markedKatex({
+    throwOnError: false,
+    output: "mathml",
+  })
+);
 
 exports.handler = async (event, context) => {
   try {
-    const pathSegments = event.path.split('/');
+    const pathSegments = event.path.split("/");
     const fileName = pathSegments[pathSegments.length - 1].split("#")[0];
-    
+
     // Try to read from the local file system first (for local development)
     let fileContent, metadata;
-    
+
     try {
       const filePath = path.join(process.cwd(), `docs/${fileName}`);
       fileContent = fs.readFileSync(filePath, "utf8");
-      
+
       const metadataPath = path.join(process.cwd(), "metadata.json");
       metadata = JSON.parse(fs.readFileSync(metadataPath, "utf8"));
     } catch (localError) {
       // If local files don't exist, fetch from the deployed site
       const baseUrl = `https://${event.headers.host}`;
-      
+
       try {
         const docResponse = await fetch(`${baseUrl}/docs/${fileName}`);
         if (!docResponse.ok) throw new Error(`Document not found: ${fileName}`);
         fileContent = await docResponse.text();
-        
+
         const metaResponse = await fetch(`${baseUrl}/metadata.json`);
-        if (!metaResponse.ok) throw new Error('Metadata not found');
+        if (!metaResponse.ok) throw new Error("Metadata not found");
         metadata = await metaResponse.json();
       } catch (fetchError) {
         throw new Error(`Failed to load content: ${fetchError.message}`);
@@ -75,7 +77,6 @@ exports.handler = async (event, context) => {
       <title>${title}</title>
       <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
       <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
-      <link rel="icon" href="/favicon.ico" type="image/x-icon">
       <style>
       body {
       font-family: 'Calibri', sans-serif;
@@ -98,6 +99,24 @@ exports.handler = async (event, context) => {
       ul, ol {
       margin-left: 20px;
       margin-bottom: 20px;
+      }
+      li {
+      margin-bottom: 10px;
+      }
+      a {
+      color: #1e90ff;
+      text-decoration: none;
+      font-weight: bold;
+      }
+      a:hover {
+      text-decoration: underline;
+      }
+      blockquote {
+      margin: 20px 0;
+      padding: 10px 20px;
+      background-color: #f9f9f9;
+      border-left: 5px solid #ccc;
+      font-style: italic;
       }
       code {
       background-color: #f4f4f4;
@@ -146,68 +165,107 @@ exports.handler = async (event, context) => {
       cursor: pointer;
       border-radius: 4px;
       }
-      .katex {
-      font-size: 1.5em;
-      line-height: 1.2;
-      }
-      .katex .katex-mathml {
-      display: inline-block;
-      vertical-align: middle;
-      }
-      .katex-display {
-      text-align: center;
-      margin: 1em 0;
-      }
-      .floating-buttons {
+      .share-buttons {
       position: fixed;
-      bottom: 20px;
+      top: 50%;
       right: 20px;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      z-index: 1000;
       }
-      .floating-button {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
+      .share-button {
+      background-color: #007acc;
+      color: white;
       border: none;
+      padding: 10px;
       cursor: pointer;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      transition: transform 0.2s;
+      width: 40px;
+      height: 40px;
       }
-      .floating-button:hover {
-      transform: scale(1.1);
+      #disqus_thread {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #ccc;
       }
-      .share-facebook { background-color: #3b5998; color: white; }
-      .share-twitter { background-color: #1da1f2; color: white; }
-      .share-whatsapp { background-color: #25d366; color: white; }
-      .copy-link { background-color: #007acc; color: white; }
-      .scroll-top { background-color: #ff6b6b; color: white; }
+      .home-button {
+      display: block;
+      margin: 20px 0;
+      padding: 10px 20px;
+      background-color: #007acc;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+      }
+      .home-button:hover {
+      background-color: #005f99;
+      }
+      .back-to-top {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #007acc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 16px;
+      }
+      .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      z-index: 1000;
+      text-align: center;
+      }
+      .popup button {
+      background-color: #007acc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-top: 10px;
+      }
       </style>
       </head>
       <body>
+      <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
       ${htmlContent}
-      <div class="floating-buttons">
-        <button class="floating-button share-facebook" onclick="shareToFacebook()" title="Share on Facebook">f</button>
-        <button class="floating-button share-twitter" onclick="shareToTwitter()" title="Share on Twitter">t</button>
-        <button class="floating-button share-whatsapp" onclick="shareToWhatsApp()" title="Share on WhatsApp">w</button>
-        <button class="floating-button copy-link" onclick="copyLink()" title="Copy Link">📋</button>
-        <button class="floating-button scroll-top" onclick="scrollToTop()" title="Scroll to Top">↑</button>
+      <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+      <div class="share-buttons">
+      <button class="share-button" onclick="shareToFacebook()">F</button>
+      <button class="share-button" onclick="shareToTwitter()">X</button>
+      <button class="share-button" onclick="shareToWhatsApp()">W</button>
+      <button class="share-button" onclick="copyLink()">C</button>
       </div>
       <div id="disqus_thread"></div>
+      <div class="popup" id="popup">
+      <p>This page content is most likely AI generated. Use it with caution.</p>
+      <button onclick="closePopup()">Close</button>
+      </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
       <script>
       var disqus_config = function () {
-      this.page.url = "${pageUrl}";
+      this.page.url = "${pageUrl}"
       this.page.identifier = "${fileName}";
       };
       (function() {
       var d = document, s = d.createElement('script');
-      s.src = 'https://akbarsahata.disqus.com/embed.js';
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
       s.setAttribute('data-timestamp', +new Date());
       (d.head || d.body).appendChild(s);
       })();
@@ -235,23 +293,33 @@ exports.handler = async (event, context) => {
       function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-      </script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-      <script>
+      window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+      backToTopButton.style.display = 'block';
+      } else {
+      backToTopButton.style.display = 'none';
+      }
+      });
       document.querySelectorAll('pre').forEach((pre) => {
       const button = document.createElement('button');
-      button.textContent = 'Copy';
       button.className = 'copy-button';
-      button.onclick = () => {
-      const code = pre.querySelector('code');
-      navigator.clipboard.writeText(code.textContent).then(() => {
-      button.textContent = 'Copied!';
-      setTimeout(() => button.textContent = 'Copy', 2000);
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+      const code = pre.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+      button.innerText = 'Copied!';
+      setTimeout(() => {
+      button.innerText = 'Copy';
+      }, 2000);
       });
-      };
+      });
       pre.appendChild(button);
       });
+      function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+      }
+      setTimeout(closePopup, 5000);
       </script>
       </body>
       </html>
@@ -266,12 +334,41 @@ exports.handler = async (event, context) => {
     };
   } catch (error) {
     console.error("Error reading file:", error);
+    const html = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+      <title>Error</title>
+      <style>
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f8f8;
+        padding: 20px;
+        }
+        h1 {
+        color: #ff0000;
+        font-size: 24px;
+        margin-bottom: 10px;
+        }
+        p {
+        color: #333333;
+        font-size: 16px;
+        margin-bottom: 20px;
+        }
+      </style>
+      </head>
+      <body>
+      <h1>Error</h1>
+      <p>There was an error reading or rendering the file.</p>
+      </body>
+      </html>
+    `;
     return {
       statusCode: 500,
       headers: {
         "Content-Type": "text/html",
       },
-      body: "Error reading the file",
+      body: html,
     };
   }
 };
