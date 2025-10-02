@@ -23,8 +23,6 @@ exports.handler = async (event, context) => {
       metadata = await response.json();
     }
 
-    console.log("Metadata loaded:", metadata);
-
     const fileList = Object.keys(metadata)
       .map((file) => {
         const { title, desc, createdAt } = metadata[file];
@@ -167,7 +165,7 @@ exports.handler = async (event, context) => {
           </head>
           <body>
             <div class="container">
-          <h1>Welcome to ${title}!</h1>
+          <h1>Welcome to ${siteTitle}!</h1>
           <p>${description}</p>
           <div class="search-container">
             <input type="text" id="search-input" placeholder="Search posts...">
