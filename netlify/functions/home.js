@@ -3,8 +3,7 @@ const fs = require("fs");
 
 exports.handler = async (event, context) => {
   try {
-    const metadataPath = path.join(__dirname, "..", "..", "metadata.json");
-    const data = fs.readFileSync(metadataPath, "utf8");
+    const data = await fetch(process.env.URL + "/metadata.json").then(res => res.text());
     const metadata = JSON.parse(data);
     
     const fileList = Object.keys(metadata)
