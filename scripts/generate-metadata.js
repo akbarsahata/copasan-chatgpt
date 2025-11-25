@@ -12,9 +12,11 @@ function updateMetadata() {
   const allMetadata = getAllFileMetadata();
 
   // Convert array to object format (fileName -> metadata)
+  // Convert .md to .html for public URLs
   const metadataObj = {};
   allMetadata.forEach((meta) => {
-    metadataObj[meta.fileName] = {
+    const htmlFileName = meta.fileName.replace('.md', '.html');
+    metadataObj[htmlFileName] = {
       title: meta.title,
       desc: meta.desc,
       createdAt: meta.createdAt,
