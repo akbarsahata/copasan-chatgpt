@@ -2,22 +2,18 @@ const fs = require('fs');
 const path = require('path');
 const marked = require('marked');
 const markedKatex = require('marked-katex-extension');
+const { 
+  getChangedMarkdownFiles, 
+  updateCacheEntry,
+  isInitialBuild
+} = require('./build-utils');
 
 // Configure marked
-marked.use({
-  gfm: true,
-});
-
-marked.use(
-  markedKatex({
-    throwOnError: false,
-    output: 'mathml',
-  })
-);
+marked.use({ gfm: true });
+marked.use(markedKatex({ throwOnError: false, output: 'mathml' }));
 
 // Paths
 const docsPath = path.join(__dirname, '../docs');
-const metadataPath = path.join(__dirname, '../metadata.json');
 const outputPath = path.join(__dirname, '../public/articles');
 
 // Ensure output directory exists
@@ -25,23 +21,53 @@ if (!fs.existsSync(outputPath)) {
   fs.mkdirSync(outputPath, { recursive: true });
 }
 
-// Read metadata
-const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
+/**
+ * Extract metadata from markdown content
+ */
+function extractMetadata(content) {
+  const lines = content.split('\n');
+  let title = '';
+  let desc = '';
 
-// Generate HTML for each article
-Object.keys(metadata).forEach(fileName => {
-  const fileMetadata = metadata[fileName];
-  const title = fileMetadata.title;
-  const description = fileMetadata.desc;
-  
-  // Read markdown file
+  for (let line of lines) {
+    if (line.startsWith('# ')) {
+      title = line.replace('# ', '').trim();
+    } else if (
+      title &&
+      line.trim() &&
+      !line.startsWith('#') &&
+      !line.startsWith('-') &&
+      !line.startsWith('*') &&
+      !line.startsWith('>') &&
+      !line.startsWith('!') &&
+      !line.startsWith('[') &&
+      !line.startsWith('```')
+    ) {
+      desc = line
+        .replace(/(\*\*|__|~~|`|>|#+|\*|-|\[.*?\]\(.*?\)|!\[.*?\]\(.*?\))/g, '')
+        .trim()
+        .slice(0, 150) + '...';
+      break;
+    }
+  }
+
+  return { title, desc, createdAt: new Date().toISOString() };
+}
+
+/**
+ * Generate HTML for a single article
+ */
+function generateArticleHTML(fileName) {
   const markdownPath = path.join(docsPath, fileName);
   const fileContent = fs.readFileSync(markdownPath, 'utf8');
+  
+  // Extract metadata
+  const metadata = extractMetadata(fileContent);
   
   // Parse markdown to HTML
   const htmlContent = marked.parse(fileContent);
   
-  // Extract image for OG
+  // Extract image for OG tags
   const imageMatch = htmlContent.match(/<img[^>]+src="([^">]+)"/);
   const imageUrl = imageMatch ? imageMatch[1] : '/image.webp';
   const pageUrl = `https://blog.akbarsahata.id/articles/${fileName}`;
@@ -52,13 +78,13 @@ Object.keys(metadata).forEach(fileName => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="${description}">
-  <meta property="og:title" content="${title}">
-  <meta property="og:description" content="${description}">
+  <meta name="description" content="${metadata.desc}">
+  <meta property="og:title" content="${metadata.title}">
+  <meta property="og:description" content="${metadata.desc}">
   <meta property="og:image" content="${imageUrl}">
   <meta property="og:url" content="${pageUrl}">
   <meta property="og:type" content="article">
-  <title>${title}</title>
+  <title>${metadata.title}</title>
   <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
   <link href="/styles/article.css" rel="stylesheet">
@@ -95,7 +121,7 @@ Object.keys(metadata).forEach(fileName => {
     
     function shareToTwitter() {
       const url = encodeURIComponent("${pageUrl}");
-      const text = encodeURIComponent("${title}");
+      const text = encodeURIComponent("${metadata.title}");
       window.open(\`https://twitter.com/intent/tweet?url=\${url}&text=\${text}\`, '_blank');
     }
     
@@ -145,7 +171,46 @@ Object.keys(metadata).forEach(fileName => {
   // Write HTML file
   const outputFilePath = path.join(outputPath, fileName.replace('.md', '.html'));
   fs.writeFileSync(outputFilePath, html, 'utf8');
-  console.log(`Generated: ${outputFilePath}`);
+  
+  // Update cache with new metadata
+  updateCacheEntry(fileName, metadata);
+  
+  return metadata;
+}
+
+// Main execution
+console.log('\n🔨 Starting incremental article generation...\n');
+
+// Check if this is initial build
+if (isInitialBuild()) {
+  console.log('🆕 Initial build detected - processing all files\n');
+}
+
+const changedFiles = getChangedMarkdownFiles();
+
+if (changedFiles.length === 0) {
+  console.log('✅ No articles to regenerate\n');
+  process.exit(0);
+}
+
+console.log(`\n🔨 Generating HTML for ${changedFiles.length} file(s)...\n`);
+
+let successCount = 0;
+let errorCount = 0;
+
+changedFiles.forEach(fileName => {
+  try {
+    generateArticleHTML(fileName);
+    console.log(`✅ Generated: ${fileName}`);
+    successCount++;
+  } catch (error) {
+    console.error(`❌ Error generating ${fileName}:`, error.message);
+    errorCount++;
+  }
 });
 
-console.log(`\n✅ Generated ${Object.keys(metadata).length} article HTML files`);
+console.log(`\n✅ Successfully regenerated ${successCount} article(s)`);
+if (errorCount > 0) {
+  console.log(`⚠️  Failed to generate ${errorCount} article(s)`);
+  process.exit(1);
+}

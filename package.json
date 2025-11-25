@@ -5,6 +5,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node api/index.js",
+    "build": "npm run build:articles && npm run build:metadata && npm run build:sitemap",
+    "build:articles": "node scripts/generate-articles.js",
+    "build:metadata": "node scripts/generate-metadata.js",
+    "build:sitemap": "node scripts/generate-sitemap.js",
     "generate:metadata": "node scripts/generate-metadata.js",
     "generate:sitemap": "node scripts/generate-sitemap.js",
     "generate:articles": "node scripts/generate-articles.js",
