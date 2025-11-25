@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="If you’ve deployed a monolithic PHP application with a MySQL database and you notice that the performance drops significantly when around 80 users acc...">
+  <meta property="og:title" content="Diagnosing and Solving Performance Issues in a Monolithic PHP App">
+  <meta property="og:description" content="If you’ve deployed a monolithic PHP application with a MySQL database and you notice that the performance drops significantly when around 80 users acc...">
+  <meta property="og:image" content="/image.webp">
+  <meta property="og:url" content="https://blog.akbarsahata.id/articles/diagnosing-and-solving-performance-issues-in-a-monolithic-php-app.md">
+  <meta property="og:type" content="article">
+  <title>Diagnosing and Solving Performance Issues in a Monolithic PHP App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+  <link href="/styles/article.css" rel="stylesheet">
+</head>
+<body>
+  <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
+  <h1>Diagnosing and Solving Performance Issues in a Monolithic PHP App</h1>
+<p>If you’ve deployed a monolithic PHP application with a MySQL database and you notice that the performance drops significantly when around 80 users access it simultaneously, you&#39;re not alone. Performance bottlenecks in monolithic apps are common, but identifying the root cause can be tricky due to the number of moving parts involved. Below, we’ll walk through common causes of performance issues in PHP apps and provide actionable steps to resolve each one.</p>
+<hr>
+<h3>1. Inefficient Database Queries</h3>
+<p>When your app slows down under load, one of the first places to check is the database. Slow or inefficient queries can bottleneck your entire application.</p>
+<ul>
+<li><strong>How to Diagnose</strong>: Enable the MySQL slow query log to track queries that take longer than a specific time (e.g., 2 seconds).</li>
+<li><strong>Solution</strong>: Use <code>EXPLAIN</code> to analyze these slow queries and identify missing indexes or poor query structure. Adding the correct indexes or rewriting queries to be more efficient can drastically improve performance.</li>
+</ul>
+<p><em>Tools</em>: MySQL slow query log, <code>EXPLAIN</code>, <code>SHOW INDEXES</code></p>
+<hr>
+<h3>2. Lack of Database Connection Pooling</h3>
+<p>Opening a new database connection for every user request can become expensive, especially under heavy load.</p>
+<ul>
+<li><strong>How to Diagnose</strong>: Monitor the number of active connections to your database. If each request spawns a new connection, pooling might not be in place.</li>
+<li><strong>Solution</strong>: Implement database connection pooling to reuse connections, reducing overhead. PHP supports persistent connections, or you can use tools like <strong>ProxySQL</strong>.</li>
+</ul>
+<p><em>Tools</em>: MySQL connection settings, <strong>ProxySQL</strong>, <code>mysqli::persistent</code></p>
+<hr>
+<h3>3. PHP Session Handling Bottlenecks</h3>
+<p>By default, PHP stores sessions on the file system, which can cause session lock contention when multiple requests need to access or modify the same session data.</p>
+<ul>
+<li><strong>How to Diagnose</strong>: Slow responses during high traffic could indicate session file locking.</li>
+<li><strong>Solution</strong>: Move session storage to an in-memory store like Redis or Memcached, which can handle concurrent sessions more efficiently.</li>
+</ul>
+<p><em>Tools</em>: Redis, Memcached, PHP’s <code>session_set_save_handler()</code></p>
+<hr>
+<h3>4. I/O Bottlenecks</h3>
+<p>High disk I/O can slow down your app, particularly if your MySQL database is frequently writing to disk or if your server is logging heavily.</p>
+<ul>
+<li><strong>How to Diagnose</strong>: Use tools like <code>iostat</code> or <code>iotop</code> to monitor disk usage.</li>
+<li><strong>Solution</strong>: Tune MySQL settings to reduce disk writes, such as adjusting the <code>innodb_buffer_pool_size</code> to allow more data to be stored in memory. If possible, upgrade to faster storage like SSDs for better performance.</li>
+</ul>
+<p><em>Tools</em>: <code>iostat</code>, <code>iotop</code>, MySQL settings (<code>innodb_buffer_pool_size</code>)</p>
+<hr>
+<h3>5. Apache Configuration Issues</h3>
+<p>Apache’s default configuration might not be optimized for handling large amounts of traffic, leading to slowdowns as user numbers increase.</p>
+<ul>
+<li><strong>How to Diagnose</strong>: Check Apache’s error logs and server status under heavy load.</li>
+<li><strong>Solution</strong>: Adjust settings like <code>MaxClients</code> (or <code>MaxRequestWorkers</code>) to increase the number of simultaneous requests Apache can handle. Reducing <code>KeepAliveTimeout</code> can also help free up resources faster.</li>
+</ul>
+<p><em>Tools</em>: Apache configuration (<code>apache2.conf</code> or <code>/etc/httpd/conf/httpd.conf</code>)</p>
+<hr>
+<h3>6. Lack of Caching</h3>
+<p>Without caching, your server performs the same expensive operations repeatedly, even for data that doesn’t change between requests.</p>
+<ul>
+<li><strong>How to Diagnose</strong>: Monitor database activity and CPU usage to identify repeated queries or operations.</li>
+<li><strong>Solution</strong>: Implement caching for database query results using Redis or Memcached. PHP <strong>OPcache</strong> can also be used to cache compiled scripts, reducing the need to recompile them for each request.</li>
+</ul>
+<p><em>Tools</em>: Redis, Memcached, OPcache</p>
+<hr>
+<h3>7. PHP Performance (Opcache)</h3>
+<p>If PHP is not caching its compiled scripts, it will recompile them on every request, which is highly inefficient.</p>
+<ul>
+<li><strong>How to Diagnose</strong>: Check if Opcache is enabled and configured correctly.</li>
+<li><strong>Solution</strong>: Enable <strong>Opcache</strong> in PHP and configure settings like <code>opcache.memory_consumption</code> to ensure enough memory is allocated to store compiled scripts.</li>
+</ul>
+<p><em>Tools</em>: PHP Opcache, <code>php.ini</code> (<code>opcache.memory_consumption</code>)</p>
+<hr>
+<h3>8. High Memory Usage</h3>
+<p>Excessive memory usage can cause your server to slow down, particularly if it starts swapping data to disk.</p>
+<ul>
+<li><strong>How to Diagnose</strong>: Use <code>htop</code> or <code>free -m</code> to monitor memory usage.</li>
+<li><strong>Solution</strong>: Optimize your PHP, Apache, and MySQL configurations to use memory more efficiently. If memory usage remains high, consider upgrading your server’s RAM or adding swap space.</li>
+</ul>
+<p><em>Tools</em>: <code>htop</code>, <code>vmstat</code>, <code>free -m</code></p>
+<hr>
+<h3>9. Concurrency and Scalability Issues</h3>
+<p>Your application code may not be optimized for handling many concurrent users, leading to race conditions or other blocking issues.</p>
+<ul>
+<li><strong>How to Diagnose</strong>: Review your code for areas where concurrency may be an issue, such as database transactions or file writes.</li>
+<li><strong>Solution</strong>: Refactor your code to better handle concurrent operations. Use optimistic locking or transactions to ensure data consistency without excessive locking.</li>
+</ul>
+<p><em>Tools</em>: Code refactoring, MySQL transactions, locking mechanisms</p>
+<hr>
+<h3>10. Network Latency</h3>
+<p>Network issues between your app and its database or between the app and users can slow down response times.</p>
+<ul>
+<li><strong>How to Diagnose</strong>: Use tools like <code>ping</code>, <code>traceroute</code>, or <strong>Wireshark</strong> to diagnose network delays.</li>
+<li><strong>Solution</strong>: Consider hosting your database on the same machine or local network as the application to reduce latency. You can also offload static content to a CDN for faster delivery.</li>
+</ul>
+<p><em>Tools</em>: <code>ping</code>, <code>traceroute</code>, Wireshark, CDN (e.g., Cloudflare)</p>
+<hr>
+<h3>11. Lack of Monitoring</h3>
+<p>Without proper monitoring, it’s hard to track down what’s causing performance issues, making troubleshooting much more difficult.</p>
+<ul>
+<li><strong>How to Diagnose</strong>: Implement monitoring tools to track server metrics like CPU usage, memory, disk I/O, and network activity.</li>
+<li><strong>Solution</strong>: Use tools like <strong>New Relic</strong>, <strong>Prometheus</strong>, or <strong>Grafana</strong> to get real-time insights into your app’s performance and set up alerts for critical thresholds.</li>
+</ul>
+<p><em>Tools</em>: New Relic, Prometheus, Grafana</p>
+<hr>
+<h3>Conclusion</h3>
+<p>By systematically addressing these common performance bottlenecks, you can significantly improve the speed and responsiveness of your monolithic PHP application. Start by monitoring key metrics and using the right tools to diagnose specific issues, then apply optimizations step by step. With proper tuning, your app will be ready to handle more users without sacrificing performance.</p>
+<p>Happy coding!</p>
+
+  <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+  <div class="share-buttons">
+    <button class="share-button" onclick="shareToFacebook()">F</button>
+    <button class="share-button" onclick="shareToTwitter()">X</button>
+    <button class="share-button" onclick="shareToWhatsApp()">W</button>
+    <button class="share-button" onclick="copyLink()">C</button>
+  </div>
+  <div id="disqus_thread"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://blog.akbarsahata.id/articles/diagnosing-and-solving-performance-issues-in-a-monolithic-php-app.md";
+      this.page.identifier = "diagnosing-and-solving-performance-issues-in-a-monolithic-php-app.md";
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    function shareToFacebook() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/diagnosing-and-solving-performance-issues-in-a-monolithic-php-app.md");
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+    
+    function shareToTwitter() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/diagnosing-and-solving-performance-issues-in-a-monolithic-php-app.md");
+      const text = encodeURIComponent("Diagnosing and Solving Performance Issues in a Monolithic PHP App");
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    function shareToWhatsApp() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/diagnosing-and-solving-performance-issues-in-a-monolithic-php-app.md");
+      window.open(`https://wa.me/?text=${url}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText("https://blog.akbarsahata.id/articles/diagnosing-and-solving-performance-issues-in-a-monolithic-php-app.md").then(() => {
+        alert('Link copied to clipboard');
+      });
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>

@@ -214,6 +214,7 @@ exports.handler = async (event, context) => {
       statusCode: 200,
       headers: {
         "Content-Type": "text/html",
+        "Cache-Control": "public, max-age=1800, s-maxage=3600, stale-while-revalidate=86400",
       },
       body: html,
     };
@@ -223,6 +224,7 @@ exports.handler = async (event, context) => {
       statusCode: 500,
       headers: {
         "Content-Type": "text/html",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
       },
       body: "Error reading metadata file",
     };

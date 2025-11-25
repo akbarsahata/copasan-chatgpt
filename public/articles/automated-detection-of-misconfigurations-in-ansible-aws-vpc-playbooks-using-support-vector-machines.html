@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Network misconfigurations are a primary source of network outages and security vulnerabilities. With the increasing complexity of cloud infrastructure...">
+  <meta property="og:title" content="Automated Detection of Misconfigurations in Ansible AWS VPC Playbooks Using Support Vector Machines">
+  <meta property="og:description" content="Network misconfigurations are a primary source of network outages and security vulnerabilities. With the increasing complexity of cloud infrastructure...">
+  <meta property="og:image" content="https://images.pexels.com/photos/2881233/pexels-photo-2881233.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1">
+  <meta property="og:url" content="https://blog.akbarsahata.id/articles/automated-detection-of-misconfigurations-in-ansible-aws-vpc-playbooks-using-support-vector-machines.md">
+  <meta property="og:type" content="article">
+  <title>Automated Detection of Misconfigurations in Ansible AWS VPC Playbooks Using Support Vector Machines</title>
+  <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+  <link href="/styles/article.css" rel="stylesheet">
+</head>
+<body>
+  <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
+  <h1>Automated Detection of Misconfigurations in Ansible AWS VPC Playbooks Using Support Vector Machines</h1>
+<hr>
+<p><img src="https://images.pexels.com/photos/2881233/pexels-photo-2881233.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1" alt="servers"></p>
+<hr>
+<h2><strong>Abstract</strong></h2>
+<p>Network misconfigurations are a primary source of network outages and security vulnerabilities. With the increasing complexity of cloud infrastructures and the widespread use of automation tools like Ansible for managing configurations, the potential for misconfigurations has grown. This research aims to develop an automated system that classifies Ansible playbooks for AWS Virtual Private Cloud (VPC) configurations as correct or misconfigured using Support Vector Machines (SVM). By leveraging fundamental classification algorithms in computational intelligence, this study seeks to enhance network reliability and security.</p>
+<hr>
+<h2><strong>Keywords</strong></h2>
+<ul>
+<li>Ansible</li>
+<li>AWS VPC</li>
+<li>Misconfiguration Detection</li>
+<li>Support Vector Machines (SVM)</li>
+<li>Text Classification</li>
+<li>Software Configuration Management</li>
+<li>Computational Intelligence</li>
+</ul>
+<hr>
+<h2><strong>1. Introduction</strong></h2>
+<h3><strong>1.1 Background</strong></h3>
+<p>The adoption of Infrastructure as Code (IaC) practices has revolutionized the way network infrastructures are deployed and managed. Tools like Ansible have become essential for automating the configuration of cloud resources, including Amazon Web Services (AWS) Virtual Private Clouds (VPCs). Despite the benefits, the complexity of these configurations can lead to misconfigurations, which are responsible for numerous network failures and security incidents [1].</p>
+<h3><strong>1.2 Problem Statement</strong></h3>
+<p>Manual detection of misconfigurations in Ansible playbooks is inefficient and error-prone. There is a pressing need for automated methods to detect these misconfigurations to prevent potential network issues and security breaches.</p>
+<h3><strong>1.3 Objectives</strong></h3>
+<ul>
+<li>Develop a dataset of labeled Ansible AWS VPC configuration playbooks, including both correct and misconfigured examples.</li>
+<li>Implement a text classification model using Support Vector Machines (SVM) to detect misconfigurations.</li>
+<li>Evaluate the effectiveness of the model in accurately classifying playbooks.</li>
+</ul>
+<h3><strong>1.4 SWEBOK Subtopic</strong></h3>
+<ul>
+<li><strong>Software Configuration Management</strong> - <em>Configuration Identification</em> [2]</li>
+</ul>
+<h3><strong>1.5 Computational Intelligence Algorithm</strong></h3>
+<ul>
+<li><strong>Support Vector Machines (Classification)</strong></li>
+</ul>
+<hr>
+<h2><strong>2. Related Work</strong></h2>
+<p>Misconfigurations have been identified as a significant cause of network vulnerabilities and outages [3]. Prior research has focused on static analysis and rule-based methods for detecting configuration errors [4]. Machine learning approaches have been applied to similar problems, such as detecting anomalies in network traffic [5] and classifying code defects [6]. However, there is limited work on applying classification algorithms to detect misconfigurations in IaC tools like Ansible.</p>
+<hr>
+<h2><strong>3. Methodology</strong></h2>
+<h3><strong>3.1 Data Collection</strong></h3>
+<h4><strong>3.1.1 Collecting Correct Ansible AWS VPC Playbooks</strong></h4>
+<ul>
+<li><strong>Public GitHub Repositories</strong>: Searched for repositories containing Ansible playbooks related to AWS VPC configurations using keywords like &quot;ansible aws vpc&quot; and filtering for YAML files.<ul>
+<li><strong>Example Repositories</strong>:<ul>
+<li>Ansible AWS Examples: Official Ansible examples for AWS configurations [7].</li>
+<li>Ansible Role for AWS VPC: Community-maintained role for managing AWS VPCs [8].</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Ansible Galaxy</strong>: Sourced roles and playbooks from Ansible Galaxy, focusing on those related to AWS VPC [9].</li>
+<li><strong>AWS Documentation</strong>: Utilized sample playbooks and configurations provided in AWS Quick Start guides [10].</li>
+</ul>
+<h4><strong>3.1.2 Generating Misconfigured Playbooks</strong></h4>
+<ul>
+<li><strong>Intentional Alterations</strong>:<ul>
+<li>Introduced syntax errors such as incorrect indentation or missing colons in YAML files.</li>
+<li>Modified parameter values to invalid or illogical settings, e.g., invalid CIDR blocks.</li>
+<li>Removed essential configuration elements, such as critical tasks or modules.</li>
+</ul>
+</li>
+<li><strong>Automation Scripts</strong>:<ul>
+<li>Developed Python scripts to systematically introduce errors into correct playbooks.</li>
+<li>Employed YAML parsers to manipulate playbooks programmatically.</li>
+</ul>
+</li>
+</ul>
+<h4><strong>3.1.3 Dataset Labeling and Organization</strong></h4>
+<ul>
+<li><strong>Labeling</strong>: Assigned &#39;correct&#39; labels to validated playbooks and &#39;misconfigured&#39; labels to those with intentional errors.</li>
+<li><strong>Organization</strong>:<ul>
+<li>Stored playbooks in a structured directory:<ul>
+<li><code>dataset/correct/</code></li>
+<li><code>dataset/misconfigured/</code></li>
+</ul>
+</li>
+<li>Maintained a metadata file (<code>labels.csv</code>) recording filenames and labels.</li>
+</ul>
+</li>
+</ul>
+<h3><strong>3.2 Ethical and Legal Considerations</strong></h3>
+<ul>
+<li>Ensured all collected playbooks were under permissible open-source licenses.</li>
+<li>Removed any sensitive information, such as AWS credentials or proprietary data.</li>
+<li>Provided appropriate attributions as required by licenses.</li>
+</ul>
+<h3><strong>3.3 Data Preprocessing</strong></h3>
+<ul>
+<li><strong>Parsing YAML Files</strong>:<ul>
+<li>Used the <code>PyYAML</code> library to parse Ansible playbooks.</li>
+<li>Extracted tasks, modules, and parameters for feature extraction.</li>
+</ul>
+</li>
+<li><strong>Normalization</strong>:<ul>
+<li>Standardized text by converting to lowercase and removing extraneous whitespace.</li>
+<li>Replaced variable placeholders with generic tokens to reduce variability.</li>
+</ul>
+</li>
+</ul>
+<h3><strong>3.4 Feature Extraction</strong></h3>
+<ul>
+<li><strong>Tokenization</strong>:<ul>
+<li>Extracted module names and parameter keys as tokens.</li>
+</ul>
+</li>
+<li><strong>Bag-of-Words Model</strong>:<ul>
+<li>Created a vocabulary of all tokens across the dataset.</li>
+</ul>
+</li>
+<li><strong>TF-IDF Vectorization</strong>:<ul>
+<li>Applied Term Frequency-Inverse Document Frequency to weigh the importance of tokens.</li>
+</ul>
+</li>
+<li><strong>Example Code Snippet</strong>:</li>
+</ul>
+<pre><code class="language-python">import yaml
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+def load_playbook(file_path):
+    with open(file_path, &#39;r&#39;) as file:
+        return yaml.safe_load(file)
+
+def extract_features(playbook_data):
+    features = []
+    for play in playbook_data:
+        tasks = play.get(&#39;tasks&#39;, [])
+        for task in tasks:
+            module = list(task.keys())[0]
+            features.append(module)
+            args = task[module]
+            if isinstance(args, dict):
+                features.extend(args.keys())
+    return &#39; &#39;.join(features)
+
+texts = []
+labels = []
+
+for file_path, label in zip(file_paths, file_labels):
+    playbook = load_playbook(file_path)
+    text = extract_features(playbook)
+    texts.append(text)
+    labels.append(label)
+
+vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform(texts)
+</code></pre>
+<h3><strong>3.5 Model Development</strong></h3>
+<ul>
+<li><strong>Algorithm Selection</strong>: Chose Support Vector Machines due to their effectiveness in high-dimensional spaces [11].</li>
+<li><strong>Kernel Selection</strong>: Experimented with linear and radial basis function (RBF) kernels.</li>
+<li><strong>Training and Validation</strong>:<ul>
+<li>Split data into training and testing sets (80/20 split).</li>
+<li>Performed k-fold cross-validation (k=5) to ensure robustness.</li>
+</ul>
+</li>
+</ul>
+<h3><strong>3.6 Evaluation Metrics</strong></h3>
+<ul>
+<li><strong>Accuracy</strong>: The proportion of correctly classified playbooks.</li>
+<li><strong>Precision</strong>: The ratio of true positives to the sum of true and false positives.</li>
+<li><strong>Recall</strong>: The ratio of true positives to the sum of true positives and false negatives.</li>
+<li><strong>F1-Score</strong>: The harmonic mean of precision and recall.</li>
+</ul>
+<hr>
+<h2><strong>4. Expected Outcomes</strong></h2>
+<ul>
+<li><strong>Automated Classification Model</strong>: A functional SVM model capable of classifying Ansible AWS VPC playbooks as correct or misconfigured.</li>
+<li><strong>Performance Metrics</strong>: Quantitative results demonstrating the model&#39;s effectiveness, with an expected accuracy above 90%.</li>
+<li><strong>Insights</strong>: Understanding of common misconfiguration patterns and the features most indicative of errors.</li>
+</ul>
+<hr>
+<h2><strong>5. Conclusion</strong></h2>
+<p>This research aims to contribute to the fields of network security and software configuration management by providing an automated method for detecting misconfigurations in Ansible AWS VPC playbooks. By leveraging fundamental classification algorithms like SVM, we expect to enhance the reliability and security of network infrastructures managed through IaC practices.</p>
+<hr>
+<h2><strong>References</strong></h2>
+<p>[1] M. Dobies and M. Gawinecki, &quot;Network configuration errors—causes, detection, and prevention,&quot; <em>IEEE Communications Surveys &amp; Tutorials</em>, vol. 21, no. 1, pp. 10-34, 2019.</p>
+<p>[2] A. Abran, J. W. Moore, P. Bourque, and R. Dupuis, <em>Guide to the Software Engineering Body of Knowledge (SWEBOK)</em>, IEEE Computer Society Press, 2004.</p>
+<p>[3] D. Oppenheimer, A. Ganapathi, and D. A. Patterson, &quot;Why do Internet services fail, and what can be done about it?,&quot; in <em>Proceedings of the 4th USENIX Symposium on Internet Technologies and Systems</em>, 2003.</p>
+<p>[4] N. Alharbi, D. Di Ruscio, A. Pierantonio, and I. Malavolta, &quot;A survey on the adoption of infrastructure as code in the context of DevOps,&quot; in <em>2018 IEEE International Conference on Software Architecture (ICSA)</em>, pp. 257-266.</p>
+<p>[5] Y. Dong, X. Yuan, and J. Liu, &quot;Network anomaly detection based on SVM,&quot; in <em>Proceedings of the 2nd International Conference on Computer Engineering and Technology</em>, 2010, vol. 6, pp. V6-376-V6-380.</p>
+<p>[6] T. Menzies, J. Greenwald, and A. Frank, &quot;Data mining static code attributes to learn defect predictors,&quot; <em>IEEE Transactions on Software Engineering</em>, vol. 33, no. 1, pp. 2-13, 2007.</p>
+<p>[7] Ansible, &quot;Ansible AWS Examples,&quot; GitHub Repository, [Online]. Available: <a href="https://github.com/ansible/ansible-examples/tree/master/aws">https://github.com/ansible/ansible-examples/tree/master/aws</a></p>
+<p>[8] Lean Delivery, &quot;Ansible Role for AWS VPC,&quot; GitHub Repository, [Online]. Available: <a href="https://github.com/lean-delivery/ansible-role-aws-vpc">https://github.com/lean-delivery/ansible-role-aws-vpc</a></p>
+<p>[9] Ansible Galaxy, &quot;AWS VPC Roles,&quot; [Online]. Available: <a href="https://galaxy.ansible.com/search?deprecated=false&keywords=aws+vpc">https://galaxy.ansible.com/search?deprecated=false&amp;keywords=aws+vpc</a></p>
+<p>[10] AWS Quick Start Team, &quot;Ansible Tower on the AWS Cloud Quick Start,&quot; Amazon Web Services, [Online]. Available: <a href="https://aws.amazon.com/quickstart/architecture/ansible-tower/">https://aws.amazon.com/quickstart/architecture/ansible-tower/</a></p>
+<p>[11] C. Cortes and V. Vapnik, &quot;Support-vector networks,&quot; <em>Machine Learning</em>, vol. 20, no. 3, pp. 273-297, 1995.</p>
+<hr>
+<h2><strong>Related Work</strong></h2>
+<ul>
+<li><strong>Infrastructure as Code Misconfiguration Detection</strong>: Rahman et al. [12] investigated static analysis techniques for detecting misconfigurations in IaC scripts but did not focus on machine learning approaches.</li>
+<li><strong>Machine Learning for Configuration Error Detection</strong>: Zhang et al. [13] applied machine learning to detect misconfigurations in software systems but did not target Ansible playbooks or AWS configurations specifically.</li>
+</ul>
+<hr>
+<h2><strong>References for Related Work</strong></h2>
+<p>[12] M. Rahman, U. K. Sharma, and L. Williams, &quot;A systematic mapping study of infrastructure as code research,&quot; in <em>2019 IEEE/ACM 41st International Conference on Software Engineering (ICSE)</em>, pp. 114-115.</p>
+<p>[13] H. Zhang and T. Menzies, &quot;Ensembles of learners for software effort estimation,&quot; in <em>Proceedings of the 30th international conference on Software engineering</em>, 2008, pp. 111-120.</p>
+<hr>
+<h2><strong>Appendix</strong></h2>
+<h3><strong>A. Sample Misconfiguration Patterns</strong></h3>
+<ul>
+<li><strong>Syntax Errors</strong>:<ul>
+<li>Incorrect indentation levels in YAML files.</li>
+<li>Missing colons or dashes required by YAML syntax.</li>
+</ul>
+</li>
+<li><strong>Invalid Parameters</strong>:<ul>
+<li>Using non-existent AWS regions.</li>
+<li>Specifying overlapping CIDR blocks in subnets.</li>
+</ul>
+</li>
+<li><strong>Logical Errors</strong>:<ul>
+<li>Referencing undefined variables.</li>
+<li>Missing required modules or tasks.</li>
+</ul>
+</li>
+</ul>
+<h3><strong>B. Tools and Libraries Used</strong></h3>
+<ul>
+<li><strong>Python Libraries</strong>:<ul>
+<li><code>PyYAML</code> for parsing YAML files.</li>
+<li><code>scikit-learn</code> for machine learning models.</li>
+<li><code>pandas</code> and <code>NumPy</code> for data manipulation.</li>
+</ul>
+</li>
+<li><strong>Version Control</strong>:<ul>
+<li>Git for tracking changes in code and dataset.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2><strong>Final Notes</strong></h2>
+<ul>
+<li><strong>Data Availability</strong>: The dataset compiled for this research consists of open-source Ansible playbooks and synthetically generated misconfigurations. Due to licensing and ethical considerations, sharing of the dataset will comply with all applicable licenses.</li>
+<li><strong>Reproducibility</strong>: All code developed for this research will be documented and made available in a public repository to facilitate reproducibility.</li>
+</ul>
+<hr>
+<p><em>By integrating the data collection strategies and dataset obtaining methods into this research draft, we have outlined a comprehensive plan for developing an automated misconfiguration detection system for Ansible AWS VPC playbooks using SVM.</em></p>
+
+  <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+  <div class="share-buttons">
+    <button class="share-button" onclick="shareToFacebook()">F</button>
+    <button class="share-button" onclick="shareToTwitter()">X</button>
+    <button class="share-button" onclick="shareToWhatsApp()">W</button>
+    <button class="share-button" onclick="copyLink()">C</button>
+  </div>
+  <div id="disqus_thread"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://blog.akbarsahata.id/articles/automated-detection-of-misconfigurations-in-ansible-aws-vpc-playbooks-using-support-vector-machines.md";
+      this.page.identifier = "automated-detection-of-misconfigurations-in-ansible-aws-vpc-playbooks-using-support-vector-machines.md";
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    function shareToFacebook() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/automated-detection-of-misconfigurations-in-ansible-aws-vpc-playbooks-using-support-vector-machines.md");
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+    
+    function shareToTwitter() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/automated-detection-of-misconfigurations-in-ansible-aws-vpc-playbooks-using-support-vector-machines.md");
+      const text = encodeURIComponent("Automated Detection of Misconfigurations in Ansible AWS VPC Playbooks Using Support Vector Machines");
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    function shareToWhatsApp() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/automated-detection-of-misconfigurations-in-ansible-aws-vpc-playbooks-using-support-vector-machines.md");
+      window.open(`https://wa.me/?text=${url}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText("https://blog.akbarsahata.id/articles/automated-detection-of-misconfigurations-in-ansible-aws-vpc-playbooks-using-support-vector-machines.md").then(() => {
+        alert('Link copied to clipboard');
+      });
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>

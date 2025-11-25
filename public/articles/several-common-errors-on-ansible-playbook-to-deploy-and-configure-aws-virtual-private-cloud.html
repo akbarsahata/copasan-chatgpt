@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="When using an Ansible playbook to deploy and configure an AWS Virtual Private Cloud (VPC), several logical errors may arise due to incorrect parameter...">
+  <meta property="og:title" content="Several Common Errors on Ansible Playbook to Deploy and Configure AWS Virtual Private Cloud">
+  <meta property="og:description" content="When using an Ansible playbook to deploy and configure an AWS Virtual Private Cloud (VPC), several logical errors may arise due to incorrect parameter...">
+  <meta property="og:image" content="https://images.pexels.com/photos/2882552/pexels-photo-2882552.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1">
+  <meta property="og:url" content="https://blog.akbarsahata.id/articles/several-common-errors-on-ansible-playbook-to-deploy-and-configure-aws-virtual-private-cloud.md">
+  <meta property="og:type" content="article">
+  <title>Several Common Errors on Ansible Playbook to Deploy and Configure AWS Virtual Private Cloud</title>
+  <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+  <link href="/styles/article.css" rel="stylesheet">
+</head>
+<body>
+  <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
+  <h1>Several Common Errors on Ansible Playbook to Deploy and Configure AWS Virtual Private Cloud</h1>
+<hr>
+<p><img src="https://images.pexels.com/photos/2882552/pexels-photo-2882552.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1" alt="error-red"></p>
+<hr>
+<p>When using an Ansible playbook to deploy and configure an AWS Virtual Private Cloud (VPC), several logical errors may arise due to incorrect parameters, resource dependencies, or improper configurations. Below are common logical errors with examples and their solutions.</p>
+<hr>
+<h3>1. <strong>Incorrect Module Usage</strong></h3>
+<ul>
+<li><strong>Problem:</strong> Using the wrong module or not specifying the correct resource in the module.</li>
+<li><strong>Error Example:</strong><pre><code class="language-yaml">- name: Create a public subnet
+  ec2_vpc:
+    vpc_id: &quot;{{ vpc.vpc_id }}&quot;
+    cidr: 10.0.1.0/24
+    availability_zone: us-east-1a
+</code></pre>
+<ul>
+<li><strong>Logical Issue:</strong> The <code>ec2_vpc</code> module is incorrectly used to create a subnet. The correct module is <code>ec2_vpc_subnet</code>.</li>
+<li><strong>Solution:</strong> Replace <code>ec2_vpc</code> with <code>ec2_vpc_subnet</code>.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3>2. <strong>Invalid or Missing Parameters</strong></h3>
+<ul>
+<li><strong>Problem:</strong> Some required parameters for modules are either missing or invalid.</li>
+<li><strong>Error Example:</strong><pre><code class="language-yaml">- name: Create a VPC
+  ec2_vpc:
+    name: my_vpc
+    cidr_block: 10.0.0.1/16   # Invalid CIDR block
+</code></pre>
+<ul>
+<li><strong>Logical Issue:</strong> The CIDR block <code>10.0.0.1/16</code> is invalid because <code>10.0.0.1</code> is not a valid network address.</li>
+<li><strong>Solution:</strong> Use <code>10.0.0.0/16</code> as the correct CIDR block.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3>3. <strong>Resource Dependencies and Sequencing</strong></h3>
+<ul>
+<li><strong>Problem:</strong> Not respecting dependencies between AWS resources.</li>
+<li><strong>Error Example:</strong><pre><code class="language-yaml">- name: Create a route table
+  ec2_vpc_route_table:
+    vpc_id: &quot;{{ vpc.vpc_id }}&quot;
+    state: present
+
+- name: Create a VPC
+  ec2_vpc:
+    name: my_vpc
+    cidr_block: 10.0.0.0/16
+    state: present
+</code></pre>
+<ul>
+<li><strong>Logical Issue:</strong> The route table is being created before the VPC, causing a failure because the VPC doesn&#39;t exist yet.</li>
+<li><strong>Solution:</strong> Move the VPC creation task before the route table creation.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3>4. <strong>Inconsistent or Overlapping CIDR Blocks</strong></h3>
+<ul>
+<li><strong>Problem:</strong> Defining overlapping CIDR blocks for subnets within the same VPC.</li>
+<li><strong>Error Example:</strong><pre><code class="language-yaml">- name: Create public subnet
+  ec2_vpc_subnet:
+    vpc_id: &quot;{{ vpc.vpc_id }}&quot;
+    cidr: 10.0.0.0/24
+    state: present
+
+- name: Create another subnet
+  ec2_vpc_subnet:
+    vpc_id: &quot;{{ vpc.vpc_id }}&quot;
+    cidr: 10.0.0.0/25   # Overlaps with the first subnet
+    state: present
+</code></pre>
+<ul>
+<li><strong>Logical Issue:</strong> The CIDR block for the second subnet overlaps with the first, causing a conflict.</li>
+<li><strong>Solution:</strong> Ensure the CIDR blocks don&#39;t overlap, e.g., use <code>10.0.1.0/24</code> for the second subnet.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3>5. <strong>Incorrect Association of Route Tables</strong></h3>
+<ul>
+<li><strong>Problem:</strong> Assigning incorrect route tables to subnets or missing associations between subnets and route tables.</li>
+<li><strong>Error Example:</strong><pre><code class="language-yaml">- name: Create a route to the internet gateway
+  ec2_vpc_route:
+    route_table_id: &quot;{{ route_table.route_table_id }}&quot;
+    destination_cidr_block: &quot;0.0.0.0/0&quot;
+    gateway_id: &quot;invalid-igw-id&quot;  # Incorrect gateway ID
+</code></pre>
+<ul>
+<li><strong>Logical Issue:</strong> The route table is being associated with an incorrect or nonexistent internet gateway.</li>
+<li><strong>Solution:</strong> Ensure the correct internet gateway ID is used by registering the result of the internet gateway creation task and using the correct variable.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3>6. <strong>Improper Security Group Configuration</strong></h3>
+<ul>
+<li><strong>Problem:</strong> Misconfiguring security groups, either by allowing too permissive or restrictive rules.</li>
+<li><strong>Error Example:</strong><pre><code class="language-yaml">- name: Create a security group
+  ec2_security_group:
+    name: &quot;open_sg&quot;
+    description: &quot;Allow all traffic&quot;
+    vpc_id: &quot;{{ vpc.vpc_id }}&quot;
+    rules:
+      - proto: all
+        cidr_ip: 0.0.0.0/0   # Too permissive, allows all traffic
+</code></pre>
+<ul>
+<li><strong>Logical Issue:</strong> The security group is configured to allow all traffic from any IP, which is a significant security risk.</li>
+<li><strong>Solution:</strong> Restrict traffic to specific ports and IP ranges, e.g., only allowing SSH or HTTP/HTTPS traffic from trusted IP addresses.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3>7. <strong>Forgotten Tags or Naming Conventions</strong></h3>
+<ul>
+<li><strong>Problem:</strong> Tags are critical for identifying and managing resources, especially in large-scale environments.</li>
+<li><strong>Error Example:</strong><pre><code class="language-yaml">- name: Create a VPC
+  ec2_vpc:
+    cidr_block: 10.0.0.0/16
+    enable_dns_support: true
+</code></pre>
+<ul>
+<li><strong>Logical Issue:</strong> The VPC does not have any tags, making it harder to manage in larger environments.</li>
+<li><strong>Solution:</strong> Add tags, for example:<pre><code class="language-yaml">tags:
+  Name: &quot;my_vpc&quot;
+  Environment: &quot;production&quot;
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3>8. <strong>Failure to Handle Existing Resources</strong></h3>
+<ul>
+<li><strong>Problem:</strong> Playbook fails or overwrites existing resources.</li>
+<li><strong>Error Example:</strong><pre><code class="language-yaml">- name: Create a VPC
+  ec2_vpc:
+    cidr_block: 10.0.0.0/16
+    state: present
+</code></pre>
+<ul>
+<li><strong>Logical Issue:</strong> If a VPC with the same CIDR block already exists, this task will fail.</li>
+<li><strong>Solution:</strong> Implement checks or use idempotent modules to verify if the resource already exists before attempting to create it. Use <code>ec2_vpc_facts</code> to check existing VPCs.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3>9. <strong>Failure to Wait for Resource Propagation</strong></h3>
+<ul>
+<li><strong>Problem:</strong> Ansible tasks that depend on the completion of another resource’s creation may fail if the resources are not yet fully available.</li>
+<li><strong>Error Example:</strong><pre><code class="language-yaml">- name: Create a route to the internet gateway
+  ec2_vpc_route:
+    route_table_id: &quot;{{ route_table.route_table_id }}&quot;
+    destination_cidr_block: &quot;0.0.0.0/0&quot;
+    gateway_id: &quot;{{ igw.internet_gateway_id }}&quot;
+</code></pre>
+<ul>
+<li><strong>Logical Issue:</strong> This task may fail if the internet gateway is not fully available yet.</li>
+<li><strong>Solution:</strong> Use a wait condition to allow time for resource propagation:<pre><code class="language-yaml">- wait_for:
+    timeout: 300
+    state: started
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3>10. <strong>Misconfigured NAT Gateway or Internet Gateway</strong></h3>
+<ul>
+<li><strong>Problem:</strong> Improper configuration of NAT gateway for private subnets or internet gateway for public subnets.</li>
+<li><strong>Error Example:</strong><pre><code class="language-yaml">- name: Create a route for private subnet
+  ec2_vpc_route:
+    route_table_id: &quot;{{ private_route_table.route_table_id }}&quot;
+    destination_cidr_block: &quot;0.0.0.0/0&quot;
+    gateway_id: &quot;{{ igw.internet_gateway_id }}&quot;  # Incorrectly uses internet gateway for private subnet
+</code></pre>
+<ul>
+<li><strong>Logical Issue:</strong> The private subnet is incorrectly routed through the internet gateway instead of a NAT gateway.</li>
+<li><strong>Solution:</strong> Use a NAT gateway for private subnets:<pre><code class="language-yaml">gateway_id: &quot;{{ nat_gateway.nat_gateway_id }}&quot;
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3>Best Practices to Avoid Errors</h3>
+<ul>
+<li><strong>Use Idempotent Modules:</strong> Ensure that each module used is idempotent, so running the playbook multiple times doesn&#39;t create duplicate resources.</li>
+<li><strong>Test Playbook Locally:</strong> Before deploying to production, run the playbook in a test environment or use mock modules like <code>local_action</code> to validate syntax and logic.</li>
+<li><strong>Error Handling:</strong> Implement error handling in the playbook to catch and manage errors gracefully (e.g., using <code>ignore_errors</code> with caution).</li>
+</ul>
+<hr>
+<h3>References</h3>
+<ol>
+<li><p><strong>Ansible AWS VPC Module Documentation</strong><br><a href="https://docs.ansible.com/ansible/latest/collections/amazon/aws/ec2_vpc_module.html">https://docs.ansible.com/ansible/latest/collections/amazon/aws/ec2_vpc_module.html</a></p>
+</li>
+<li><p><strong>Ansible Playbooks for AWS – Best Practices</strong><br><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html">https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html</a></p>
+</li>
+<li><p><strong>AWS Ansible Integration Guide</strong><br><a href="https://aws.amazon.com/blogs/devops/getting-started-with-ansible-and-aws/">https://aws.amazon.com/blogs/devops/getting-started-with-ansible-and-aws/</a></p>
+</li>
+<li><p><strong>AWS VPC Best Practices</strong><br><a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-best-practices.html">https://docs.aws.amazon.com/vpc/latest/userguide/vpc-best-practices.html</a></p>
+</li>
+</ol>
+
+  <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+  <div class="share-buttons">
+    <button class="share-button" onclick="shareToFacebook()">F</button>
+    <button class="share-button" onclick="shareToTwitter()">X</button>
+    <button class="share-button" onclick="shareToWhatsApp()">W</button>
+    <button class="share-button" onclick="copyLink()">C</button>
+  </div>
+  <div id="disqus_thread"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://blog.akbarsahata.id/articles/several-common-errors-on-ansible-playbook-to-deploy-and-configure-aws-virtual-private-cloud.md";
+      this.page.identifier = "several-common-errors-on-ansible-playbook-to-deploy-and-configure-aws-virtual-private-cloud.md";
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    function shareToFacebook() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/several-common-errors-on-ansible-playbook-to-deploy-and-configure-aws-virtual-private-cloud.md");
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+    
+    function shareToTwitter() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/several-common-errors-on-ansible-playbook-to-deploy-and-configure-aws-virtual-private-cloud.md");
+      const text = encodeURIComponent("Several Common Errors on Ansible Playbook to Deploy and Configure AWS Virtual Private Cloud");
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    function shareToWhatsApp() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/several-common-errors-on-ansible-playbook-to-deploy-and-configure-aws-virtual-private-cloud.md");
+      window.open(`https://wa.me/?text=${url}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText("https://blog.akbarsahata.id/articles/several-common-errors-on-ansible-playbook-to-deploy-and-configure-aws-virtual-private-cloud.md").then(() => {
+        alert('Link copied to clipboard');
+      });
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>

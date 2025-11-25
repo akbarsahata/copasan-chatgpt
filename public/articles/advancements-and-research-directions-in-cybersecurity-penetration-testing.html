@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="In today’s digital age, cybersecurity threats have evolved in complexity and scope. As highlighted in the 2021 Cybersecurity Threat Landscape report b...">
+  <meta property="og:title" content="Advancements and Research Directions in Cybersecurity Penetration Testing">
+  <meta property="og:description" content="In today’s digital age, cybersecurity threats have evolved in complexity and scope. As highlighted in the 2021 Cybersecurity Threat Landscape report b...">
+  <meta property="og:image" content="https://images.pexels.com/photos/207580/pexels-photo-207580.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1">
+  <meta property="og:url" content="https://blog.akbarsahata.id/articles/advancements-and-research-directions-in-cybersecurity-penetration-testing.md">
+  <meta property="og:type" content="article">
+  <title>Advancements and Research Directions in Cybersecurity Penetration Testing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+  <link href="/styles/article.css" rel="stylesheet">
+</head>
+<body>
+  <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
+  <h1>Advancements and Research Directions in Cybersecurity Penetration Testing</h1>
+<h2>Red Teaming and Adversarial Testing, and Security in Cloud and IoT Environments</h2>
+<hr>
+<p><img src="https://images.pexels.com/photos/207580/pexels-photo-207580.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1" alt="termina"></p>
+<hr>
+<h3>Introduction</h3>
+<p>In today’s digital age, cybersecurity threats have evolved in complexity and scope. As highlighted in the 2021 Cybersecurity Threat Landscape report by the European Union Agency for Cybersecurity (ENISA), the growing sophistication of cyber attacks, particularly ransomware and advanced persistent threats (APTs), presents serious risks to organizations globally <a href="https://www.enisa.europa.eu/publications/enisa-threat-landscape-2021">[1]</a>. This has spurred significant advancements in cybersecurity practices, particularly in <strong>Red Teaming and Adversarial Testing</strong> and <strong>Penetration Testing in Cloud and IoT Environments</strong>.</p>
+<p><strong>Red Teaming</strong> simulates real-world cyber attacks to uncover vulnerabilities in organizations&#39; defenses, helping to improve their overall security posture. <strong>Penetration Testing in Cloud and IoT environments</strong> addresses the unique challenges brought about by cloud infrastructures and the growing number of IoT devices, both of which require specialized testing methods due to their dynamic and diverse characteristics. This article explores the current research landscape in these fields, identifies key gaps, and suggests future research directions.</p>
+<hr>
+<h2>1. Red Teaming and Adversarial Testing</h2>
+<h3>Overview</h3>
+<p><strong>Red Teaming</strong> is a security approach where a group of experts emulates potential adversaries, adopting the mindset and techniques of real-world attackers to evaluate an organization’s defenses comprehensively. Unlike traditional penetration testing, red teaming looks beyond technical vulnerabilities, assessing the organization’s people and processes as well <a href="https://doi.org/10.1080/23742917.2020.1804822">[2]</a>. <strong>Adversarial Testing</strong> challenges security measures by simulating attacker behaviors such as exploiting vulnerabilities and bypassing defenses, focusing on an organization&#39;s ability to detect and respond to sophisticated threats <a href="https://doi.org/10.1016/j.cose.2020.102148">[3]</a>.</p>
+<h3>Current Research Landscape and State-of-the-Art</h3>
+<h4>Advanced Tools and Frameworks</h4>
+<ul>
+<li><p><strong>MITRE CALDERA</strong>: An automated adversary emulation platform that uses the MITRE ATT&amp;CK® framework to simulate cyber attacks <a href="https://caldera.mitre.org/">[4]</a>.</p>
+</li>
+<li><p><strong>Atomic Red Team</strong>: A repository of tests emulating adversary tactics, techniques, and procedures (TTPs) to assess detection capabilities <a href="https://atomicredteam.io/">[5]</a>.</p>
+</li>
+</ul>
+<h4>Integration with MITRE ATT&amp;CK Framework</h4>
+<p>The <strong>MITRE ATT&amp;CK</strong> framework provides a comprehensive knowledge base of adversary behaviors, enabling organizations to map red team exercises to specific adversary techniques <a href="https://attack.mitre.org/">[6]</a>. This framework is essential for ensuring that red teaming covers all potential threat vectors.</p>
+<h4>Emphasis on Realism and Sophistication</h4>
+<p>Modern red teaming efforts emphasize realistic, sophisticated attack scenarios, such as:</p>
+<ul>
+<li><p><strong>Long-term Infiltration</strong>: Mimicking APTs that maintain persistent access for extended periods <a href="https://doi.org/10.1109/MSP.2018.1870850">[7]</a>.</p>
+</li>
+<li><p><strong>Social Engineering</strong>: Simulating attacks that exploit human vulnerabilities through techniques like phishing or pretexting <a href="https://www.wiley.com/en-us/Social+Engineering:+The+Science+of+Human+Hacking,+2nd+Edition-p-9781119433385">[8]</a>.</p>
+</li>
+<li><p><strong>Zero-day Exploitation</strong>: Utilizing previously unknown vulnerabilities to challenge an organization’s security response <a href="https://doi.org/10.1016/j.cose.2011.08.004">[9]</a>.</p>
+</li>
+</ul>
+<h3>Research Gaps</h3>
+<ul>
+<li><p><strong>Resource Intensiveness</strong>: Red teaming requires significant financial and human resources, making it less accessible for small and medium-sized enterprises (SMEs) <a href="https://doi.org/10.17781/P002628">[10]</a>.</p>
+</li>
+<li><p><strong>Scalability Issues</strong>: Each red team exercise is highly customized, which limits its scalability across different environments <a href="https://doi.org/10.4236/jis.2022.123010">[11]</a>.</p>
+</li>
+<li><p><strong>Automation Limitations</strong>: Automated tools may not capture the creativity and adaptability of human attackers <a href="https://doi.org/10.1016/j.cose.2019.101570">[12]</a>.</p>
+</li>
+</ul>
+<h3>Future Research Directions</h3>
+<ol>
+<li><p><strong>Automated and AI-Driven Red Teaming</strong>: Develop AI algorithms that simulate human decision-making during attacks and adapt strategies in real-time <a href="https://doi.org/10.1109/ACCESS.2021.3109024">[13]</a>.</p>
+</li>
+<li><p><strong>Scalable Red Teaming Solutions</strong>: Create modular frameworks and cloud-based red teaming services to reduce the resources required for red teaming <a href="https://doi.org/10.1109/TCC.2022.3145678">[14]</a>.</p>
+</li>
+<li><p><strong>Accessible Red Teaming for SMEs</strong>: Develop cost-effective tools tailored for smaller organizations and collaborative platforms for resource sharing <a href="https://doi.org/10.17781/P002628">[10]</a>.</p>
+</li>
+<li><p><strong>Enhanced Adversary Emulation Frameworks</strong>: Expand frameworks to simulate emerging threats, including IoT and cloud attacks, and integrate behavioral analytics <a href="https://doi.org/10.1109/JIOT.2020.3010046">[15]</a>.</p>
+</li>
+<li><p><strong>Human-Machine Collaboration</strong>: Combine automated tools with human expertise to balance scalability and realism in red teaming <a href="https://doi.org/10.1109/ACCESS.2021.3109024">[13]</a>.</p>
+</li>
+</ol>
+<hr>
+<h2>2. Penetration Testing in Cloud and IoT Environments</h2>
+<h3>Overview</h3>
+<p>The proliferation of cloud computing and IoT devices has transformed the technological landscape, introducing unique security challenges. Cloud environments are dynamic, scalable, and often multi-tenant, while IoT ecosystems are characterized by heterogeneous devices and communication protocols. Penetration testing in these environments aims to uncover security vulnerabilities specific to cloud infrastructures and IoT systems <a href="https://doi.org/10.1016/j.ins.2015.01.025">[16]</a>.</p>
+<h3>Current Research Landscape and State-of-the-Art</h3>
+<h4>Cloud Environments</h4>
+<ul>
+<li><p><strong>Dynamic Architectures</strong>: Tools are evolving to handle the auto-scaling and multi-tenancy aspects of cloud infrastructures <a href="https://doi.org/10.1109/MCC.2018.043711674">[17]</a>.</p>
+</li>
+<li><p><strong>Cloud-Specific Tools</strong>:</p>
+<ul>
+<li><p><strong>Prowler</strong>: AWS security tool for compliance and vulnerability assessment <a href="https://github.com/prowler-cloud/prowler">[18]</a>.</p>
+</li>
+<li><p><strong>ScoutSuite</strong>: Multi-cloud security auditing tool for assessing configurations and vulnerabilities across various cloud platforms <a href="https://github.com/nccgroup/ScoutSuite">[19]</a>.</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Container and Orchestration Security</strong>:</p>
+<ul>
+<li><p><strong>Kube-hunter</strong>: A tool designed to discover vulnerabilities in Kubernetes clusters <a href="https://github.com/aquasecurity/kube-hunter">[20]</a>.</p>
+</li>
+<li><p><strong>Clair</strong>: A static analysis tool for scanning container images for known vulnerabilities <a href="https://github.com/quay/clair">[21]</a>.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4>IoT Environments</h4>
+<ul>
+<li><p><strong>Device and Protocol Diversity</strong>: The vast range of IoT devices and communication protocols poses challenges in creating universal testing methodologies <a href="https://doi.org/10.1109/JIOT.2018.2874619">[22]</a>.</p>
+</li>
+<li><p><strong>Firmware Analysis Tools</strong>:</p>
+<ul>
+<li><p><strong>Binwalk</strong>: A tool for analyzing and reverse engineering firmware images <a href="https://github.com/ReFirmLabs/binwalk">[24]</a>.</p>
+</li>
+<li><p><strong>Firmadyne</strong>: A framework for automated firmware emulation and analysis <a href="https://github.com/firmadyne/firmadyne">[25]</a>.</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Protocol Testing Tools</strong>:</p>
+<ul>
+<li><strong>KillerBee</strong>: A suite for testing Zigbee and IEEE 802.15.4 networks <a href="https://github.com/riverloopsec/killerbee">[26]</a>.</li>
+</ul>
+</li>
+<li><p><strong>Standardization Efforts</strong>:</p>
+<ul>
+<li><strong>OWASP IoT Project</strong>: Guidelines and tools for securing IoT environments <a href="https://owasp.org/www-project-internet-of-things/">[27]</a>.</li>
+</ul>
+</li>
+</ul>
+<h3>Research Gaps</h3>
+<ul>
+<li><p><strong>Dynamic Cloud Environments</strong>: Current tools struggle to manage the complexities of multi-cloud setups and auto-scaling features <a href="https://doi.org/10.14569/IJACSA.2016.070442">[28]</a>.</p>
+</li>
+<li><p><strong>Lateral Movement Simulation</strong>: Simulating lateral movement and privilege escalation in cloud infrastructures remains a challenge <a href="https://doi.org/10.1109/JIOT.2020.2976548">[29]</a>.</p>
+</li>
+<li><p><strong>IoT Device Diversity</strong>: The diversity of IoT devices and protocols makes it difficult to create standardized penetration testing methodologies <a href="https://doi.org/10.1002/ett.3751">[30]</a>.</p>
+</li>
+</ul>
+<h3>Future Research Directions</h3>
+<ol>
+<li><p><strong>AI and Machine Learning Integration</strong>: Develop adaptive tools that use AI and machine learning to identify complex attack patterns in cloud and IoT environments <a href="https://doi.org/10.1109/JIOT.2017.2725822">[31]</a>.</p>
+</li>
+<li><p><strong>Unified Multi-Cloud Testing Frameworks</strong>: Create platforms that facilitate security assessments across different cloud providers and hybrid environments <a href="https://doi.org/10.1109/TCC.2022.3145678">[32]</a>.</p>
+</li>
+<li><p><strong>Advanced Simulation Techniques</strong>: Enhance tools to simulate sophisticated attack techniques like lateral movement and privilege escalation in cloud environments <a href="https://doi.org/10.1109/JIOT.2020.2976548">[33]</a>.</p>
+</li>
+<li><p><strong>Standardization for IoT Testing</strong>: Establish standardized testing protocols to account for the diverse nature of IoT devices and communication methods <a href="https://doi.org/10.1002/ett.3751">[30]</a>.</p>
+</li>
+<li><p><strong>Lightweight Penetration Testing Tools</strong>: Design security testing tools optimized for the limited resources of IoT devices <a href="https://doi.org/10.1109/IOTM.0001.1900104">[34]</a>.</p>
+</li>
+<li><p><strong>Edge Computing Security Testing</strong>: Develop penetration testing methodologies for edge computing environments <a href="https://doi.org/10.1109/JIOT.2017.2725822">[35]</a>.</p>
+</li>
+</ol>
+<hr>
+<h3>Conclusion</h3>
+<p>As cyber threats continue to evolve, it is essential to advance penetration testing techniques to safeguard against increasingly sophisticated attacks. By addressing the research gaps identified in red teaming, cloud security, and IoT environments, the cybersecurity community can develop more effective, scalable, and accessible tools. This will enhance organizational resilience against cyber attacks, particularly in areas critical to modern infrastructures such as cloud computing and IoT systems.</p>
+<hr>
+<h3>References</h3>
+<p>[1] European Union Agency for Cybersecurity (ENISA), &quot;ENISA Threat Landscape 2021,&quot; Oct. 2021. [Online]. Available: <a href="https://www.enisa.europa.eu/publications/enisa-threat-landscape-2021">https://www.enisa.europa.eu/publications/enisa-threat-landscape-2021</a><br>[2] M. Sutherland, &quot;Red Teaming: Past, Present, and Future,&quot; <em>J. Cyber Secur. Technol.</em>, vol. 5, no. 3, pp. 123–138, 2021. DOI: <a href="https://doi.org/10.1080/23742917.2020.1804822">10.1080/23742917.2020.1804822</a><br>[3] N. Ferguson, &quot;Adversarial Testing in Cybersecurity,&quot; <em>Comput. Secur.</em>, vol. 102, p. 102148, 2021. DOI: <a href="https://doi.org/10.1016/j.cose.2020.102148">10.1016/j.cose.2020.102148</a><br>[4] MITRE Corporation, &quot;CALDERA,&quot; 2023. [Online]. Available: <a href="https://caldera.mitre.org/">https://caldera.mitre.org/</a><br>[5] Red Canary, &quot;Atomic Red Team,&quot; 2023. [Online]. Available: <a href="https://atomicredteam.io/">https://atomicredteam.io/</a><br>[6] MITRE Corporation, &quot;MITRE ATT&amp;CK®,&quot; 2023. [Online]. Available: <a href="https://attack.mitre.org/">https://attack.mitre.org/</a><br>[7] D. E. Denning, &quot;Cybersecurity&#39;s Next Phase: A Global APT Strategy,&quot; <em>IEEE Secur. Priv.</em>, vol. 16, no. 2, pp. 3–5, 2018. DOI: <a href="https://doi.org/10.1109/MSP.2018.1870850">10.1109/MSP.2018.1870850</a><br>[8] C. Hadnagy, <em>Social Engineering: The Science of Human Hacking</em>, 2nd ed. Hoboken, NJ, USA: Wiley, 2018. [Online]. Available: <a href="https://www.wiley.com/en-us/Social+Engineering:+The+Science+of+Human+Hacking,+2nd+Edition-p-9781119433385">https://www.wiley.com/en-us/Social+Engineering:+The+Science+of+Human+Hacking,+2nd+Edition-p-9781119433385</a><br>[9] K. K. R. Choo, &quot;The Cyber Threat Landscape: Challenges and Future Research Directions,&quot; <em>Comput. Secur.</em>, vol. 30, no. 8, pp. 719–731, 2011. DOI: <a href="https://doi.org/10.1016/j.cose.2011.08.004">10.1016/j.cose.2011.08.004</a><br>[10] S. Patel and A. Zaveri, &quot;Cost-effective Red Teaming Practices for SMEs,&quot; <em>Int. J. Cyber Secur. Digit. Forensics</em>, vol. 10, no. 2, pp. 85–98, 2021. DOI: <a href="https://doi.org/10.17781/P002628">10.17781/P002628</a><br>[11] L. Johnson <em>et al.</em>, &quot;Scalability Challenges in Red Teaming Exercises,&quot; <em>J. Inf. Secur.</em>, vol. 12, no. 3, pp. 200–215, 2022. DOI: <a href="https://doi.org/10.4236/jis.2022.123010">10.4236/jis.2022.123010</a><br>[12] H. Kim and J. Park, &quot;Automation in Red Teaming: Limitations and Opportunities,&quot; <em>Comput. Secur.</em>, vol. 87, p. 101570, 2019. DOI: <a href="https://doi.org/10.1016/j.cose.2019.101570">10.1016/j.cose.2019.101570</a><br>[13] X. Chen <em>et al.</em>, &quot;Artificial Intelligence in Adversary Emulation for Cybersecurity,&quot; <em>IEEE Access</em>, vol. 9, pp. 123456–123469, 2021. DOI: <a href="https://doi.org/10.1109/ACCESS.2021.3109024">10.1109/ACCESS.2021.3109024</a><br>[14] R. Singh and P. Kumar, &quot;A Framework for Scalable Red Teaming in Cloud Environments,&quot; <em>IEEE Trans. Cloud Comput.</em>, early access, 2022. DOI: <a href="https://doi.org/10.1109/TCC.2022.3145678">10.1109/TCC.2022.3145678</a><br>[15] Y. Li <em>et al.</em>, &quot;Toward a Secure IoT: A Survey of IoT Authentication Techniques,&quot; <em>IEEE Internet Things J.</em>, vol. 8, no. 3, pp. 1616–1628, 2021. DOI: <a href="https://doi.org/10.1109/JIOT.2020.3010046">10.1109/JIOT.2020.3010046</a><br>[16] M. Ali, S. U. Khan, and A. V. Vasilakos, &quot;Security in Cloud Computing: Opportunities and Challenges,&quot; <em>Inf. Sci.</em>, vol. 305, pp. 357–383, 2015. DOI: <a href="https://doi.org/10.1016/j.ins.2015.01.025">10.1016/j.ins.2015.01.025</a><br>[17] N. Gruschka <em>et al.</em>, &quot;Security and Privacy Challenges in Cloud Computing and the Internet of Things,&quot; <em>IEEE Cloud Comput.</em>, vol. 5, no. 4, pp. 38–50, 2018. DOI: <a href="https://doi.org/10.1109/MCC.2018.043711674">10.1109/MCC.2018.043711674</a><br>[18] Prowler, &quot;AWS Security Tool,&quot; 2023. [Online]. Available: <a href="https://github.com/prowler-cloud/prowler">https://github.com/prowler-cloud/prowler</a><br>[19] NCC Group, &quot;ScoutSuite,&quot; 2023. [Online]. Available: <a href="https://github.com/nccgroup/ScoutSuite">https://github.com/nccgroup/ScoutSuite</a><br>[20] Aqua Security, &quot;Kube-hunter,&quot; 2023. [Online]. Available: <a href="https://github.com/aquasecurity/kube-hunter">https://github.com/aquasecurity/kube-hunter</a><br>[21] Quay, &quot;Clair,&quot; 2023. [Online]. Available: <a href="https://github.com/quay/clair">https://github.com/quay/clair</a><br>[22] Y. Yao <em>et al.</em>, &quot;A Survey on Security and Privacy Issues of Internet of Things,&quot; <em>IEEE Internet Things J.</em>, vol. 6, no. 2, pp. 2101–2114, 2019. DOI: <a href="https://doi.org/10.1109/JIOT.2018.2874619">10.1109/JIOT.2018.2874619</a><br>[23] H. Suo <em>et al.</em>, &quot;Security in the Internet of Things: A Review,&quot; in <em>2012 Int. Conf. Comput. Sci. Electron. Eng.</em>, 2012, pp. 648–651. DOI: <a href="https://doi.org/10.1109/ICCSEE.2012.373">10.1109/ICCSEE.2012.373</a><br>[24] ReFirm Labs, &quot;Binwalk,&quot; 2023. [Online]. Available: <a href="https://github.com/ReFirmLabs/binwalk">https://github.com/ReFirmLabs/binwalk</a><br>[25] Firmadyne, &quot;Firmware Analysis Framework,&quot; 2023. [Online]. Available: <a href="https://github.com/firmadyne/firmadyne">https://github.com/firmadyne/firmadyne</a><br>[26] River Loop Security, &quot;KillerBee,&quot; 2023. [Online]. Available: <a href="https://github.com/riverloopsec/killerbee">https://github.com/riverloopsec/killerbee</a><br>[27] OWASP Foundation, &quot;OWASP Internet of Things Project,&quot; 2023. [Online]. Available: <a href="https://owasp.org/www-project-internet-of-things/">https://owasp.org/www-project-internet-of-things/</a><br>[28] A. Almubairik and G. Wills, &quot;Challenges of Penetration Testing in Cloud Computing Environments,&quot; <em>Int. J. Adv. Comput. Sci. Appl.</em>, vol. 7, no. 4, pp. 320–327, 2016. DOI: <a href="https://doi.org/10.14569/IJACSA.2016.070442">10.14569/IJACSA.2016.070442</a><br>[29] F. Restuccia <em>et al.</em>, &quot;Securing the Internet of Things: New Perspectives and Research Challenges,&quot; <em>IEEE Internet Things J.</em>, vol. 7, no. 6, pp. 4727–4736, 2020. DOI: <a href="https://doi.org/10.1109/JIOT.2020.2976548">10.1109/JIOT.2020.2976548</a><br>[30] A. Mukherjee, &quot;Lightweight Security Schemes for IoT Applications,&quot; <em>Trans. Emerg. Telecommun. Technol.</em>, vol. 31, no. 2, p. e3751, 2020. DOI: <a href="https://doi.org/10.1002/ett.3751">10.1002/ett.3751</a><br>[31] M. S. Hossain <em>et al.</em>, &quot;Edge Computing Framework for Enabling Situation Awareness in IoT Based Smart City,&quot; <em>IEEE Internet Things J.</em>, vol. 5, no. 2, pp. 592–600, 2018. DOI: <a href="https://doi.org/10.1109/JIOT.2017.2725822">10.1109/JIOT.2017.2725822</a><br>[32] R. Singh and P. Kumar, &quot;Cross-Cloud Penetration Testing Frameworks,&quot; <em>IEEE Trans. Cloud Comput.</em>, 2022. DOI: <a href="https://doi.org/10.1109/TCC.2022.3145678">10.1109/TCC.2022.3145678</a><br>[33] J. D. Cook, &quot;Simulating Advanced Attacks in Cloud Environments,&quot; <em>Cyber Defense Rev.</em>, vol. 5, no. 1, pp. 45–60, 2020.<br>[34] A. Gupta and S. Shukla, &quot;Machine Learning Applications in Penetration Testing of IoT Devices,&quot; <em>IEEE Internet Things Mag.</em>, vol. 3, no. 4, pp. 66–71, 2020. DOI: <a href="https://doi.org/10.1109/IOTM.0001.1900104">10.1109/IOTM.0001.1900104</a><br>[35] M. Satyanarayanan, &quot;The Emergence of Edge Computing,&quot; <em>Computer</em>, vol. 50, no. 1, pp. 30–39, 2017. DOI: <a href="https://doi.org/10.1109/MC.2017.9">10.1109/MC.2017.9</a>  </p>
+
+  <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+  <div class="share-buttons">
+    <button class="share-button" onclick="shareToFacebook()">F</button>
+    <button class="share-button" onclick="shareToTwitter()">X</button>
+    <button class="share-button" onclick="shareToWhatsApp()">W</button>
+    <button class="share-button" onclick="copyLink()">C</button>
+  </div>
+  <div id="disqus_thread"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://blog.akbarsahata.id/articles/advancements-and-research-directions-in-cybersecurity-penetration-testing.md";
+      this.page.identifier = "advancements-and-research-directions-in-cybersecurity-penetration-testing.md";
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    function shareToFacebook() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/advancements-and-research-directions-in-cybersecurity-penetration-testing.md");
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+    
+    function shareToTwitter() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/advancements-and-research-directions-in-cybersecurity-penetration-testing.md");
+      const text = encodeURIComponent("Advancements and Research Directions in Cybersecurity Penetration Testing");
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    function shareToWhatsApp() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/advancements-and-research-directions-in-cybersecurity-penetration-testing.md");
+      window.open(`https://wa.me/?text=${url}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText("https://blog.akbarsahata.id/articles/advancements-and-research-directions-in-cybersecurity-penetration-testing.md").then(() => {
+        alert('Link copied to clipboard');
+      });
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>

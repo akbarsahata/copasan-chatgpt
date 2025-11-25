@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="In today’s increasingly decentralized digital landscape, edge computing has become a crucial architecture for reducing latency and improving performan...">
+  <meta property="og:title" content="Building Your Own Simple Edge Runtime Environment: A Step-by-Step Guide">
+  <meta property="og:description" content="In today’s increasingly decentralized digital landscape, edge computing has become a crucial architecture for reducing latency and improving performan...">
+  <meta property="og:image" content="/image.webp">
+  <meta property="og:url" content="https://blog.akbarsahata.id/articles/building-your-own-simple-edge-runtime-environment-a-step-by-step-guide.md">
+  <meta property="og:type" content="article">
+  <title>Building Your Own Simple Edge Runtime Environment: A Step-by-Step Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+  <link href="/styles/article.css" rel="stylesheet">
+</head>
+<body>
+  <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
+  <h1>Building Your Own Simple Edge Runtime Environment: A Step-by-Step Guide</h1>
+<p>In today’s increasingly decentralized digital landscape, edge computing has become a crucial architecture for reducing latency and improving performance by processing data closer to the user. While several commercial platforms provide edge computing solutions, building your own edge runtime environment can give you control over the infrastructure, offer insights into the inner workings of edge computing, and potentially save costs. In this blog post, we’ll walk you through a step-by-step guide to creating a basic edge runtime environment from scratch.</p>
+<h3>Step 1: Set Up Infrastructure</h3>
+<p><strong>Choose Edge Locations:</strong>
+Start by identifying and setting up several geographically distributed servers or virtual machines (VMs). Depending on your resources, you can either use cloud providers with global regions (like AWS, Google Cloud, or Azure) or set up your own servers in different locations to serve as edge nodes.</p>
+<p><strong>Operating System:</strong>
+Install a lightweight, stable Linux distribution, such as Ubuntu Server or CentOS, on each server. These distributions are widely supported and have strong communities for troubleshooting and optimization.</p>
+<h3>Step 2: Networking and DNS Configuration</h3>
+<p><strong>Global DNS Setup:</strong>
+Utilize a DNS service that supports geolocation-based routing, such as AWS Route 53 or Cloudflare DNS, to direct user requests to the nearest edge server. This ensures users are served by the closest node, minimizing latency.</p>
+<p><strong>Anycast IP Addressing (Optional):</strong>
+For those with networking expertise, configuring an Anycast IP can route traffic to the nearest edge node based on Border Gateway Protocol (BGP) routing. While more complex, Anycast can further reduce latency and improve performance.</p>
+<h3>Step 3: Install and Configure a Container Runtime</h3>
+<p><strong>Docker Installation:</strong>
+Install Docker on each edge server to manage containerized applications. Docker is ideal for edge environments due to its lightweight nature, ease of use, and portability across different systems.</p>
+<p><strong>Container Orchestration (Optional):</strong>
+If you plan to manage multiple containers and require advanced features, consider installing Kubernetes or a simpler orchestrator like Docker Swarm. These tools help with scaling, self-healing, and rolling updates.</p>
+<h3>Step 4: Set Up a Serverless Framework</h3>
+<p><strong>Install OpenFaaS:</strong>
+OpenFaaS is an open-source, serverless framework that integrates well with Docker. Install OpenFaaS on each server to manage Functions as a Service (FaaS), allowing you to deploy and scale functions efficiently.</p>
+<p><strong>Function Deployment:</strong>
+Start by writing simple functions, such as a &quot;Hello World&quot; HTTP function, and deploy them to your OpenFaaS setup. OpenFaaS supports various languages, including Node.js, Python, and Go.</p>
+<h3>Step 5: Implement Load Balancing</h3>
+<p><strong>Set Up a Load Balancer:</strong>
+Install a load balancer like NGINX or HAProxy to distribute incoming requests across your edge nodes. This ensures high availability and reliability in your edge environment.</p>
+<p><strong>Geolocation Routing:</strong>
+Configure your load balancer to route requests based on the client’s geographic location, ensuring that users are served by the nearest edge node, thus reducing latency.</p>
+<h3>Step 6: Implement Caching</h3>
+<p><strong>Install a Caching Proxy:</strong>
+Use a caching proxy like Varnish or NGINX on each edge node to store static content, reducing the need to fetch data from origin servers repeatedly and lowering response times.</p>
+<p><strong>Configure Cache Headers:</strong>
+Make sure your edge functions return proper cache-control headers to maximize caching efficiency. This helps improve performance by serving content from cache rather than generating it anew for each request.</p>
+<h3>Step 7: Monitoring and Logging</h3>
+<p><strong>Install Prometheus and Grafana:</strong>
+Set up Prometheus on each edge server to monitor metrics such as CPU usage, memory usage, and request counts. Grafana can be used to visualize these metrics and help in analyzing performance trends.</p>
+<p><strong>Centralized Logging with ELK Stack:</strong>
+Deploy the ELK (Elasticsearch, Logstash, Kibana) stack or Fluentd on each edge server to collect, aggregate, and analyze logs from your functions. Centralized logging is essential for debugging and maintaining the health of your edge environment.</p>
+<h3>Step 8: Security Setup</h3>
+<p><strong>Sandboxing:</strong>
+Ensure that each function runs in an isolated environment within its container to minimize the risk of security vulnerabilities spreading across the system.</p>
+<p><strong>TLS/SSL Certificates:</strong>
+Install TLS/SSL certificates on your edge nodes to encrypt traffic. Using Let&#39;s Encrypt is a good option for obtaining free, automated certificates to secure your communications.</p>
+<p><strong>API Gateway (Optional):</strong>
+Consider deploying an API Gateway like Kong or Ambassador to manage and secure API requests, handle rate limiting, and perform authentication, adding an additional layer of security and control.</p>
+<h3>Step 9: Continuous Integration and Deployment (CI/CD)</h3>
+<p><strong>Set Up CI/CD Pipeline:</strong>
+Implement a CI/CD pipeline using Jenkins, GitHub Actions, or GitLab CI to automate the deployment of functions to your edge nodes. This pipeline should:</p>
+<ul>
+<li>Build Docker images of your functions.</li>
+<li>Push these images to a Docker registry.</li>
+<li>Deploy the updated images to your edge nodes using OpenFaaS or your container orchestration tool.</li>
+</ul>
+<p>Automation ensures consistency and efficiency in deployments, especially as your edge environment grows.</p>
+<h3>Step 10: Testing and Optimization</h3>
+<p><strong>Latency Testing:</strong>
+Use tools like Pingdom, Lighthouse, or custom scripts to test the latency from various global locations to your edge nodes. This helps identify bottlenecks and optimize your setup.</p>
+<p><strong>Optimize Routing:</strong>
+Adjust your DNS routing or load balancer rules based on testing results to ensure optimal performance and minimal latency for users.</p>
+<p><strong>Resource Optimization:</strong>
+Monitor resource usage and adjust your container resource limits (CPU, memory) to optimize performance and avoid over-provisioning, ensuring efficient use of resources.</p>
+<h3>Step 11: Scaling</h3>
+<p><strong>Horizontal Scaling:</strong>
+Add more edge nodes in additional locations as traffic increases. This allows your environment to handle more requests and provide faster responses to a growing user base.</p>
+<p><strong>Auto-Scaling (Optional):</strong>
+Implement auto-scaling rules based on traffic patterns to automatically add or remove containers or edge nodes. This helps maintain performance during traffic spikes while conserving resources during low-traffic periods.</p>
+<h3>Step 12: Documentation and Maintenance</h3>
+<p><strong>Document Configuration:</strong>
+Keep detailed documentation of your setup, including configurations, deployment processes, and troubleshooting steps. This documentation will be invaluable for ongoing maintenance and scaling efforts.</p>
+<p><strong>Regular Updates:</strong>
+Regularly update your server software, Docker images, and any frameworks you&#39;re using to keep your environment secure and performant. Regular maintenance helps avoid vulnerabilities and ensures that your edge runtime remains reliable.</p>
+<h3>Summary</h3>
+<p>By following these steps, you can build a basic edge runtime environment capable of running serverless functions close to your users. This environment is ideal for reducing latency and improving the user experience, especially for globally distributed applications. While this guide provides a simplified version, you can expand and scale your system as needed, implementing more advanced features like auto-scaling, failover mechanisms, and sophisticated routing strategies.</p>
+<p>Building your own edge runtime environment is a complex but rewarding project that offers deep insights into the world of edge computing. Whether for educational purposes, personal projects, or scaling your business, this setup provides a solid foundation to explore and innovate in the field of edge computing.</p>
+
+  <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+  <div class="share-buttons">
+    <button class="share-button" onclick="shareToFacebook()">F</button>
+    <button class="share-button" onclick="shareToTwitter()">X</button>
+    <button class="share-button" onclick="shareToWhatsApp()">W</button>
+    <button class="share-button" onclick="copyLink()">C</button>
+  </div>
+  <div id="disqus_thread"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://blog.akbarsahata.id/articles/building-your-own-simple-edge-runtime-environment-a-step-by-step-guide.md";
+      this.page.identifier = "building-your-own-simple-edge-runtime-environment-a-step-by-step-guide.md";
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    function shareToFacebook() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/building-your-own-simple-edge-runtime-environment-a-step-by-step-guide.md");
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+    
+    function shareToTwitter() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/building-your-own-simple-edge-runtime-environment-a-step-by-step-guide.md");
+      const text = encodeURIComponent("Building Your Own Simple Edge Runtime Environment: A Step-by-Step Guide");
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    function shareToWhatsApp() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/building-your-own-simple-edge-runtime-environment-a-step-by-step-guide.md");
+      window.open(`https://wa.me/?text=${url}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText("https://blog.akbarsahata.id/articles/building-your-own-simple-edge-runtime-environment-a-step-by-step-guide.md").then(() => {
+        alert('Link copied to clipboard');
+      });
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>
