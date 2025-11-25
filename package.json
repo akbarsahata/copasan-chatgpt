@@ -9,7 +9,7 @@
     "generate:sitemap": "node scripts/generate-sitemap.js",
     "generate:articles": "node scripts/generate-articles.js",
     "generate:home": "node scripts/generate-home.js",
-    "copy:assets": "cp -r docs public/ && cp metadata.json public/",
+    "copy:assets": "cp -r docs public/",
     "build:static": "npm run generate:metadata && npm run generate:articles && npm run generate:home && npm run generate:sitemap && npm run copy:assets",
     "validate": "node scripts/validate-build.js",
     "build": "npm run build:static && npm run validate",
