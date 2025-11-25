@@ -125,15 +125,16 @@ function getAllFileMetadata() {
   const files = fs.readdirSync(docsPath).filter(f => f.endsWith('.md'));
   
   for (const file of files) {
-    if (cache[file] && cache[file].metadata) {
+    const fileName = file.replace('.md', '.html');
+    if (cache[fileName] && cache[fileName].metadata) {
       // Use cached metadata
       metadataArray.push({
-        fileName: file,
-        ...cache[file].metadata
+        fileName,
+        ...cache[fileName].metadata
       });
     } else {
       // File hasn't been built yet, it will be processed
-      console.warn(`⚠️  No cache found for ${file}, it needs to be processed first`);
+      console.warn(`⚠️  No cache found for ${fileName}, it needs to be processed first`);
     }
   }
   
