@@ -1,37 +1,14 @@
 [build]
   command = "npm run build"
-  functions = "netlify/functions"
   publish = "public"
 
-[functions]
-  node_bundler = "esbuild"
-
-# Serve static files first, functions as fallback
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
-
-# Articles: try static HTML first, then markdown via function
+# Serve static files only
 [[redirects]]
   from = "/articles/:slug"
   to = "/articles/:slug.html"
   status = 200
-  force = false
 
-[[redirects]]
-  from = "/articles/*"
-  to = "/.netlify/functions/articles"
-  status = 200
-
-# Home page: serve static first
 [[redirects]]
   from = "/"
   to = "/index.html"
-  status = 200
-  force = false
-
-[[redirects]]
-  from = "/"
-  to = "/.netlify/functions/home"
   status = 200
