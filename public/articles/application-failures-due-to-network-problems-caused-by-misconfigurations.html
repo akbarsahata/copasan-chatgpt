@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Here are documented cases of application failures due to network problems caused by misconfigurations, along with references for each of cases for fur...">
+  <meta property="og:title" content="Application Failures Due to Network Problems Caused by Misconfigurations">
+  <meta property="og:description" content="Here are documented cases of application failures due to network problems caused by misconfigurations, along with references for each of cases for fur...">
+  <meta property="og:image" content="https://images.pexels.com/photos/3747132/pexels-photo-3747132.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1">
+  <meta property="og:url" content="https://blog.akbarsahata.id/articles/application-failures-due-to-network-problems-caused-by-misconfigurations.md">
+  <meta property="og:type" content="article">
+  <title>Application Failures Due to Network Problems Caused by Misconfigurations</title>
+  <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+  <link href="/styles/article.css" rel="stylesheet">
+</head>
+<body>
+  <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
+  <h1>Application Failures Due to Network Problems Caused by Misconfigurations</h1>
+<hr>
+<p><img src="https://images.pexels.com/photos/3747132/pexels-photo-3747132.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1" alt="error-app"></p>
+<hr>
+<p>Here are documented cases of application failures due to network problems caused by misconfigurations, along with references for each of cases for further information:</p>
+<h3>1. <strong>Facebook Outage on October 4, 2021</strong></h3>
+<p><strong>Description:</strong><br>Facebook, along with its services Instagram and WhatsApp, experienced a global outage lasting nearly six hours. The issue was caused by a misconfiguration during routine maintenance that led to the withdrawal of Facebook&#39;s Border Gateway Protocol (BGP) routes. This misconfiguration effectively disconnected Facebook&#39;s data centers from the internet.</p>
+<p><strong>References:</strong></p>
+<ul>
+<li><p><strong>Facebook Engineering Blog:</strong><br><a href="https://engineering.fb.com/2021/10/05/networking-traffic/outage/">Our engineering team&#39;s view of the October 4th outage</a></p>
+</li>
+<li><p><strong>BBC News Article:</strong><br><a href="https://www.bbc.com/news/technology-58793174">Facebook, Instagram, WhatsApp go down</a></p>
+</li>
+</ul>
+<hr>
+<h3>2. <strong>Fastly Outage on June 8, 2021</strong></h3>
+<p><strong>Description:</strong><br>Fastly, a major content delivery network (CDN) provider, experienced a global outage that took down numerous high-traffic websites, including Amazon, Reddit, and The New York Times. The outage was triggered by a software bug that was activated by a valid customer configuration change, highlighting how a misconfiguration can have widespread effects.</p>
+<p><strong>References:</strong></p>
+<ul>
+<li><strong>Fastly Blog Post:</strong><br><a href="https://www.fastly.com/blog/summary-of-june-8-outage">Summary of June 8 outage</a></li>
+</ul>
+<hr>
+<h3>3. <strong>Cloudflare Outage on July 2, 2019</strong></h3>
+<p><strong>Description:</strong><br>Cloudflare suffered a significant outage due to a misconfigured firewall rule that was deployed during a software update. The misconfiguration caused CPU exhaustion on their servers, leading to widespread service disruptions for websites and applications using Cloudflare&#39;s services.</p>
+<p><strong>References:</strong></p>
+<ul>
+<li><strong>Cloudflare Blog Post:</strong><br><a href="https://blog.cloudflare.com/cloudflare-outage/">Cloudflare outage caused by bad software deploy (updated)</a></li>
+</ul>
+<hr>
+<h3>4. <strong>Google Cloud Networking Issue on November 16, 2021</strong></h3>
+<p><strong>Description:</strong><br>Google Cloud Platform experienced a major network outage due to a misconfiguration in their network management system. This led to significant latency and connectivity issues, affecting applications and services relying on GCP, such as Spotify, Discord, and Snap.</p>
+<p><strong>References:</strong></p>
+<ul>
+<li><strong>Google Cloud Status Dashboard:</strong><br><a href="https://status.cloud.google.com/incidents/6PM5mNd43NbMqjCZ5REh">Google Cloud Networking Incident #21013</a></li>
+</ul>
+<hr>
+<h3>5. <strong>Verizon BGP Misconfiguration on June 24, 2019</strong></h3>
+<p><strong>Description:</strong><br>A network misconfiguration at Verizon led to a Border Gateway Protocol (BGP) route leak, causing internet outages and service disruptions across multiple platforms, including Cloudflare and Amazon. The misconfiguration involved incorrect routing announcements that propagated across the internet.</p>
+<p><strong>References:</strong></p>
+<ul>
+<li><strong>Cloudflare Blog Post:</strong><br><a href="https://blog.cloudflare.com/how-verizon-and-a-bgp-optimizer-knocked-large-parts-of-the-internet-offline-today/">How Verizon and a BGP Optimizer Knocked Large Parts of the Internet Offline Today</a></li>
+</ul>
+<hr>
+<h3>6. <strong>Microsoft Azure DNS Outage on April 1, 2021</strong></h3>
+<p><strong>Description:</strong><br>A misconfiguration in Microsoft&#39;s Azure DNS service led to a global outage, affecting multiple Microsoft services such as Teams, Xbox Live, and Office 365. The issue was caused by an error in the DNS update automation process, which resulted in DNS queries failing.</p>
+<p><strong>References:</strong></p>
+<ul>
+<li><strong>Microsoft Azure Status History:</strong><br><a href="https://status.azure.com/en-us/status/history/">Summary of Impact for Azure DNS Outage</a></li>
+</ul>
+<hr>
+<h3>7. <strong>AWS S3 Outage on February 28, 2017</strong></h3>
+<p><strong>Description:</strong><br>Amazon Web Services experienced a significant outage in its S3 storage service in the US-EAST-1 region. The outage was caused by a misconfiguration during a debugging session; an incorrect command was executed that inadvertently removed a larger set of servers than intended, disrupting various internet services.</p>
+<p><strong>References:</strong></p>
+<ul>
+<li><strong>AWS Summary Report:</strong><br><a href="https://aws.amazon.com/message/41926/">Summary of the Amazon S3 Service Disruption in the Northern Virginia (US-EAST-1) Region</a></li>
+</ul>
+<hr>
+<h3>8. <strong>GitLab.com Database Incident on January 31, 2017</strong></h3>
+<p><strong>Description:</strong><br>GitLab.com suffered a major outage when a misconfigured backup procedure led to the accidental deletion of the primary database. Although not a network misconfiguration, it underscores the impact that configuration errors can have on application availability.</p>
+<p><strong>References:</strong></p>
+<ul>
+<li><strong>GitLab Blog Post:</strong><br><a href="https://about.gitlab.com/blog/2017/02/01/gitlab-dot-com-database-incident/">Post-Incident Review: GitLab.com Database Incident</a></li>
+</ul>
+<hr>
+<h3>9. <strong>Dyn DNS DDoS Attack on October 21, 2016</strong></h3>
+<p><strong>Description:</strong><br>A misconfiguration in IoT devices led to them being compromised and used in a massive Distributed Denial of Service (DDoS) attack against Dyn, a major DNS service provider. The attack caused widespread outages for major websites like Twitter, Reddit, and Netflix.</p>
+<p><strong>References:</strong></p>
+<ul>
+<li><strong>KrebsOnSecurity Article:</strong><br><a href="https://krebsonsecurity.com/2016/10/ddos-on-dyn-impacts-twitter-spotify-reddit/">DDoS on Dyn Impacts Twitter, Spotify, Reddit</a></li>
+</ul>
+<hr>
+<p>These incidents highlight the critical importance of proper network configuration and the far-reaching consequences that misconfigurations can have on application availability and internet infrastructure. For a deeper dive into the technical aspects and prevention strategies, you might also consider reviewing scientific papers and industry reports on network reliability and configuration management.</p>
+
+  <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+  <div class="share-buttons">
+    <button class="share-button" onclick="shareToFacebook()">F</button>
+    <button class="share-button" onclick="shareToTwitter()">X</button>
+    <button class="share-button" onclick="shareToWhatsApp()">W</button>
+    <button class="share-button" onclick="copyLink()">C</button>
+  </div>
+  <div id="disqus_thread"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://blog.akbarsahata.id/articles/application-failures-due-to-network-problems-caused-by-misconfigurations.md";
+      this.page.identifier = "application-failures-due-to-network-problems-caused-by-misconfigurations.md";
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    function shareToFacebook() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/application-failures-due-to-network-problems-caused-by-misconfigurations.md");
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+    
+    function shareToTwitter() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/application-failures-due-to-network-problems-caused-by-misconfigurations.md");
+      const text = encodeURIComponent("Application Failures Due to Network Problems Caused by Misconfigurations");
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    function shareToWhatsApp() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/application-failures-due-to-network-problems-caused-by-misconfigurations.md");
+      window.open(`https://wa.me/?text=${url}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText("https://blog.akbarsahata.id/articles/application-failures-due-to-network-problems-caused-by-misconfigurations.md").then(() => {
+        alert('Link copied to clipboard');
+      });
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>

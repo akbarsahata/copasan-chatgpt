@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pembelajaran elektronik (elearning) di Indonesia telah mengalami perkembangan pesat dalam beberapa tahun terakhir. Namun, implementasinya masih mengha...">
+  <meta property="og:title" content="Progressive Web Apps sebagai Solusi Tantangan Teknis dalam Pembelajaran Elektronik di Indonesia: Kajian Literatur Sistematis">
+  <meta property="og:description" content="Pembelajaran elektronik (elearning) di Indonesia telah mengalami perkembangan pesat dalam beberapa tahun terakhir. Namun, implementasinya masih mengha...">
+  <meta property="og:image" content="/image.webp">
+  <meta property="og:url" content="https://blog.akbarsahata.id/articles/progressive-web-apps-sebagai-solusi-tantangan-teknis-dalam-pembelajaran-elektronik-di-indonesia-kajian-literatur-sistematis.md">
+  <meta property="og:type" content="article">
+  <title>Progressive Web Apps sebagai Solusi Tantangan Teknis dalam Pembelajaran Elektronik di Indonesia: Kajian Literatur Sistematis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+  <link href="/styles/article.css" rel="stylesheet">
+</head>
+<body>
+  <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
+  <h1>Progressive Web Apps sebagai Solusi Tantangan Teknis dalam Pembelajaran Elektronik di Indonesia: Kajian Literatur Sistematis</h1>
+<p>Pembelajaran elektronik (e-learning) di Indonesia telah mengalami perkembangan pesat dalam beberapa tahun terakhir. Namun, implementasinya masih menghadapi berbagai tantangan teknis, seperti keterbatasan infrastruktur jaringan internet, keterbatasan perangkat keras yang digunakan oleh siswa dan tenaga pengajar, serta keterbatasan aplikasi berbasis web tradisional yang bergantung pada koneksi internet yang stabil</p>
+<h2><strong>Abstrak</strong></h2>
+<p><strong>Latar Belakang:</strong> Pembelajaran elektronik (e-learning) di Indonesia telah mengalami perkembangan pesat dalam beberapa tahun terakhir. Namun, implementasinya masih menghadapi berbagai tantangan teknis, seperti keterbatasan infrastruktur jaringan internet, keterbatasan perangkat keras yang digunakan oleh siswa dan tenaga pengajar, serta keterbatasan aplikasi berbasis web tradisional yang bergantung pada koneksi internet yang stabil. Dalam menghadapi tantangan ini, <strong>Progressive Web Apps (PWA)</strong> muncul sebagai solusi potensial yang menawarkan fitur seperti <strong>kemampuan offline, caching yang efisien, serta konsumsi sumber daya yang lebih rendah dibandingkan aplikasi web tradisional</strong>.  </p>
+<p><strong>Tujuan:</strong> Penelitian ini bertujuan untuk <strong>melakukan kajian sistematis terhadap PWA dalam konteks pembelajaran daring di Indonesia</strong>, dengan fokus pada tiga aspek utama:  </p>
+<ol>
+<li><strong>Mengidentifikasi permasalahan teknis utama dalam penyelenggaraan e-learning di Indonesia.</strong>  </li>
+<li><strong>Menganalisis sejauh mana PWA dapat menjadi solusi untuk mengatasi tantangan tersebut.</strong>  </li>
+<li><strong>Membandingkan PWA dengan solusi teknologi lain yang telah diterapkan dalam LMS berbasis web.</strong></li>
+</ol>
+<p><strong>Metode:</strong> Kajian ini dilakukan menggunakan <strong>Systematic Literature Review (SLR)</strong> berdasarkan berbagai publikasi ilmiah dari database bereputasi seperti <strong>IEEE Xplore, Springer Nature, ACM Digital Library, dan Garuda</strong>. Artikel yang digunakan dalam studi ini dipilih berdasarkan <strong>kriteria inklusi dan eksklusi yang ketat</strong>, dengan fokus pada penelitian yang membahas <strong>implementasi teknis PWA, tantangan infrastruktur pembelajaran daring, serta solusi teknologi alternatif dalam e-learning</strong>. Evaluasi literatur dilakukan dengan pendekatan tematik, mengelompokkan temuan ke dalam tiga kategori utama: <strong>masalah teknis pembelajaran daring, peran PWA dalam e-learning, dan solusi teknologi alternatif yang tersedia</strong>.  </p>
+<p><strong>Hasil:</strong> Hasil kajian menunjukkan bahwa <strong>PWA memiliki keunggulan signifikan dibandingkan LMS berbasis web tradisional</strong>, terutama dalam <strong>kecepatan muat halaman, efisiensi penggunaan bandwidth, serta kemampuannya untuk tetap berfungsi dalam kondisi jaringan terbatas melalui caching</strong>. Selain itu, PWA memiliki keunggulan dalam <strong>penggunaan sumber daya yang lebih efisien</strong>, sehingga cocok untuk digunakan di perangkat dengan spesifikasi rendah. Namun, kajian ini juga mengidentifikasi <strong>gap penelitian</strong> yang masih perlu diatasi, termasuk <strong>kurangnya studi empiris yang mengevaluasi performa PWA dalam kondisi jaringan ekstrem, minimnya studi komparatif antara PWA dan LMS berbasis teknologi lain, serta kurangnya implementasi di wilayah dengan infrastruktur terbatas</strong>.  </p>
+<p><strong>Kesimpulan:</strong> Berdasarkan hasil kajian literatur, PWA berpotensi menjadi solusi teknis yang efisien untuk mengatasi berbagai permasalahan pembelajaran daring di Indonesia. Namun, untuk memastikan efektivitasnya, diperlukan studi lebih lanjut dalam bentuk <strong>evaluasi empiris terhadap kinerja PWA dalam LMS, pengujian komprehensif terkait efisiensi konsumsi energi, serta analisis keandalan sistem dalam skenario penggunaan skala besar</strong>. Dengan demikian, penelitian ini memberikan rekomendasi bagi pengembang LMS dan institusi pendidikan untuk mempertimbangkan implementasi PWA sebagai bagian dari strategi peningkatan kualitas e-learning di Indonesia.  </p>
+<p><strong>Kata Kunci:</strong> Progressive Web Apps, LMS, Pembelajaran Elektronik, Tantangan Teknis, Infrastruktur, Evaluasi Kinerja.  </p>
+<hr>
+<h2><strong>1. Pendahuluan</strong></h2>
+<h3><strong>1.1 Latar Belakang</strong></h3>
+<p>Pembelajaran elektronik (e-learning) telah menjadi bagian integral dari sistem pendidikan di Indonesia, terutama sejak meningkatnya kebutuhan akan pendidikan jarak jauh. Kemajuan teknologi informasi dan komunikasi telah memungkinkan akses terhadap berbagai platform pembelajaran daring, seperti <strong>Learning Management System (LMS)</strong> berbasis web. Namun, meskipun e-learning memberikan fleksibilitas dalam pembelajaran, implementasinya di Indonesia masih menghadapi berbagai tantangan teknis dan infrastruktur.  </p>
+<p>Beberapa penelitian menunjukkan bahwa <strong>keterbatasan infrastruktur jaringan internet</strong> menjadi hambatan utama dalam penyelenggaraan pembelajaran daring di Indonesia. Banyak daerah, terutama di wilayah pedesaan dan terpencil, mengalami <strong>akses internet yang terbatas atau tidak stabil</strong>, yang berdampak pada efektivitas pembelajaran daring. Selain itu, keterbatasan <strong>perangkat dan fasilitas pendukung</strong> juga menjadi kendala yang signifikan, di mana banyak siswa dan pendidik masih menggunakan perangkat dengan spesifikasi rendah yang kurang mendukung aplikasi pembelajaran berbasis web.  </p>
+<p>Selain masalah infrastruktur, aplikasi pembelajaran berbasis web tradisional juga memiliki <strong>keterbatasan teknis</strong>, seperti performa yang lambat, ketergantungan penuh pada koneksi internet, serta konsumsi data yang tinggi. Dalam konteks ini, <strong>Progressive Web Apps (PWA)</strong> muncul sebagai alternatif solusi yang menjanjikan karena menawarkan pengalaman pengguna yang lebih cepat, efisiensi sumber daya, serta kemampuan offline melalui mekanisme caching berbasis <strong>Service Worker</strong>.  </p>
+<h3><strong>1.2 Motivasi Penelitian</strong></h3>
+<p>Mengingat tantangan teknis yang dihadapi dalam pembelajaran daring di Indonesia, diperlukan solusi teknologi yang dapat meningkatkan <strong>aksesibilitas, performa, dan efisiensi dalam penggunaan sumber daya</strong>. <strong>Progressive Web Apps (PWA)</strong> menjadi pendekatan yang potensial dalam mengatasi permasalahan ini, karena PWA dapat <strong>berfungsi secara offline, mengurangi konsumsi bandwidth, serta diakses dengan lancar pada perangkat dengan spesifikasi rendah</strong>.  </p>
+<p>Beberapa studi menunjukkan bahwa PWA telah berhasil diterapkan dalam berbagai sektor, termasuk dalam <strong>sistem pembelajaran daring</strong>. Namun, masih terdapat <strong>kekurangan studi sistematis yang menganalisis sejauh mana PWA dapat menjadi solusi teknis dalam konteks pembelajaran elektronik di Indonesia</strong>. Oleh karena itu, penelitian ini bertujuan untuk mengisi kesenjangan penelitian dengan mengevaluasi peran PWA dalam menghadapi tantangan teknis LMS berbasis web.  </p>
+<h3><strong>1.3 Tujuan Penelitian</strong></h3>
+<p>Penelitian ini bertujuan untuk:  </p>
+<ol>
+<li><strong>Mengidentifikasi permasalahan teknis dan infrastruktur utama dalam penyelenggaraan pembelajaran elektronik di Indonesia.</strong>  </li>
+<li><strong>Menganalisis sejauh mana PWA dapat menjadi solusi dalam mengatasi tantangan teknis pembelajaran daring.</strong>  </li>
+<li><strong>Membandingkan efektivitas PWA dengan solusi teknologi lain yang telah digunakan dalam sistem pembelajaran daring.</strong></li>
+</ol>
+<h3><strong>1.4 Pertanyaan Penelitian</strong></h3>
+<p>Berdasarkan tujuan yang telah dirumuskan, penelitian ini difokuskan untuk menjawab pertanyaan berikut:  </p>
+<ol>
+<li><strong>Apa saja masalah teknis dan infrastruktur yang dihadapi dalam penyelenggaraan pembelajaran elektronik di Indonesia?</strong>  </li>
+<li><strong>Bagaimana PWA dapat membantu mengatasi tantangan teknis tersebut?</strong>  </li>
+<li><strong>Apa saja solusi teknologi alternatif selain PWA dalam konteks pembelajaran daring?</strong></li>
+</ol>
+<hr>
+<h2><strong>2. Metodologi Penelitian</strong></h2>
+<h3><strong>2.1 Pendekatan Penelitian</strong></h3>
+<p>Penelitian ini menggunakan pendekatan <strong>Systematic Literature Review (SLR)</strong> untuk menganalisis bagaimana <strong>Progressive Web Apps (PWA) dapat menjadi solusi terhadap tantangan teknis dalam pembelajaran elektronik di Indonesia</strong>. SLR dipilih karena memungkinkan <strong>pengumpulan, evaluasi, dan sintesis studi yang telah dilakukan sebelumnya</strong> guna memahami <strong>tren, tantangan, serta peluang dalam implementasi PWA dalam sistem pembelajaran daring</strong>.  </p>
+<p>Proses SLR dalam penelitian ini mengacu pada metodologi yang diadaptasi dari Kitchenham &amp; Charters (2007), yang terdiri dari beberapa tahap utama:  </p>
+<ol>
+<li><strong>Identifikasi sumber literatur</strong>  </li>
+<li><strong>Penerapan kriteria inklusi dan eksklusi</strong>  </li>
+<li><strong>Seleksi dan analisis literatur</strong>  </li>
+<li><strong>Sintesis temuan utama</strong></li>
+</ol>
+<h3><strong>2.2 Sumber Data dan Database yang Digunakan</strong></h3>
+<p>Artikel yang digunakan dalam penelitian ini diperoleh dari <strong>database ilmiah bereputasi</strong>, yaitu:  </p>
+<ul>
+<li><strong>IEEE Xplore</strong>  </li>
+<li><strong>Springer Nature</strong>  </li>
+<li><strong>ACM Digital Library</strong>  </li>
+<li><strong>Garuda (Garba Rujukan Digital)</strong> – digunakan untuk mencari <strong>artikel terkait tantangan pembelajaran jarak jauh (PJJ) di Indonesia</strong> serta beberapa studi tentang PWA.</li>
+</ul>
+<p>Database ini dipilih untuk memastikan bahwa <strong>studi yang digunakan memiliki standar akademik yang tinggi serta mencakup sumber yang relevan dengan konteks penelitian ini</strong>.  </p>
+<h3><strong>2.3 Kriteria Inklusi dan Eksklusi</strong></h3>
+<p>Untuk memastikan bahwa artikel yang dikaji sesuai dengan ruang lingkup penelitian ini, diterapkan <strong>kriteria inklusi dan eksklusi</strong> sebagai berikut:  </p>
+<h4><strong>2.3.1 Kriteria Inklusi</strong>:</h4>
+<ul>
+<li>Studi yang membahas <strong>implementasi PWA di wilayah dengan akses internet terbatas</strong>.  </li>
+<li>Artikel yang menganalisis <strong>performa teknis PWA</strong>, seperti kecepatan muat halaman, efisiensi penggunaan bandwidth, dan caching.  </li>
+<li>Studi tentang <strong>usability PWA</strong>, terutama dalam konteks pembelajaran daring.  </li>
+<li>Artikel yang membahas <strong>Service Worker dalam PWA</strong>, yang menjadi komponen kunci dalam efisiensi caching dan mode offline.</li>
+</ul>
+<h4><strong>2.3.2 Kriteria Eksklusi</strong>:</h4>
+<ul>
+<li>Studi tentang implementasi PWA dalam <strong>sektor industri lain</strong>, seperti <strong>e-commerce, kesehatan, atau bisnis</strong>, yang tidak berkaitan dengan <strong>pendidikan atau daerah dengan keterbatasan infrastruktur</strong>.  </li>
+<li>Artikel yang hanya membahas <strong>teori umum tentang PWA tanpa analisis teknis atau studi kasus dalam e-learning</strong>.  </li>
+<li>Studi yang diterbitkan <strong>sebelum 10 tahun terakhir</strong> untuk memastikan kesesuaian dengan perkembangan teknologi terbaru.</li>
+</ul>
+<h3><strong>2.4 Prosedur Seleksi Publikasi</strong></h3>
+<p>Setelah pencarian artikel dilakukan, proses seleksi dilakukan dengan <strong>beberapa tahapan</strong> berikut:  </p>
+<ol>
+<li><p><strong>Pencarian Awal</strong>  </p>
+<ul>
+<li>Menggunakan kata kunci seperti:  <ul>
+<li><code>&quot;Progressive Web Apps in e-learning&quot;</code>  </li>
+<li><code>&quot;PWA for low-connectivity environments&quot;</code>   </li>
+<li><code>&quot;PWA for education in Indonesia&quot;</code></li>
+</ul>
+</li>
+<li>Pencarian dilakukan dalam <strong>judul, abstrak, dan kata kunci</strong> dari setiap database yang digunakan.</li>
+</ul>
+</li>
+<li><p><strong>Penyaringan Berdasarkan Kriteria</strong>  </p>
+<ul>
+<li>Artikel yang ditemukan melalui pencarian awal akan disaring berdasarkan <strong>kriteria inklusi dan eksklusi</strong>.  </li>
+<li>Studi yang tidak relevan dengan <strong>konteks pendidikan dan daerah dengan keterbatasan akses</strong> akan dihapus dari daftar.</li>
+</ul>
+</li>
+<li><p><strong>Evaluasi Kualitas dan Relevansi</strong>  </p>
+<ul>
+<li>Artikel yang lolos penyaringan akan <strong>dievaluasi lebih lanjut</strong> berdasarkan relevansi dengan <strong>topik utama penelitian ini</strong>.  </li>
+<li>Artikel yang memiliki <strong>data teknis yang kurang lengkap atau tidak menyediakan informasi mendalam tentang performa PWA</strong> akan dieliminasi.</li>
+</ul>
+</li>
+<li><p><strong>Ekstraksi dan Analisis Data</strong>  </p>
+<ul>
+<li>Artikel yang memenuhi semua kriteria akan dianalisis dan dikategorikan berdasarkan <strong>tiga aspek utama dalam penelitian ini</strong>:  <ol>
+<li><strong>Masalah teknis dalam pembelajaran daring</strong>  </li>
+<li><strong>Peran PWA dalam mengatasi tantangan tersebut</strong>  </li>
+<li><strong>Alternatif solusi teknologi lainnya</strong></li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><strong>Sintesis Temuan</strong>  </p>
+<ul>
+<li>Setelah semua data dikumpulkan dan dikategorikan, penelitian ini akan <strong>mensintesis temuan utama dari setiap artikel</strong> untuk mendapatkan <strong>gambaran menyeluruh mengenai efektivitas PWA sebagai solusi dalam LMS berbasis web</strong>.</li>
+</ul>
+</li>
+</ol>
+<h3><strong>2.5 Batasan Metodologi</strong></h3>
+<p>Meskipun pendekatan SLR dalam penelitian ini telah dirancang secara sistematis, terdapat beberapa <strong>batasan metodologi</strong> yang perlu diperhatikan:  </p>
+<ul>
+<li><strong>Hanya artikel dalam database tertentu yang digunakan</strong>, sehingga mungkin terdapat penelitian lain di luar database tersebut yang tidak teridentifikasi.  </li>
+<li><strong>Studi empiris langsung belum dilakukan</strong>, sehingga hasil kajian ini masih bersifat sintesis dari studi-studi terdahulu.  </li>
+<li><strong>Konteks geografis penelitian sebagian besar berfokus pada Indonesia</strong>, meskipun terdapat beberapa literatur internasional yang relevan.</li>
+</ul>
+<p>Meskipun demikian, <strong>hasil analisis ini tetap memberikan wawasan penting mengenai efektivitas dan tantangan dalam penerapan PWA untuk pembelajaran daring</strong>, serta menjadi dasar bagi studi lebih lanjut yang lebih empiris dan terfokus pada implementasi nyata.  </p>
+<hr>
+<h2>3. Pembahasan &amp; Diskusi</h2>
+<h3>3.1 Masalah Teknis dan Infrastruktur dalam Penyelenggaraan Pembelajaran Elektronik di Indonesia</h3>
+<p>Dalam kajian literatur ini, ditemukan berbagai permasalahan teknis dan infrastruktur yang menjadi kendala utama dalam penyelenggaraan pembelajaran elektronik di Indonesia. Permasalahan tersebut dapat dikategorikan menjadi lima aspek utama: <strong>keterbatasan infrastruktur jaringan internet</strong>, <strong>keterbatasan perangkat dan fasilitas pendukung</strong>, <strong>masalah teknis pada aplikasi pembelajaran</strong>, <strong>keterbatasan teknologi web tradisional</strong>, serta <strong>kendala pengembangan dan pemeliharaan aplikasi</strong>.</p>
+<h4>3.1.1 Permasalahan Infrastruktur Jaringan Internet</h4>
+<p>Salah satu hambatan terbesar dalam penyelenggaraan pembelajaran daring adalah <strong>terbatasnya infrastruktur jaringan internet</strong>, terutama di daerah terpencil. Kurnia (2022) menyebutkan bahwa keterbatasan akses internet menjadi faktor utama yang menghambat efektivitas pembelajaran elektronik. Tanpa konektivitas yang memadai, siswa dan guru mengalami kesulitan dalam mengakses materi pembelajaran, menghadiri kelas daring, dan berpartisipasi dalam diskusi interaktif secara real-time.  </p>
+<p>Selain itu, Rica (2019) menambahkan bahwa lemahnya konektivitas internet, bahkan di daerah perkotaan dengan infrastruktur yang lebih baik, masih menjadi kendala utama dalam implementasi pembelajaran berbasis teknologi. Dalam konteks portal edukasi seperti <strong>Rumah Belajar</strong>, tantangan terbesar adalah ketidakstabilan jaringan yang menyebabkan siswa sulit mengakses konten pembelajaran secara berkelanjutan. Masalah ini diperparah dengan tingginya biaya akses internet bagi sebagian besar pengguna di Indonesia.  </p>
+<h4>3.1.2 Keterbatasan Perangkat dan Fasilitas Pendukung</h4>
+<p>Selain masalah konektivitas, <strong>keterbatasan perangkat dan infrastruktur teknologi</strong> juga menjadi hambatan signifikan dalam pembelajaran daring. Menurut Azzahra, Abidin, dan Wulandari (2021), banyak guru di SMA yang menghadapi kendala akibat keterbatasan perangkat yang mereka miliki. Sebagian besar guru dan siswa masih menggunakan perangkat dengan spesifikasi rendah yang kurang mendukung aplikasi pembelajaran berbasis internet.  </p>
+<p>Hal yang sama juga ditemukan dalam penelitian Hamela, Situmorang, dan Efendi (2022), yang mengungkapkan bahwa keterbatasan perangkat pendukung, seperti laptop dan tablet, menjadi tantangan utama dalam pemanfaatan Learning Management Systems (LMS). Selain perangkat, fasilitas pendukung seperti <strong>laboratorium komputer, akses listrik yang stabil, dan ruang belajar yang memadai</strong> juga menjadi faktor yang sering diabaikan dalam implementasi pembelajaran daring, terutama di sekolah-sekolah yang memiliki keterbatasan anggaran.  </p>
+<h4>3.1.3 Masalah Teknis pada Aplikasi Pembelajaran</h4>
+<p>Banyaknya platform pembelajaran daring yang digunakan di Indonesia tidak selalu berarti solusi yang mudah diakses oleh semua pengguna. Sebaliknya, beberapa penelitian menunjukkan bahwa kompleksitas teknis dari aplikasi pembelajaran justru menjadi hambatan tersendiri.  </p>
+<p>Ningsih (2024) menyoroti bahwa implementasi teknologi digital dalam pembelajaran sering kali terkendala oleh <strong>kerumitan antarmuka aplikasi</strong>, yang menyebabkan pengguna mengalami kesulitan dalam navigasi dan penggunaan fitur-fitur yang tersedia. Selain itu, beberapa platform juga mengalami <strong>masalah kompatibilitas dengan berbagai perangkat</strong>, terutama bagi pengguna yang masih menggunakan ponsel atau komputer dengan sistem operasi lama.  </p>
+<p>Masalah serupa juga disampaikan dalam penelitian lain (Rica, 2019; Azzahra et al., 2021), yang menyebutkan bahwa beberapa aplikasi pembelajaran daring memiliki <strong>kurangnya fitur aksesibilitas</strong>, seperti mode akses untuk pengguna dengan keterbatasan fisik atau pilihan mode hemat data bagi pengguna dengan koneksi terbatas. Hal ini menunjukkan bahwa masih ada celah dalam pengembangan aplikasi pembelajaran yang perlu diperbaiki untuk memastikan aksesibilitas yang lebih luas.  </p>
+<h4>3.1.4 Keterbatasan Teknologi Web Tradisional</h4>
+<p>Beberapa penelitian juga menyoroti keterbatasan aplikasi web tradisional yang masih banyak digunakan dalam pembelajaran daring. Menurut Hamela, Situmorang, dan Efendi (2022), aplikasi berbasis web yang tidak dioptimalkan sering kali menghadapi <strong>masalah performa dan latensi tinggi</strong>, terutama ketika digunakan dalam kondisi koneksi internet yang tidak stabil.  </p>
+<p>Kelemahan utama dari web tradisional adalah ketergantungannya pada <strong>koneksi internet yang terus-menerus</strong>, sehingga ketika pengguna mengalami gangguan jaringan, aplikasi menjadi tidak responsif atau bahkan tidak dapat diakses sama sekali. Ini menyebabkan pengalaman pengguna yang buruk, terutama dalam pembelajaran daring yang membutuhkan akses cepat dan tanpa hambatan ke berbagai materi pembelajaran.  </p>
+<p>Selain itu, beberapa aplikasi web tradisional masih menggunakan <strong>arsitektur lama</strong> yang tidak mendukung caching data yang efisien, sehingga tidak dapat memberikan pengalaman yang optimal dalam mode offline. Hal ini menjadi tantangan besar bagi siswa dan guru di daerah dengan infrastruktur jaringan yang tidak dapat diandalkan.  </p>
+<h4>3.1.5 Kendala Pengembangan dan Pemeliharaan Aplikasi</h4>
+<p>Selain masalah pada aplikasi yang telah digunakan, tantangan lain yang ditemukan dalam literatur adalah <strong>keterbatasan sumber daya dalam pengembangan dan pemeliharaan aplikasi pembelajaran daring</strong>. Hamela, Situmorang, dan Efendi (2022) mengungkapkan bahwa banyak institusi pendidikan, terutama di tingkat sekolah, tidak memiliki tenaga teknis yang cukup untuk menangani pembaruan dan pemeliharaan sistem pembelajaran daring mereka.  </p>
+<p>Karena keterbatasan sumber daya ini, banyak aplikasi mengalami <strong>penurunan performa seiring waktu</strong> akibat kurangnya pemeliharaan yang optimal. Dalam beberapa kasus, pengguna juga mengalami masalah dalam mendapatkan <strong>dukungan teknis</strong>, baik karena kurangnya dokumentasi yang jelas maupun terbatasnya tenaga ahli di sekolah dan universitas yang dapat membantu menyelesaikan kendala teknis yang mereka hadapi.  </p>
+<p>Kondisi ini menunjukkan bahwa tantangan dalam implementasi pembelajaran daring tidak hanya berkaitan dengan infrastruktur jaringan dan perangkat keras, tetapi juga melibatkan aspek pemeliharaan jangka panjang dari sistem yang digunakan.  </p>
+<h3><strong>3.2 Progressive Web Apps (PWA) dalam Konteks Pembelajaran Elektronik</strong></h3>
+<p>Literatur dalam kajian ini secara khusus membahas bagaimana <strong>Progressive Web Apps (PWA)</strong> digunakan untuk mengatasi permasalahan teknis dan infrastruktur dalam penyelenggaraan pembelajaran elektronik. Sejumlah penelitian menunjukkan bahwa PWA menawarkan berbagai keunggulan dalam hal <strong>aksesibilitas, efisiensi, dan pengalaman pengguna</strong>, yang menjadikannya solusi potensial bagi pembelajaran elektronik, terutama di wilayah dengan keterbatasan infrastruktur digital.</p>
+<h4><strong>3.2.1 Kemampuan PWA dalam Mengatasi Kendala Konektivitas dan Mode Offline</strong></h4>
+<p>Salah satu permasalahan utama dalam implementasi pembelajaran elektronik di Indonesia adalah <strong>keterbatasan akses internet yang stabil dan andal</strong>, terutama di daerah terpencil. Sejumlah penelitian menegaskan bahwa PWA dapat menjadi solusi efektif untuk mengatasi masalah ini melalui <strong>fitur caching</strong> yang memungkinkan aplikasi tetap dapat diakses meskipun tanpa koneksi internet (Roumeliotis &amp; Tselikas, 2022; Correia et al., 2021).<br>Teknologi <strong>Service Worker</strong> dalam PWA memainkan peran penting dalam memungkinkan aplikasi <strong>beroperasi secara offline</strong>, dengan menyimpan sumber daya aplikasi secara lokal. Fitur ini memastikan bahwa konten pembelajaran tetap tersedia bagi pengguna meskipun koneksi internet terputus (Tahir et al., 2021). Selain itu, mekanisme <strong>sinkronisasi latar belakang (background synchronization)</strong> memungkinkan data yang dibuat saat offline secara otomatis dikirim ke server begitu koneksi kembali tersedia, menjaga kesinambungan proses pembelajaran daring (Josephe et al., 2023).<br>Beberapa penelitian bahkan mengusulkan <strong>jalur komunikasi alternatif</strong> seperti pengiriman data melalui SMS dalam kondisi tanpa koneksi internet sama sekali, yang dapat menjadi solusi inovatif bagi pembelajaran di daerah dengan infrastruktur jaringan yang sangat terbatas (Josephe et al., 2023).</p>
+<h4><strong>3.2.2 Efisiensi dan Kinerja PWA dalam Pembelajaran Elektronik</strong></h4>
+<p>Sejumlah studi mengungkapkan bahwa <strong>PWA menawarkan peningkatan performa dibandingkan aplikasi web tradisional</strong>, terutama dalam aspek <strong>waktu muat (loading time), latensi, dan throughput</strong> (Tahir et al., 2021; Pande et al., 2018).<br>Caching yang lebih efisien dalam PWA memungkinkan pengurangan lalu lintas data hingga <strong>25%</strong>, menjadikannya solusi yang lebih ringan dibandingkan aplikasi web konvensional dalam kondisi jaringan yang lemah (Pande et al., 2018; Correia et al., 2021).<br>Selain itu, penelitian lain menyoroti bahwa <strong>efisiensi PWA juga terkait dengan konsumsi energi perangkat pengguna</strong>. Meskipun fitur caching meningkatkan performa aplikasi, terdapat hubungan antara <strong>peningkatan cache dan konsumsi energi perangkat</strong>, yang dapat menjadi faktor penting dalam implementasi PWA untuk pembelajaran elektronik di perangkat dengan spesifikasi rendah (Malavolta et al., 2020; Kurniawan et al., 2022).</p>
+<h4><strong>3.2.3 Kemudahan Implementasi dan Keunggulan PWA dibandingkan Aplikasi Native</strong></h4>
+<p>Salah satu keunggulan utama PWA adalah kemudahannya dalam <strong>distribusi dan instalasi</strong>, karena aplikasi dapat diakses langsung melalui browser tanpa perlu diunduh dari toko aplikasi seperti Google Play Store atau Apple App Store (Cuenca-Enrique et al., 2024; Behl &amp; Raj, 2018).<br>Dibandingkan dengan aplikasi native, <strong>PWA memiliki biaya pengembangan yang lebih rendah, lebih mudah diperbarui, serta lebih ringan dalam penggunaan sumber daya perangkat</strong> (Huber et al., 2021).<br>Studi menunjukkan bahwa implementasi PWA menggunakan <strong>framework seperti Angular dan pemanfaatan Service Worker</strong> dapat meningkatkan performa aplikasi secara signifikan, mendekati pengalaman aplikasi native (Tahir et al., 2021). Hal ini menjadikan PWA sebagai alternatif yang menarik untuk pengembangan sistem pembelajaran elektronik yang <strong>fleksibel, hemat biaya, dan tidak bergantung pada ekosistem aplikasi tertentu</strong>.</p>
+<h4><strong>3.2.4 Dampak PWA terhadap Pengalaman dan Aksesibilitas Pengguna</strong></h4>
+<p>PWA juga membawa dampak positif terhadap <strong>pengalaman dan aksesibilitas pengguna dalam pembelajaran elektronik</strong>. Studi menunjukkan bahwa <strong>fitur push notifications</strong> dalam PWA dapat meningkatkan keterlibatan pengguna, memungkinkan interaksi yang lebih aktif dalam proses pembelajaran daring (Jeong &amp; Hur, 2022).<br>Selain itu, PWA dinilai <strong>lebih aksesibel dibandingkan aplikasi web konvensional</strong>, terutama bagi pengguna dengan disabilitas. Namun, masih diperlukan <strong>audit aksesibilitas secara berkala</strong> agar aplikasi PWA benar-benar sesuai dengan standar WCAG (Web Content Accessibility Guidelines) dan dapat diakses secara optimal oleh semua kelompok pengguna (Roumeliotis &amp; Tselikas, 2022).<br>Sebagai bukti keberhasilan implementasi, sebuah studi kasus di komunitas pedesaan <strong>Ngäbe Buglé, Panama</strong> menunjukkan bahwa penggunaan PWA dapat meningkatkan akses pendidikan secara signifikan di daerah dengan keterbatasan infrastruktur teknologi, yang dapat menjadi referensi bagi daerah pedesaan di Indonesia (Cuenca-Enrique et al., 2024).</p>
+<h4><strong>3.2.5 Keamanan dan Tantangan Implementasi PWA</strong></h4>
+<p>Meskipun memiliki banyak keunggulan, beberapa penelitian menyoroti <strong>potensi risiko keamanan dalam implementasi PWA</strong>. Penggunaan <strong>Service Worker</strong> memungkinkan fitur seperti push notifications dan caching, tetapi juga membuka peluang eksploitasi untuk serangan <strong>phishing, penyadapan informasi lokasi, serta penyalahgunaan cache untuk script injection dan mining cryptocurrency</strong> (Jeong &amp; Hur, 2022).<br>Oleh karena itu, pengembang yang menerapkan PWA untuk pembelajaran elektronik harus memperhatikan aspek <strong>keamanan aplikasi</strong>, termasuk perlindungan terhadap serangan siber yang dapat merugikan pengguna.</p>
+<h4><strong>3.2.6 Gap Penelitian yang Ditemukan</strong></h4>
+<p>Meskipun penelitian sebelumnya telah mengidentifikasi <strong>keunggulan arsitektural dan fungsional PWA</strong>, masih terdapat <strong>gap dalam evaluasi teknis yang lebih mendalam</strong>, terutama dalam konteks rekayasa perangkat lunak untuk pendidikan daring di daerah dengan akses terbatas. Sebagian besar literatur lebih menyoroti aspek konseptual dan manfaat umum PWA (Roumeliotis &amp; Tselikas, 2022; Correia et al., 2021), tetapi belum banyak studi yang <strong>mengukur performa PWA secara empiris dalam kondisi infrastruktur terbatas</strong>, termasuk dalam aspek <strong>efisiensi caching, latensi jaringan, dan manajemen sumber daya perangkat dengan spesifikasi rendah</strong>. Meskipun Service Worker telah diidentifikasi sebagai komponen utama yang memungkinkan mode offline (Tahir et al., 2021), penelitian yang mengeksplorasi <strong>strategi optimasi caching untuk konten pembelajaran interaktif seperti video atau simulasi berbasis web</strong> masih terbatas. Padahal, dalam konteks pembelajaran daring, strategi caching yang efisien dapat berkontribusi pada <strong>pengurangan beban jaringan serta peningkatan pengalaman pengguna</strong>, terutama di wilayah dengan keterbatasan infrastruktur (Correia et al., 2021).  </p>
+<p>Selain performa teknis, <strong>evaluasi komparatif terhadap efisiensi konsumsi energi antara PWA dan aplikasi native dalam pembelajaran elektronik</strong> masih kurang mendapat perhatian. Studi sebelumnya menunjukkan bahwa <strong>implementasi caching dalam PWA berpotensi meningkatkan konsumsi daya perangkat pengguna</strong>, meskipun tetap lebih efisien dibandingkan beberapa teknologi aplikasi lintas platform lainnya seperti React Native dan Flutter (Huber et al., 2021). Namun, penelitian lebih lanjut diperlukan untuk <strong>mengidentifikasi bagaimana desain arsitektur PWA dapat dioptimalkan guna mengurangi konsumsi energi</strong>, terutama untuk perangkat dengan <strong>spesifikasi rendah yang sering digunakan di daerah dengan keterbatasan daya dan konektivitas</strong> (Kurniawan et al., 2022). Dalam rekayasa perangkat lunak, optimalisasi konsumsi daya sangat penting untuk memastikan bahwa aplikasi dapat berjalan secara efisien tanpa membebani prosesor atau baterai pengguna, khususnya di lingkungan dengan keterbatasan infrastruktur digital.</p>
+<p>Aspek lain yang masih kurang dieksplorasi adalah <strong>keamanan arsitektur PWA dalam lingkungan pembelajaran daring</strong>. Beberapa penelitian telah mengidentifikasi potensi risiko keamanan, seperti <strong>serangan melalui push notifications, eksploitasi caching untuk menyisipkan skrip berbahaya, serta penyalahgunaan sinkronisasi latar belakang untuk mengakses data pengguna secara tidak sah</strong> (Jeong &amp; Hur, 2022). Namun, belum banyak studi yang secara spesifik membahas <strong>model mitigasi risiko untuk PWA dalam sistem pendidikan berbasis cloud</strong>. Dalam rekayasa perangkat lunak, diperlukan <strong>strategi keamanan berbasis enkripsi, otentikasi multi-faktor, serta mekanisme deteksi anomali dalam Service Worker</strong> guna memastikan bahwa PWA tetap aman digunakan dalam ekosistem pembelajaran daring (Jeong &amp; Hur, 2022). Oleh karena itu, penelitian lebih lanjut diperlukan dalam aspek <strong>performa, efisiensi sumber daya, dan keamanan PWA</strong>, guna memastikan bahwa teknologi ini dapat diterapkan secara optimal sebagai solusi pembelajaran daring yang berkelanjutan, terutama dalam kondisi infrastruktur yang terbatas.</p>
+<h3>3.3 Alternatif Solusi Teknologi untuk Penyampaian Pembelajaran Elektronik</h3>
+<p>Selain penggunaan Progressive Web Apps (PWA), literatur juga mengidentifikasi berbagai alternatif solusi teknologi yang digunakan dalam penyampaian pembelajaran elektronik.</p>
+<h4>3.3.1 Learning Management System (LMS) Tradisional</h4>
+<p>Beberapa referensi mengkaji penggunaan Learning Management System (LMS) sebagai solusi utama dalam penyelenggaraan pembelajaran elektronik. LMS seperti Moodle, Google Classroom, dan Edmodo banyak digunakan karena memiliki fitur lengkap yang mendukung interaksi guru-siswa secara terstruktur. Hamela, Situmorang, dan Efendi (2022) menekankan bahwa LMS memberikan manfaat dalam pengelolaan kelas daring secara efisien, termasuk dalam pengelolaan tugas, ujian, dan komunikasi antara guru serta siswa. Namun, LMS juga memiliki keterbatasan, terutama dalam hal kebutuhan konektivitas internet yang stabil dan ketergantungan pada infrastruktur teknologi yang memadai (Ningsih, 2024).</p>
+<h4>3.3.2 Aplikasi Mobile Native</h4>
+<p>Referensi lainnya menyoroti penggunaan aplikasi mobile native sebagai alternatif yang umum digunakan, khususnya di daerah dengan akses internet yang lebih stabil. Aplikasi mobile native, yang dikembangkan secara khusus untuk platform Android atau iOS, menawarkan performa yang lebih baik dibandingkan aplikasi berbasis web. Kelebihan aplikasi native meliputi pengalaman pengguna yang lebih responsif serta optimalisasi penggunaan perangkat keras, seperti kamera dan sensor perangkat (Kurnia, 2022). Namun, pengembangan aplikasi native memerlukan biaya lebih tinggi serta proses distribusi yang lebih kompleks melalui platform seperti Google Play Store dan Apple App Store (Rica, 2019).</p>
+<h4>3.3.3 Aplikasi Hybrid dan Cross-platform</h4>
+<p>Meskipun tidak ditemukan referensi eksplisit dalam literatur yang dianalisis terkait penggunaan aplikasi hybrid atau cross-platform dalam pembelajaran elektronik, solusi ini sering kali digunakan sebagai pendekatan alternatif. Aplikasi hybrid menggabungkan keunggulan aplikasi berbasis web dan aplikasi native, dengan kelebihan dalam pengembangan yang lebih cepat serta kemudahan dalam pembaruan. Teknologi seperti Flutter dan React Native umumnya digunakan untuk memungkinkan aplikasi berjalan di berbagai sistem operasi tanpa memerlukan pengembangan terpisah untuk setiap platform.</p>
+<h4>3.3.4 Teknologi Alternatif Lainnya</h4>
+<p>Selain LMS dan aplikasi mobile native, beberapa referensi membahas alternatif teknologi lainnya dalam penyampaian pembelajaran elektronik. Contohnya, teknologi berbasis cloud yang memungkinkan penyimpanan dan akses materi secara fleksibel melalui berbagai perangkat (Ningsih, 2024). Selain itu, ada pula pendekatan berbasis Single Page Application (SPA), yang memungkinkan pengalaman aplikasi web yang lebih interaktif dengan pemuatan halaman yang lebih cepat dan efisien. Pendekatan ini dianggap sebagai solusi potensial dalam mengatasi kendala teknis yang sering dihadapi dalam pembelajaran daring (Selly Puspita Azzahra et al., 2021).</p>
+<h2><strong>4. Evaluasi Teknis Usulan untuk Progressive Web Apps dalam LMS</strong></h2>
+<p>Evaluasi teknis diperlukan untuk memastikan bahwa <strong>Progressive Web Apps (PWA) dalam Learning Management System (LMS)</strong> dapat menjadi solusi yang efektif dalam menghadapi tantangan teknis pembelajaran elektronik. Evaluasi ini berfokus pada <strong>performa, efisiensi sumber daya, dan kegunaan teknis</strong> dengan pendekatan pengujian yang berbasis pada <strong>benchmarking terhadap LMS berbasis web tradisional (Moodle berbasis web) dibandingkan dengan Moodle berbasis PWA</strong>. </p>
+<p>Pendekatan ini bertujuan untuk mengukur apakah PWA benar-benar memberikan keunggulan dalam kecepatan, keandalan, efisiensi sumber daya, serta pengalaman pengguna, terutama dalam kondisi konektivitas yang terbatas. Berikut adalah rincian metodologi yang akan digunakan dalam evaluasi ini.</p>
+<h3><strong>4.1 Evaluasi Performa (Performance Testing)</strong></h3>
+<p>Evaluasi performa bertujuan untuk mengukur <strong>seberapa cepat, responsif, dan efisien PWA dalam LMS dibandingkan dengan LMS berbasis web tradisional</strong>. Pengujian ini berfokus pada <strong>waktu muat halaman, efisiensi bandwidth, penggunaan CPU/memori, serta konsumsi energi</strong>.</p>
+<h4><strong>4.1.1 Waktu Muat Halaman (Load Time) dan Responsivitas (Response Time)</strong></h4>
+<p>Kecepatan dalam memuat halaman dan merespons interaksi pengguna merupakan faktor utama dalam menentukan kualitas pengalaman pengguna. PWA yang baik harus mampu <strong>memuat halaman dengan lebih cepat dibandingkan aplikasi berbasis web tradisional</strong>, terutama dalam kondisi jaringan yang kurang stabil.</p>
+<ul>
+<li><strong>Metode Pengujian:</strong>  <ul>
+<li>Pengukuran dilakukan menggunakan <strong>Google Lighthouse</strong>, <strong>WebPageTest</strong>, dan <strong>GTmetrix</strong> untuk menganalisis waktu muat halaman pertama dan interaktivitas aplikasi.</li>
+<li>Pembandingan dilakukan antara <strong>PWA berbasis Moodle</strong> dan <strong>Moodle berbasis web tradisional</strong>.</li>
+</ul>
+</li>
+<li><strong>Hasil yang Diharapkan:</strong>  <ul>
+<li>PWA diharapkan dapat memanfaatkan <strong>Service Worker</strong> untuk caching, sehingga mengurangi waktu muat halaman dan meningkatkan responsivitas dibandingkan LMS berbasis web tradisional.</li>
+</ul>
+</li>
+</ul>
+<h4><strong>4.1.2 Efisiensi Penggunaan Bandwidth (Data Usage)</strong></h4>
+<p>Efisiensi penggunaan bandwidth menjadi penting, terutama bagi pengguna di daerah dengan akses internet terbatas. PWA dapat mengurangi konsumsi data dengan <strong>memanfaatkan mekanisme caching yang memungkinkan data yang sudah pernah diakses tidak perlu dimuat ulang</strong>.</p>
+<ul>
+<li><strong>Metode Pengujian:</strong>  <ul>
+<li>Simulasi akses ke berbagai halaman LMS menggunakan <strong>Chrome DevTools Network Throttling</strong> dengan skenario konektivitas berbeda (<strong>Wi-Fi cepat, 4G, 3G, dan offline</strong>).</li>
+<li>Pengukuran jumlah data yang ditransfer selama sesi pembelajaran dalam setiap kondisi jaringan.</li>
+</ul>
+</li>
+<li><strong>Hasil yang Diharapkan:</strong>  <ul>
+<li>PWA diharapkan mampu menghemat bandwidth dengan <strong>mengurangi permintaan jaringan berulang</strong> melalui mekanisme caching yang optimal.</li>
+</ul>
+</li>
+</ul>
+<h4><strong>4.1.3 Penggunaan CPU dan Memori (Resource Consumption)</strong></h4>
+<p>Salah satu aspek penting dalam evaluasi performa adalah efisiensi penggunaan CPU dan memori. <strong>Aplikasi yang boros dalam penggunaan sumber daya dapat menyebabkan kinerja perangkat melambat, terutama pada perangkat dengan spesifikasi rendah</strong>.</p>
+<ul>
+<li><strong>Metode Pengujian:</strong>  <ul>
+<li>Menggunakan <strong>Chrome Task Manager</strong> untuk melihat pemanfaatan CPU dan memori selama aktivitas pembelajaran dalam LMS.</li>
+<li>Membandingkan konsumsi sumber daya antara <strong>PWA berbasis Moodle</strong> dan <strong>Moodle berbasis web tradisional</strong> saat membuka materi, mengerjakan kuis, dan mengakses konten multimedia.</li>
+</ul>
+</li>
+<li><strong>Hasil yang Diharapkan:</strong>  <ul>
+<li>PWA diharapkan memiliki penggunaan CPU dan memori yang lebih optimal dibandingkan LMS berbasis web karena <strong>memanfaatkan caching untuk mengurangi permintaan jaringan yang berat</strong>.</li>
+</ul>
+</li>
+</ul>
+<h4><strong>4.1.4 Konsumsi Energi (Battery Consumption)</strong></h4>
+<p>Efisiensi energi merupakan faktor penting dalam penggunaan LMS berbasis PWA. Berdasarkan studi <strong>Huber et al. (2022)</strong>, konsumsi energi pada PWA dipengaruhi oleh <strong>browser engine, metode caching, dan interaksi UI</strong>.</p>
+<ul>
+<li><strong>Metode Pengujian:</strong>  <ul>
+<li>Menggunakan <strong>Battery Historian (Android)</strong> dan <strong>Power Profiler</strong> untuk mengukur konsumsi energi saat menggunakan Moodle berbasis PWA dibandingkan Moodle berbasis web tradisional.</li>
+<li>Mengamati pengaruh <strong>browser engine yang berbeda</strong> terhadap konsumsi daya saat menjalankan LMS berbasis PWA.</li>
+</ul>
+</li>
+<li><strong>Hasil yang Diharapkan:</strong>  <ul>
+<li>Konsumsi energi PWA diharapkan lebih efisien dibandingkan aplikasi web tradisional, meskipun mungkin masih lebih tinggi dibandingkan aplikasi native.</li>
+</ul>
+</li>
+</ul>
+<h3><strong>4.2 Efisiensi Sumber Daya (Resource Usage Testing)</strong></h3>
+<p>Evaluasi ini bertujuan untuk menilai bagaimana PWA dalam LMS <strong>mengelola sumber daya perangkat secara efisien</strong>, terutama dalam kondisi koneksi yang buruk atau tanpa koneksi.</p>
+<h4><strong>4.2.1 Pengelolaan Cache dan Mode Offline</strong></h4>
+<p>Salah satu fitur unggulan PWA adalah <strong>kemampuannya untuk tetap berfungsi dalam kondisi offline dengan caching konten secara efisien</strong>. Evaluasi ini bertujuan untuk mengukur sejauh mana LMS berbasis PWA mampu <strong>menyediakan akses ke materi pembelajaran meskipun tanpa koneksi internet</strong>.</p>
+<ul>
+<li><strong>Metode Pengujian:</strong>  <ul>
+<li>Simulasi penggunaan LMS <strong>dalam mode offline</strong> menggunakan <strong>Chrome DevTools Offline Mode</strong>.</li>
+<li>Evaluasi bagaimana <strong>Service Worker menangani caching dan penyajian konten pembelajaran</strong>.</li>
+<li>Menggunakan <strong>Workbox dari Google</strong> untuk menganalisis strategi caching yang diterapkan.</li>
+</ul>
+</li>
+<li><strong>Hasil yang Diharapkan:</strong>  <ul>
+<li>LMS berbasis PWA harus mampu <strong>memuat halaman dan materi pembelajaran secara offline dengan caching yang optimal</strong>.</li>
+</ul>
+</li>
+</ul>
+<h4><strong>4.2.2 Skalabilitas (Scalability Testing)</strong></h4>
+<p>Skalabilitas menjadi faktor penting ketika jumlah pengguna meningkat. LMS berbasis PWA harus mampu <strong>menangani peningkatan jumlah pengguna tanpa mengalami degradasi performa</strong>.</p>
+<ul>
+<li><strong>Metode Pengujian:</strong>  <ul>
+<li>Menggunakan <strong>Apache JMeter</strong> untuk melakukan <strong>stress testing</strong> terhadap LMS berbasis PWA.</li>
+<li>Mengukur respons sistem saat jumlah pengguna meningkat secara signifikan.</li>
+</ul>
+</li>
+<li><strong>Hasil yang Diharapkan:</strong>  <ul>
+<li>PWA harus dapat menangani jumlah pengguna yang lebih besar dibandingkan LMS berbasis web tradisional dengan memanfaatkan <strong>strategi caching dan optimalisasi performa</strong>.</li>
+</ul>
+</li>
+</ul>
+<h3><strong>4.3 Pengujian Kegunaan Teknis (Technical Usability Testing)</strong></h3>
+<p>Selain performa dan efisiensi sumber daya, LMS berbasis PWA harus <strong>mudah digunakan secara teknis</strong> tanpa memerlukan konfigurasi tambahan yang kompleks.</p>
+<h4><strong>4.3.1 Kemudahan Navigasi dan Interaksi</strong></h4>
+<p>Evaluasi ini bertujuan untuk mengukur bagaimana <strong>struktur navigasi dan desain antarmuka pengguna dalam LMS berbasis PWA</strong> mempengaruhi pengalaman pengguna.</p>
+<ul>
+<li><strong>Metode Pengujian:</strong>  <ul>
+<li>Menggunakan <strong>Google Lighthouse Usability Score</strong> dan <strong>Heatmap Tracking</strong> untuk melihat pola navigasi pengguna.</li>
+<li>Simulasi akses pengguna dari berbagai perangkat (PC, tablet, ponsel).</li>
+</ul>
+</li>
+<li><strong>Hasil yang Diharapkan:</strong>  <ul>
+<li>LMS berbasis PWA harus menawarkan navigasi yang lebih intuitif dibandingkan LMS berbasis web.</li>
+</ul>
+</li>
+</ul>
+<h4><strong>4.3.2 Pengalaman Pengguna Offline vs Online</strong></h4>
+<p>Dalam lingkungan dengan konektivitas yang terbatas, <strong>LMS berbasis PWA harus tetap fungsional dan memberikan pengalaman yang mendekati penggunaan online</strong>.</p>
+<ul>
+<li><strong>Metode Pengujian:</strong>  <ul>
+<li>Simulasi penggunaan <strong>LMS berbasis PWA dalam kondisi koneksi tidak stabil</strong> untuk melihat bagaimana konten dapat diakses.</li>
+</ul>
+</li>
+<li><strong>Hasil yang Diharapkan:</strong>  <ul>
+<li>LMS berbasis PWA harus mampu memberikan pengalaman yang hampir sama baik dalam mode online maupun offline.</li>
+</ul>
+</li>
+</ul>
+<h4><strong>4.3.3 Aksesibilitas di Berbagai Perangkat</strong></h4>
+<p>Aksesibilitas menjadi faktor penting untuk memastikan bahwa LMS berbasis PWA dapat digunakan di berbagai jenis perangkat.</p>
+<ul>
+<li><strong>Metode Pengujian:</strong>  <ul>
+<li>Pengujian kompatibilitas dengan <strong>BrowserStack atau LambdaTest</strong>.</li>
+<li>Evaluasi bagaimana <strong>PWA menyesuaikan tampilan pada berbagai perangkat</strong>.</li>
+</ul>
+</li>
+<li><strong>Hasil yang Diharapkan:</strong>  <ul>
+<li>LMS berbasis PWA harus responsif dan dapat diakses dengan baik dari berbagai ukuran layar dan sistem operasi.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2><strong>5. Kesimpulan, Keterbatasan, dan Studi Lanjutan</strong></h2>
+<h3><strong>5.1 Kesimpulan</strong></h3>
+<p>Berdasarkan hasil tinjauan literatur yang dilakukan dalam kajian ini, dapat disimpulkan bahwa <strong>Progressive Web Apps (PWA) memiliki potensi besar sebagai solusi teknis dalam penyelenggaraan pembelajaran elektronik di Indonesia</strong>, terutama dalam mengatasi berbagai tantangan infrastruktur dan keterbatasan teknis yang dihadapi dalam implementasi Learning Management System (LMS) berbasis web.  </p>
+<p>Secara spesifik, PWA menawarkan <strong>keunggulan dalam efisiensi penggunaan sumber daya, fleksibilitas akses melalui berbagai perangkat, serta kemampuan untuk tetap berfungsi dalam kondisi konektivitas terbatas melalui fitur caching dan Service Worker</strong>. Dengan karakteristik tersebut, PWA menjadi alternatif yang menarik dibandingkan dengan LMS berbasis web tradisional, native apps, maupun hybrid apps.  </p>
+<p>Namun demikian, <strong>kajian yang telah dilakukan juga mengungkap beberapa celah penelitian yang masih perlu dieksplorasi lebih lanjut</strong>, terutama dalam aspek evaluasi teknis secara mendalam, studi kasus di wilayah dengan infrastruktur terbatas, serta analisis komparatif langsung antara PWA dan LMS berbasis teknologi lain.</p>
+<h3><strong>5.2 Keterbatasan Penelitian</strong></h3>
+<p>Meskipun kajian ini telah mengidentifikasi berbagai keunggulan teknis PWA serta tantangan yang dihadapi dalam implementasi LMS berbasis web di Indonesia, terdapat beberapa keterbatasan dalam penelitian ini yang perlu diperhatikan:</p>
+<ol>
+<li><p><strong>Keterbatasan dalam Evaluasi Teknis Terstruktur</strong>  </p>
+<ul>
+<li>Sebagian besar penelitian yang tersedia saat ini hanya membahas manfaat umum PWA, seperti <strong>kemampuan offline, performa responsif, dan efisiensi distribusi</strong>, tanpa adanya evaluasi teknis yang lebih terstruktur.  </li>
+<li>Minimnya penelitian yang menguji <strong>kinerja PWA dalam kondisi jaringan sangat terbatas</strong>, evaluasi keamanan aplikasi, serta analisis penggunaan sumber daya pada perangkat dengan spesifikasi rendah menjadi celah yang perlu ditindaklanjuti lebih lanjut.</li>
+</ul>
+</li>
+<li><p><strong>Kurangnya Studi Kasus di Wilayah dengan Infrastruktur Terbatas</strong>  </p>
+<ul>
+<li>Studi-studi yang tersedia lebih banyak berfokus pada pengembangan PWA dalam lingkungan yang memiliki akses jaringan yang relatif baik.  </li>
+<li>Masih sedikit penelitian yang secara spesifik <strong>mengevaluasi implementasi PWA dalam LMS di daerah terpencil dengan akses internet terbatas</strong>, padahal tantangan utama pembelajaran daring di Indonesia justru berkaitan dengan <strong>disparitas infrastruktur digital antar wilayah</strong>.</li>
+</ul>
+</li>
+<li><p><strong>Minimnya Evaluasi Perbandingan Langsung dengan LMS Berbasis Teknologi Lain</strong>  </p>
+<ul>
+<li>Hingga saat ini, penelitian yang membahas PWA dalam LMS masih dilakukan secara terpisah, tanpa adanya studi <strong>komparatif langsung</strong> dengan <strong>LMS berbasis web tradisional, native apps, atau hybrid apps</strong>.  </li>
+<li>Evaluasi yang lebih mendalam mengenai <strong>performa, konsumsi sumber daya, serta pengalaman pengguna dalam berbagai skenario penggunaan</strong> masih sangat dibutuhkan untuk memahami posisi strategis PWA di antara solusi teknologi lain yang telah digunakan dalam e-learning.</li>
+</ul>
+</li>
+</ol>
+<h3><strong>5.3 Studi Lanjutan yang Direkomendasikan</strong></h3>
+<p>Untuk menjembatani gap penelitian yang telah diidentifikasi, studi lanjutan diperlukan guna mengevaluasi efektivitas PWA sebagai instrumen pembelajaran daring secara lebih mendalam. Berikut beberapa aspek yang direkomendasikan untuk diteliti lebih lanjut:</p>
+<ol>
+<li><p><strong>Evaluasi Performa dalam Berbagai Skenario Jaringan</strong>  </p>
+<ul>
+<li>Studi lanjutan perlu melakukan <strong>pengujian empiris terhadap kinerja PWA dalam berbagai kondisi jaringan</strong>, termasuk Wi-Fi cepat, 4G, 3G, dan bahkan dalam mode offline.  </li>
+<li>Pengukuran teknis yang lebih detail terhadap <strong>waktu muat halaman (Load Time), responsivitas aplikasi (Response Time), serta efisiensi konsumsi bandwidth</strong> perlu dilakukan untuk memastikan PWA benar-benar mampu mengatasi tantangan teknis yang ada.</li>
+</ul>
+</li>
+<li><p><strong>Analisis Efisiensi Penggunaan Sumber Daya</strong>  </p>
+<ul>
+<li>Studi lebih lanjut perlu mengevaluasi <strong>penggunaan CPU, RAM, storage, serta konsumsi energi</strong> dari LMS berbasis PWA dibandingkan dengan LMS berbasis web tradisional.  </li>
+<li>Uji coba pada berbagai perangkat, termasuk <strong>smartphone dan laptop dengan spesifikasi rendah</strong>, akan memberikan wawasan mengenai seberapa ringan dan efisien PWA dalam konteks pembelajaran daring.</li>
+</ul>
+</li>
+<li><p><strong>Pengujian Keandalan dan Skalabilitas PWA dalam Pembelajaran Daring</strong>  </p>
+<ul>
+<li>Simulasi <strong>penggunaan LMS berbasis PWA oleh jumlah pengguna yang besar</strong> perlu dilakukan untuk menilai sejauh mana aplikasi ini dapat menangani beban yang tinggi tanpa mengalami degradasi performa.  </li>
+<li>Studi tentang <strong>cara PWA menangani kegagalan sistem serta tingkat crash/error pada berbagai skenario penggunaan</strong> juga penting untuk memastikan bahwa teknologi ini benar-benar dapat diandalkan dalam implementasi skala besar.</li>
+</ul>
+</li>
+<li><p><strong>Studi Kasus Implementasi PWA dalam LMS di Daerah dengan Konektivitas Terbatas</strong>  </p>
+<ul>
+<li>Evaluasi empiris di lapangan, terutama di daerah dengan akses internet terbatas, diperlukan untuk memahami sejauh mana PWA dapat memberikan manfaat nyata dalam meningkatkan akses pembelajaran daring bagi siswa dan tenaga pendidik.  </li>
+<li>Studi ini juga dapat mengeksplorasi bagaimana pengguna di daerah dengan keterbatasan infrastruktur merespons pengalaman penggunaan LMS berbasis PWA dibandingkan dengan LMS berbasis web tradisional.</li>
+</ul>
+</li>
+<li><p><strong>Keamanan dan Privasi dalam PWA untuk LMS</strong>  </p>
+<ul>
+<li>Mengingat PWA mengandalkan <strong>Service Worker dan mekanisme caching</strong>, diperlukan studi yang lebih mendalam tentang potensi risiko keamanan, seperti <strong>manipulasi data offline, serangan XSS (Cross-Site Scripting), serta penyimpanan informasi sensitif dalam cache</strong>.  </li>
+<li>Studi tentang <strong>implementasi standar keamanan yang lebih baik</strong> dalam LMS berbasis PWA juga dapat menjadi kontribusi penting dalam pengembangan sistem pembelajaran daring yang lebih aman dan terpercaya.</li>
+</ul>
+</li>
+</ol>
+<h3><strong>5.4 Implikasi Penelitian bagi Rekayasa Perangkat Lunak</strong></h3>
+<p>Penelitian ini memberikan implikasi yang penting bagi bidang <strong>rekayasa perangkat lunak</strong>, khususnya dalam pengembangan LMS berbasis PWA. Dari temuan yang telah diidentifikasi, terdapat beberapa aspek yang dapat menjadi <strong>panduan bagi pengembang sistem e-learning berbasis PWA</strong>:</p>
+<ul>
+<li><p><strong>Optimasi Performa</strong>  </p>
+<ul>
+<li>Pengembang LMS berbasis PWA perlu lebih fokus pada <strong>optimasi waktu muat halaman, caching strategi yang lebih efisien, serta responsivitas aplikasi</strong>, terutama untuk penggunaan dalam kondisi jaringan yang tidak stabil.</li>
+</ul>
+</li>
+<li><p><strong>Pengelolaan Sumber Daya</strong>  </p>
+<ul>
+<li>Desain arsitektur LMS berbasis PWA harus <strong>meminimalkan penggunaan CPU dan RAM</strong>, agar tetap dapat berjalan dengan baik di perangkat dengan spesifikasi rendah.</li>
+</ul>
+</li>
+<li><p><strong>Keamanan Data</strong>  </p>
+<ul>
+<li>Pengembangan PWA dalam LMS perlu memperhatikan standar keamanan yang lebih tinggi, termasuk <strong>enkripsi data, pengelolaan cache yang lebih aman, serta perlindungan terhadap ancaman serangan berbasis web</strong>.</li>
+</ul>
+</li>
+<li><p><strong>Pengujian dan Validasi Lebih Lanjut</strong>  </p>
+<ul>
+<li>Studi lanjutan diperlukan untuk <strong>melakukan pengujian skala besar</strong>, sehingga dapat diperoleh gambaran yang lebih akurat mengenai <strong>seberapa jauh PWA dapat bersaing dengan solusi LMS berbasis teknologi lain</strong>.</li>
+</ul>
+</li>
+</ul>
+<p>Dengan adanya studi lanjutan yang berfokus pada aspek-aspek tersebut, diharapkan PWA dapat semakin berkembang sebagai <strong>solusi teknis yang andal, efisien, dan adaptif dalam mendukung sistem pembelajaran elektronik di Indonesia</strong>. Hal ini akan membantu institusi pendidikan, pengembang LMS, serta pemangku kepentingan lainnya dalam <strong>memilih dan mengimplementasikan solusi teknologi yang paling sesuai dengan kebutuhan pembelajaran daring di era digital ini</strong>.</p>
+<hr>
+<h3><strong>Daftar Pustaka</strong></h3>
+<ol>
+<li><p>Adi, L., Akbar, R. J., &amp; Khotimah, W. N. (2018). <strong>Platform e-Learning untuk Pembelajaran Pemrograman Web Menggunakan Konsep Progressive Web Apps.</strong> <em>Jurnal Teknik ITS, 6</em>(2). <a href="https://doi.org/10.12962/j23373539.v6i2.24291">https://doi.org/10.12962/j23373539.v6i2.24291</a>  </p>
+</li>
+<li><p>Azzahra, S. P., Abidin, F. A., Susiati, E., &amp; Cahyadi, S. (2021). <strong>Tantangan dan Upaya Guru SMA Dalam Melaksanakan Pembelajaran Jarak Jauh.</strong> <em>Lectura: Jurnal Pendidikan, 12</em>(2), 108–121. <a href="https://doi.org/10.31849/lectura.v12i2.7160">https://doi.org/10.31849/lectura.v12i2.7160</a>  </p>
+</li>
+<li><p>Behl, K., &amp; Raj, G. (2018). <strong>Architectural Pattern of Progressive Web and Background Synchronization.</strong> <em>2018 International Conference on Advances in Computing and Communication Engineering (ICACCE)</em>, 366–371. <a href="https://doi.org/10.1109/ICACCE.2018.8441701">https://doi.org/10.1109/ICACCE.2018.8441701</a>  </p>
+</li>
+<li><p>Camarini, N. P. I., Riastini, P. N., &amp; Suarjana, I. M. (2024). <strong>Permasalahan Penggunaan Aplikasi Digital: Studi Masalah Guru Sekolah Dasar.</strong> <em>Jurnal Media Dan Teknologi Pendidikan, 4</em>(2), 158–165. <a href="https://doi.org/10.23887/jmt.v4i2.62701">https://doi.org/10.23887/jmt.v4i2.62701</a>  </p>
+</li>
+<li><p>Correia, F., Ribeiro, O., &amp; Silva, J. C. (2021). <strong>Progressive Web Apps Development: Study of Caching Mechanisms.</strong> <em>Proceedings - 2021 21st International Conference on Computational Science and Its Applications (ICCSA)</em>, 181–187. <a href="https://doi.org/10.1109/ICCSA54496.2021.00033">https://doi.org/10.1109/ICCSA54496.2021.00033</a>  </p>
+</li>
+<li><p>Cuenca-Enrique, C., del-Río-Carazo, L., Iglesias-Pradas, S., Acquila-Natale, E., Chaparro-Peláez, J., Voinov, I. A., Fernández, J. G. M., &amp; Martínez, C. R. (2024). <strong>Progressive Web Apps: An Optimal Solution for Rural Communities in Developing Countries?</strong> <em>Lecture Notes in Networks and Systems, 801</em>, 356–365. <a href="https://doi.org/10.1007/978-3-031-45648-0_35">https://doi.org/10.1007/978-3-031-45648-0_35</a>  </p>
+</li>
+<li><p>Hamela, S. S., Situmorang, I., &amp; Efendi, S. (2022). <strong>The Effectiveness of Using Learning Management System (LMS) in Blended Learning Model in The Learning System of 4.0 Era.</strong> <em>Jurnal Mantik, 1</em>(1), 417–422. <a href="https://www.iocscience.org/ejournal/index.php/mantik/article/view/2258">https://www.iocscience.org/ejournal/index.php/mantik/article/view/2258</a>  </p>
+</li>
+<li><p>Huber, S., Demetz, L., &amp; Felderer, M. (2021). <strong>PWA vs the Others: A Comparative Study on the UI Energy-Efficiency of Progressive Web Apps.</strong> <em>Lecture Notes in Computer Science, 12706</em>, 464–479. <a href="https://doi.org/10.1007/978-3-030-74296-6_35">https://doi.org/10.1007/978-3-030-74296-6_35</a>  </p>
+</li>
+<li><p>Huber, S., Demetz, L., &amp; Felderer, M. (2022). <strong>A Comparative Study on the Energy Consumption of Progressive Web Apps.</strong> <em>Information Systems, 108</em>. <a href="https://doi.org/10.1016/j.is.2022.102017">https://doi.org/10.1016/j.is.2022.102017</a>  </p>
+</li>
+<li><p>Jeong, Y., &amp; Hur, J. (2022). <strong>A Survey on Vulnerabilities of Service Workers.</strong> <em>International Conference on ICT Convergence (ICTC)</em>, 2080–2082. <a href="https://doi.org/10.1109/ICTC55196.2022.9952818">https://doi.org/10.1109/ICTC55196.2022.9952818</a>  </p>
+</li>
+<li><p>Jiménez-Honrado, J., Gómez García, J., Costa-Tebar, F., Marco, F. A., Gallud, J. A., &amp; Sebastián Rivera, G. (2024, June 19). <strong>Progressive Web Application for Storytelling Therapy Support.</strong> <em>ACM International Conference Proceeding Series.</em> <a href="https://doi.org/10.1145/3657242.3658588">https://doi.org/10.1145/3657242.3658588</a>  </p>
+</li>
+<li><p>Josephe, A. O., Chrysoulas, C., Peng, T., Boudani, B. el, Iatropoulos, I., &amp; Pitropakis, N. (2023). <strong>Progressive Web Apps to Support (Critical) Systems in Low or No Connectivity Areas.</strong> <em>2023 IEEE IAS Global Conference on Emerging Technologies, GlobConET 2023.</em> <a href="https://doi.org/10.1109/GlobConET56651.2023.10150058">https://doi.org/10.1109/GlobConET56651.2023.10150058</a>  </p>
+</li>
+<li><p>Kurnia, F. (2022). <strong>Pendidikan Berbasis Teknologi (Permasalahan dan Tantangan).</strong> <em>Tarbawi: Journal Studi Pendidikan Islam, 10</em>, 205–221. <a href="https://doi.org/10.55757/tarbawi">https://doi.org/10.55757/tarbawi</a>  </p>
+</li>
+<li><p>Kurniawan, W., Fatwanto, A., &amp; Korespondensi, P. (2022). <strong>Hubungan Antara Cache, Energy Consumption dan Runtime Performance pada Progressive Web Apps.</strong> <em>Jurnal Teknologi Informasi dan Ilmu Komputer (JTIIK), 9</em>(2), 293–302. <a href="https://doi.org/10.25126/jtiik.202294993">https://doi.org/10.25126/jtiik.202294993</a>  </p>
+</li>
+<li><p>Mahadin, M., Rochalina, C. I., &amp; Ibrahim, N. (2022). <strong>Challenges of E-Learning Effectiveness During the Covid-19 Pandemic in Historical Subjects.</strong> <em>Journal of Education Research and Evaluation, 6</em>(2), 348–357. <a href="https://doi.org/10.23887/jere.v6i2.43573">https://doi.org/10.23887/jere.v6i2.43573</a>  </p>
+</li>
+<li><p>Malavolta, I., Chinnappan, K., Jasmontas, L., Gupta, S., &amp; Soltany, K. A. K. (2020). <strong>Evaluating the Impact of Caching on the Energy Consumption and Performance of Progressive Web Apps.</strong> <em>2020 IEEE/ACM 7th International Conference on Mobile Software Engineering and Systems, MOBILESoft 2020</em>, 109–119. <a href="https://doi.org/10.1145/3387905.3388593">https://doi.org/10.1145/3387905.3388593</a>  </p>
+</li>
+<li><p>Ningsih, E. P. (2024). <strong>Implementasi Teknologi Digital dalam Pendidikan: Manfaat dan Hambatan.</strong> <em>EduTech Journal, 1</em>(1), 1–8. <a href="https://doi.org/10.62872/qbp1fg61">https://doi.org/10.62872/qbp1fg61</a>  </p>
+</li>
+<li><p>Pande, N., Somani, A., Prasad Samal, S., &amp; Kakkirala, V. (2018). <strong>Enhanced Web Application and Browsing Performance through Service-Worker Infusion Framework.</strong> <em>Proceedings - 2018 IEEE International Conference on Web Services (ICWS)</em>, 195–202. <a href="https://doi.org/10.1109/ICWS.2018.00032">https://doi.org/10.1109/ICWS.2018.00032</a>  </p>
+</li>
+<li><p>Rica, Y. (2019). <strong>Pemanfaatan Portal Rumah Belajar untuk Meningkatkan Kompetensi Teknologi Informasi dan Komunikasi Guru Daerah Tertinggal.</strong> <em>TEKNODIK, 23</em>(2). <a href="https://doi.org/10.32550/teknodik.v0i1.514">https://doi.org/10.32550/teknodik.v0i1.514</a>  </p>
+</li>
+<li><p>Roumeliotis, K. I., &amp; Tselikas, N. D. (2022). <strong>Evaluating Progressive Web App Accessibility for People with Disabilities.</strong> <em>Network, 2</em>(2), 350–369. <a href="https://doi.org/10.3390/network2020022">https://doi.org/10.3390/network2020022</a>  </p>
+</li>
+<li><p>Schmetz, A., &amp; Kampker, A. (2024). <strong>Evaluation of Offline Data Synchronization Approaches in Data-Intense Manufacturing.</strong> <em>IFAC-PapersOnLine, 58</em>(27), 1316–1321. <a href="https://doi.org/10.1016/j.procir.2024.10.245">https://doi.org/10.1016/j.procir.2024.10.245</a>  </p>
+</li>
+<li><p>Tahir, Z., Ilham, A. A., Niswar, M., Adnan, &amp; Fauzy, A. A. (2021). <strong>Progressive Web Apps Development and Analysis with Angular Framework and Service Worker for E-Commerce System.</strong> <em>2021 IEEE International Conference on Computing, ICOCO 2021</em>, 192–195. <a href="https://doi.org/10.1109/ICOCO53166.2021.9673557">https://doi.org/10.1109/ICOCO53166.2021.9673557</a>  </p>
+</li>
+<li><p>Jiménez-Honrado, J., Gómez García, J., Costa-Tebar, F., Marco, F. A., Gallud, J. A., &amp; Sebastián Rivera, G. (2024, June 19). Progressive Web Application for Storytelling Therapy Support. ACM International Conference Proceeding Series. <a href="https://doi.org/10.1145/3657242.3658588">https://doi.org/10.1145/3657242.3658588</a></p>
+</li>
+</ol>
+
+  <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+  <div class="share-buttons">
+    <button class="share-button" onclick="shareToFacebook()">F</button>
+    <button class="share-button" onclick="shareToTwitter()">X</button>
+    <button class="share-button" onclick="shareToWhatsApp()">W</button>
+    <button class="share-button" onclick="copyLink()">C</button>
+  </div>
+  <div id="disqus_thread"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://blog.akbarsahata.id/articles/progressive-web-apps-sebagai-solusi-tantangan-teknis-dalam-pembelajaran-elektronik-di-indonesia-kajian-literatur-sistematis.md";
+      this.page.identifier = "progressive-web-apps-sebagai-solusi-tantangan-teknis-dalam-pembelajaran-elektronik-di-indonesia-kajian-literatur-sistematis.md";
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    function shareToFacebook() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/progressive-web-apps-sebagai-solusi-tantangan-teknis-dalam-pembelajaran-elektronik-di-indonesia-kajian-literatur-sistematis.md");
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+    
+    function shareToTwitter() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/progressive-web-apps-sebagai-solusi-tantangan-teknis-dalam-pembelajaran-elektronik-di-indonesia-kajian-literatur-sistematis.md");
+      const text = encodeURIComponent("Progressive Web Apps sebagai Solusi Tantangan Teknis dalam Pembelajaran Elektronik di Indonesia: Kajian Literatur Sistematis");
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    function shareToWhatsApp() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/progressive-web-apps-sebagai-solusi-tantangan-teknis-dalam-pembelajaran-elektronik-di-indonesia-kajian-literatur-sistematis.md");
+      window.open(`https://wa.me/?text=${url}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText("https://blog.akbarsahata.id/articles/progressive-web-apps-sebagai-solusi-tantangan-teknis-dalam-pembelajaran-elektronik-di-indonesia-kajian-literatur-sistematis.md").then(() => {
+        alert('Link copied to clipboard');
+      });
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>

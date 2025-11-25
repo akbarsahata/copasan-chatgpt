@@ -1,20 +1,35 @@
 [build]
-  command = "npm run generate:metadata && npm run generate:sitemap && cp -r docs public/ && cp metadata.json public/"
+  command = "npm run build"
   functions = "netlify/functions"
   publish = "public"
 
 [functions]
   node_bundler = "esbuild"
 
+# Serve static files first, functions as fallback
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
 
+# Articles: try static HTML first, then markdown via function
+[[redirects]]
+  from = "/articles/:slug"
+  to = "/articles/:slug.html"
+  status = 200
+  force = false
+
 [[redirects]]
   from = "/articles/*"
   to = "/.netlify/functions/articles"
   status = 200
+
+# Home page: serve static first
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+  force = false
 
 [[redirects]]
   from = "/"

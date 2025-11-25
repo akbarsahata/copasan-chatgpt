@@ -313,6 +313,7 @@ exports.handler = async (event, context) => {
       statusCode: 200,
       headers: {
         "Content-Type": "text/html",
+        "Cache-Control": "public, max-age=86400, s-maxage=2592000, stale-while-revalidate=604800",
       },
       body: html,
     };
@@ -351,6 +352,7 @@ exports.handler = async (event, context) => {
       statusCode: 500,
       headers: {
         "Content-Type": "text/html",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
       },
       body: html,
     };

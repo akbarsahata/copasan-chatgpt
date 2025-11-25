@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="This agenda outlines a detailed plan to complete the research project within a four-week timeframe. The project is divided into manageable tasks and m...">
+  <meta property="og:title" content="Research Project Agenda">
+  <meta property="og:description" content="This agenda outlines a detailed plan to complete the research project within a four-week timeframe. The project is divided into manageable tasks and m...">
+  <meta property="og:image" content="/image.webp">
+  <meta property="og:url" content="https://blog.akbarsahata.id/articles/automated-detection-of-misconfigurations-in-ansible-aws-vpc-playbooks-using-support-vector-machines-research-agenda.md">
+  <meta property="og:type" content="article">
+  <title>Research Project Agenda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+  <link href="/styles/article.css" rel="stylesheet">
+</head>
+<body>
+  <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
+  <h1>Research Project Agenda</h1>
+<p><strong>Title:</strong> Automated Detection of Misconfigurations in Ansible AWS VPC Playbooks Using Support Vector Machines (SVM)</p>
+<p><strong>Duration:</strong> 4 Weeks</p>
+<hr>
+<h2><strong>Overview</strong></h2>
+<p>This agenda outlines a detailed plan to complete the research project within a four-week timeframe. The project is divided into manageable tasks and milestones, ensuring that all critical components are addressed efficiently.</p>
+<hr>
+<h2><strong>Week 1: Data Collection and Literature Review</strong></h2>
+<h3><strong>Day 1-2: Literature Review</strong></h3>
+<ul>
+<li><strong>Task 1:</strong> Conduct a comprehensive literature review on:<ul>
+<li>Misconfigurations in network systems and their impact on reliability and security.</li>
+<li>Existing methods for detecting misconfigurations in Infrastructure as Code (IaC) tools like Ansible.</li>
+<li>Applications of Support Vector Machines (SVM) in text classification.</li>
+</ul>
+</li>
+<li><strong>Deliverable:</strong> Summarized notes and references that provide a solid theoretical foundation for the research.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Use academic databases like IEEE Xplore, ACM Digital Library, and Google Scholar.</li>
+<li>Focus on recent publications (last 5 years) to capture the latest developments.</li>
+<li>Organize references using a reference management tool like Zotero or Mendeley.</li>
+</ul>
+<hr>
+<h3><strong>Day 3-5: Collecting Correct Ansible AWS VPC Playbooks</strong></h3>
+<ul>
+<li><strong>Task 2:</strong> Search and collect correct Ansible playbooks for AWS VPC configurations.<ul>
+<li><strong>Sources:</strong><ul>
+<li>GitHub repositories (<a href="https://github.com/ansible/ansible-examples/tree/master/aws">Ansible AWS Examples</a>, <a href="https://github.com/lean-delivery/ansible-role-aws-vpc">Ansible Role for AWS VPC</a>).</li>
+<li>Ansible Galaxy roles related to AWS VPC.</li>
+<li>AWS Quick Start guides and official documentation.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Task 3:</strong> Verify the correctness of collected playbooks.<ul>
+<li><strong>Methods:</strong><ul>
+<li>Review the code for compliance with Ansible and YAML syntax.</li>
+<li>Run the playbooks in a controlled AWS environment (if feasible).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Deliverable:</strong> A collection of verified correct Ansible AWS VPC playbooks organized in a directory (<code>dataset/correct/</code>).</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Prioritize well-documented and popular repositories with high star ratings and recent updates.</li>
+<li>Ensure compliance with open-source licenses and proper attribution.</li>
+</ul>
+<hr>
+<h3><strong>Day 6-7: Generating Misconfigured Playbooks</strong></h3>
+<ul>
+<li><strong>Task 4:</strong> Identify common misconfiguration patterns in Ansible playbooks.<ul>
+<li><strong>Examples:</strong><ul>
+<li>Syntax errors (incorrect indentation, missing colons).</li>
+<li>Invalid parameter values (incorrect region codes, invalid CIDR blocks).</li>
+<li>Logical errors (undefined variables, missing tasks).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Task 5:</strong> Develop scripts to automate the introduction of misconfigurations.<ul>
+<li><strong>Tools:</strong><ul>
+<li>Python scripts using <code>PyYAML</code> for parsing and modifying YAML files.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Task 6:</strong> Generate misconfigured playbooks by applying the scripts to correct playbooks.</li>
+<li><strong>Deliverable:</strong> A set of misconfigured Ansible AWS VPC playbooks stored in a directory (<code>dataset/misconfigured/</code>).</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Document each type of misconfiguration introduced for reference.</li>
+<li>Ensure an equal number of correct and misconfigured playbooks for dataset balance.</li>
+</ul>
+<hr>
+<h2><strong>Week 2: Data Preprocessing and Feature Extraction</strong></h2>
+<h3><strong>Day 8: Data Labeling and Organization</strong></h3>
+<ul>
+<li><strong>Task 7:</strong> Label all playbooks appropriately and create a metadata file (<code>labels.csv</code>).<ul>
+<li><strong>Structure:</strong><ul>
+<li><code>filename,label</code></li>
+<li>Example: <code>playbook1.yml,correct</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Task 8:</strong> Organize the dataset into directories:<ul>
+<li><code>dataset/correct/</code></li>
+<li><code>dataset/misconfigured/</code></li>
+</ul>
+</li>
+<li><strong>Deliverable:</strong> A well-organized and labeled dataset ready for preprocessing.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Use consistent naming conventions for files to simplify data handling.</li>
+<li>Double-check labels to prevent misclassification.</li>
+</ul>
+<hr>
+<h3><strong>Day 9-10: Data Preprocessing</strong></h3>
+<ul>
+<li><strong>Task 9:</strong> Parse YAML files to extract relevant information.<ul>
+<li><strong>Libraries:</strong> <code>PyYAML</code> for loading YAML content.</li>
+</ul>
+</li>
+<li><strong>Task 10:</strong> Normalize text data.<ul>
+<li>Convert all text to lowercase.</li>
+<li>Remove or standardize variable placeholders.</li>
+<li>Strip unnecessary whitespace and comments.</li>
+</ul>
+</li>
+<li><strong>Deliverable:</strong> Preprocessed data suitable for feature extraction.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Handle exceptions and errors during parsing to prevent data loss.</li>
+<li>Maintain a log of preprocessing steps for reproducibility.</li>
+</ul>
+<hr>
+<h3><strong>Day 11-12: Feature Extraction</strong></h3>
+<ul>
+<li><strong>Task 11:</strong> Extract features from the playbooks.<ul>
+<li><strong>Methods:</strong><ul>
+<li>Tokenization of modules, tasks, and parameters.</li>
+<li>Create a corpus using the Bag-of-Words model.</li>
+<li>Apply TF-IDF vectorization.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Task 12:</strong> Prepare the feature matrix (<code>X</code>) and label vector (<code>y</code>) for model training.</li>
+<li><strong>Deliverable:</strong> Numerical representations of playbooks ready for machine learning.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Experiment with n-grams (unigrams, bigrams) to capture more contextual information.</li>
+<li>Use <code>scikit-learn</code>&#39;s <code>TfidfVectorizer</code> for efficient vectorization.</li>
+</ul>
+<hr>
+<h3><strong>Day 13-14: Dataset Splitting and Preliminary Analysis</strong></h3>
+<ul>
+<li><strong>Task 13:</strong> Split the dataset into training and testing sets (e.g., 80% training, 20% testing).</li>
+<li><strong>Task 14:</strong> Perform exploratory data analysis (EDA).<ul>
+<li>Analyze feature distributions.</li>
+<li>Identify any class imbalances or anomalies.</li>
+</ul>
+</li>
+<li><strong>Deliverable:</strong> Insights into the dataset and readiness for model development.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Use visualization tools like Matplotlib or Seaborn to plot feature distributions.</li>
+<li>Ensure random shuffling before splitting to maintain randomness.</li>
+</ul>
+<hr>
+<h2><strong>Week 3: Model Development and Evaluation</strong></h2>
+<h3><strong>Day 15-16: Implementing the SVM Model</strong></h3>
+<ul>
+<li><strong>Task 15:</strong> Implement the SVM classifier using <code>scikit-learn</code>.<ul>
+<li><strong>Parameters to consider:</strong><ul>
+<li>Kernel type (linear, RBF).</li>
+<li>Regularization parameter (<code>C</code>).</li>
+<li>Gamma parameter for RBF kernel.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Deliverable:</strong> An initial SVM model set up with default parameters.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Start with a linear kernel to establish a baseline.</li>
+<li>Document the initial model settings for comparison.</li>
+</ul>
+<hr>
+<h3><strong>Day 17-18: Model Training</strong></h3>
+<ul>
+<li><strong>Task 16:</strong> Train the SVM model using the training dataset.</li>
+<li><strong>Task 17:</strong> Perform hyperparameter tuning.<ul>
+<li>Use techniques like Grid Search or Random Search.</li>
+<li>Employ cross-validation (e.g., 5-fold cross-validation) to assess model performance.</li>
+</ul>
+</li>
+<li><strong>Deliverable:</strong> A trained SVM model with optimized hyperparameters.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Use <code>GridSearchCV</code> or <code>RandomizedSearchCV</code> from <code>scikit-learn</code> for efficient tuning.</li>
+<li>Monitor training time to manage computational resources.</li>
+</ul>
+<hr>
+<h3><strong>Day 19: Model Evaluation</strong></h3>
+<ul>
+<li><strong>Task 18:</strong> Evaluate the model using the testing dataset.<ul>
+<li>Calculate performance metrics:<ul>
+<li>Accuracy</li>
+<li>Precision</li>
+<li>Recall</li>
+<li>F1-Score</li>
+</ul>
+</li>
+<li>Generate a confusion matrix.</li>
+</ul>
+</li>
+<li><strong>Deliverable:</strong> A comprehensive evaluation report of the model&#39;s performance.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Use classification reports from <code>scikit-learn</code> for detailed metrics.</li>
+<li>Interpret the confusion matrix to understand misclassification patterns.</li>
+</ul>
+<hr>
+<h3><strong>Day 20: Comparative Analysis and Validation</strong></h3>
+<ul>
+<li><strong>Task 19:</strong> Compare the SVM model with baseline models (e.g., Naïve Bayes, Decision Tree).</li>
+<li><strong>Task 20:</strong> Validate the robustness of the model.<ul>
+<li>Test on a separate validation set if available.</li>
+</ul>
+</li>
+<li><strong>Deliverable:</strong> Insights into the effectiveness of the SVM model relative to other models.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Keep the comparison fair by using the same training and testing splits.</li>
+<li>Analyze cases where the SVM model outperforms or underperforms compared to others.</li>
+</ul>
+<hr>
+<h2><strong>Week 4: Results Interpretation, Documentation, and Finalization</strong></h2>
+<h3><strong>Day 21-22: Results Interpretation</strong></h3>
+<ul>
+<li><strong>Task 21:</strong> Analyze the significance of the results.<ul>
+<li>Discuss the implications for network security and configuration management.</li>
+<li>Identify key features that contribute most to misconfiguration detection.</li>
+</ul>
+</li>
+<li><strong>Deliverable:</strong> A detailed understanding of the research findings.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Use feature importance scores or coefficients to identify influential features.</li>
+<li>Relate findings back to the objectives and research questions.</li>
+</ul>
+<hr>
+<h3><strong>Day 23-25: Writing the Research Paper</strong></h3>
+<ul>
+<li><strong>Task 22:</strong> Draft the research paper, covering:<ul>
+<li><strong>Abstract:</strong> Summarize the research objectives, methods, results, and conclusions.</li>
+<li><strong>Introduction:</strong> Present the background, problem statement, and objectives.</li>
+<li><strong>Related Work:</strong> Discuss previous studies and how your work fills a gap.</li>
+<li><strong>Methodology:</strong> Detail data collection, preprocessing, feature extraction, and model development.</li>
+<li><strong>Results and Discussion:</strong> Present evaluation metrics and interpret the results.</li>
+<li><strong>Conclusion:</strong> Summarize findings and suggest future work.</li>
+<li><strong>References:</strong> Cite all sources in IEEE format.</li>
+</ul>
+</li>
+<li><strong>Deliverable:</strong> A complete draft of the research paper.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Follow the guidelines of the target journal or conference for formatting.</li>
+<li>Use clear and concise language, avoiding unnecessary jargon.</li>
+</ul>
+<hr>
+<h3><strong>Day 26: Review and Editing</strong></h3>
+<ul>
+<li><strong>Task 23:</strong> Proofread and revise the paper.<ul>
+<li>Check for grammatical errors and clarity.</li>
+<li>Ensure all figures and tables are correctly labeled and referenced.</li>
+</ul>
+</li>
+<li><strong>Task 24:</strong> Validate the accuracy of all citations and references.</li>
+<li><strong>Deliverable:</strong> A polished and professional research paper ready for submission.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Read the paper aloud to catch awkward phrasing.</li>
+<li>Use grammar and spell-check tools like Grammarly.</li>
+</ul>
+<hr>
+<h3><strong>Day 27: Final Preparations</strong></h3>
+<ul>
+<li><strong>Task 25:</strong> Prepare supplementary materials.<ul>
+<li>Appendices for additional figures or code snippets.</li>
+<li>Prepare datasets or code repositories if sharing is permissible.</li>
+</ul>
+</li>
+<li><strong>Task 26:</strong> Ensure all ethical and legal considerations are addressed.<ul>
+<li>Verify compliance with licenses for any code or data used.</li>
+</ul>
+</li>
+<li><strong>Deliverable:</strong> Complete research package, including the paper and supplementary materials.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Double-check permissions for sharing any third-party content.</li>
+<li>Include a README file if sharing code or datasets.</li>
+</ul>
+<hr>
+<h3><strong>Day 28: Project Closure</strong></h3>
+<ul>
+<li><strong>Task 27:</strong> Backup all project files and data.</li>
+<li><strong>Task 28:</strong> Reflect on the project.<ul>
+<li>Document lessons learned and potential improvements.</li>
+<li>Consider avenues for future research.</li>
+</ul>
+</li>
+<li><strong>Deliverable:</strong> Project archived and personal reflections noted.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Store backups in multiple locations (cloud storage, external drive).</li>
+<li>Update your CV or portfolio with this project.</li>
+</ul>
+<hr>
+<h2><strong>Additional Tips for Success</strong></h2>
+<h3><strong>Time Management</strong></h3>
+<ul>
+<li>Allocate specific hours each day dedicated to the project.</li>
+<li>Use productivity techniques like the Pomodoro Technique to maintain focus.</li>
+</ul>
+<h3><strong>Regular Progress Checks</strong></h3>
+<ul>
+<li>At the end of each day, review what was accomplished.</li>
+<li>Adjust the next day&#39;s plan if necessary to stay on track.</li>
+</ul>
+<h3><strong>Communication</strong></h3>
+<ul>
+<li>If working with advisors or peers, maintain regular communication.</li>
+<li>Schedule meetings or check-ins to discuss progress and challenges.</li>
+</ul>
+<h3><strong>Resource Management</strong></h3>
+<ul>
+<li>Ensure computational resources are adequate for model training.</li>
+<li>Utilize cloud services if local resources are limited.</li>
+</ul>
+<h3><strong>Self-Care</strong></h3>
+<ul>
+<li>Balance work with rest to prevent burnout.</li>
+<li>Maintain a healthy lifestyle to keep energy levels high.</li>
+</ul>
+<hr>
+<h2><strong>Summary</strong></h2>
+<p>By adhering to this detailed agenda, you will systematically progress through the essential stages of the research project:</p>
+<ul>
+<li><strong>Week 1:</strong> Establish a strong foundation through literature review and data collection.</li>
+<li><strong>Week 2:</strong> Prepare and understand your data, setting the stage for modeling.</li>
+<li><strong>Week 3:</strong> Develop, train, and evaluate your machine learning model.</li>
+<li><strong>Week 4:</strong> Interpret your findings, document your work, and finalize the project.</li>
+</ul>
+<p>This plan emphasizes efficiency, organization, and thoroughness, ensuring that the project is completed within the four-week timeframe without compromising on quality.</p>
+<hr>
+<p><strong>Best of luck with our research project!</strong></p>
+
+  <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+  <div class="share-buttons">
+    <button class="share-button" onclick="shareToFacebook()">F</button>
+    <button class="share-button" onclick="shareToTwitter()">X</button>
+    <button class="share-button" onclick="shareToWhatsApp()">W</button>
+    <button class="share-button" onclick="copyLink()">C</button>
+  </div>
+  <div id="disqus_thread"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://blog.akbarsahata.id/articles/automated-detection-of-misconfigurations-in-ansible-aws-vpc-playbooks-using-support-vector-machines-research-agenda.md";
+      this.page.identifier = "automated-detection-of-misconfigurations-in-ansible-aws-vpc-playbooks-using-support-vector-machines-research-agenda.md";
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    function shareToFacebook() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/automated-detection-of-misconfigurations-in-ansible-aws-vpc-playbooks-using-support-vector-machines-research-agenda.md");
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+    
+    function shareToTwitter() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/automated-detection-of-misconfigurations-in-ansible-aws-vpc-playbooks-using-support-vector-machines-research-agenda.md");
+      const text = encodeURIComponent("Research Project Agenda");
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    function shareToWhatsApp() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/automated-detection-of-misconfigurations-in-ansible-aws-vpc-playbooks-using-support-vector-machines-research-agenda.md");
+      window.open(`https://wa.me/?text=${url}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText("https://blog.akbarsahata.id/articles/automated-detection-of-misconfigurations-in-ansible-aws-vpc-playbooks-using-support-vector-machines-research-agenda.md").then(() => {
+        alert('Link copied to clipboard');
+      });
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>

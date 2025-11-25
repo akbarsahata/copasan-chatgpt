@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Endtoend (E2E) testing is a crucial part of ensuring a web application functions correctly. If you’re using Next.js inside a monorepo managed with Tur...">
+  <meta property="og:title" content="End-to-End Testing in a Next.js Monorepo with Playwright and Turborepo">
+  <meta property="og:description" content="Endtoend (E2E) testing is a crucial part of ensuring a web application functions correctly. If you’re using Next.js inside a monorepo managed with Tur...">
+  <meta property="og:image" content="https://images.pexels.com/photos/8850706/pexels-photo-8850706.jpeg?auto=compress&cs=tinysrgb&w=600&dpr=1">
+  <meta property="og:url" content="https://blog.akbarsahata.id/articles/end-to-end-testing-in-a-next-js-monorepo-with-playwright-and-turborepo.md">
+  <meta property="og:type" content="article">
+  <title>End-to-End Testing in a Next.js Monorepo with Playwright and Turborepo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+  <link href="/styles/article.css" rel="stylesheet">
+</head>
+<body>
+  <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
+  <h1>End-to-End Testing in a Next.js Monorepo with Playwright and Turborepo</h1>
+<p>End-to-end (E2E) testing is a crucial part of ensuring a web application functions correctly. If you’re using <strong>Next.js inside a monorepo managed with Turborepo and pnpm</strong>, integrating <strong>Playwright</strong> for E2E testing can be incredibly powerful. This guide walks through the best practices for setting up Playwright in such an environment, ensuring a clean test environment each time.</p>
+<hr>
+<p><img src="https://images.pexels.com/photos/8850706/pexels-photo-8850706.jpeg?auto=compress&cs=tinysrgb&w=600&dpr=1" alt="checklist-image"></p>
+<hr>
+<h2><strong>Project Setup</strong></h2>
+<p>To keep things modular, place the <strong>Playwright tests in a separate package</strong> within your monorepo. Your project structure might look like this:</p>
+<pre><code>/apps
+  /web  (Next.js app)
+/packages
+  /e2e-tests  (Playwright tests)
+/turbo.json
+/pnpm-workspace.yaml
+</code></pre>
+<p>Inside <code>/packages/e2e-tests/package.json</code>, define dependencies:</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;e2e-tests&quot;,
+  &quot;private&quot;: true,
+  &quot;devDependencies&quot;: {
+    &quot;@playwright/test&quot;: &quot;^1.x&quot;
+  },
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;playwright test&quot;
+  }
+}
+</code></pre>
+<p>Ensure <code>pnpm-workspace.yaml</code> includes the package:</p>
+<pre><code class="language-yaml">packages:
+  - &quot;apps/*&quot;
+  - &quot;packages/*&quot;
+</code></pre>
+<hr>
+<h2><strong>Configuring Playwright to Start Next.js</strong></h2>
+<p>In <code>playwright.config.ts</code>, define how Playwright launches the Next.js app:</p>
+<pre><code class="language-ts">import { defineConfig } from &quot;@playwright/test&quot;;
+
+export default defineConfig({
+  testDir: &quot;./tests&quot;,
+  timeout: 30_000,
+  expect: { timeout: 5_000 },
+  fullyParallel: true,
+  use: {
+    baseURL: &quot;http://localhost:3000&quot;,
+    headless: true,
+    trace: &quot;on-first-retry&quot;,
+  },
+  webServer: {
+    command: &quot;pnpm --filter web dev&quot;,
+    url: &quot;http://localhost:3000&quot;,
+    reuseExistingServer: !process.env.CI,
+  },
+});
+</code></pre>
+<p>For testing <strong>built</strong> Next.js apps, modify:</p>
+<pre><code class="language-ts">webServer: {
+  command: &quot;pnpm --filter web start&quot;,
+  url: &quot;http://localhost:3000&quot;,
+  reuseExistingServer: !process.env.CI,
+},
+</code></pre>
+<hr>
+<h2><strong>Ensuring a Clean Test Environment</strong></h2>
+<p>If your tests depend on a database, always start with a <strong>clean state</strong>. Use a script to teardown, migrate, and seed your database before each test.</p>
+<p>Modify <code>package.json</code> inside <code>e2e-tests</code>:</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;pretest&quot;: &quot;pnpm db:reset&quot;,
+    &quot;test&quot;: &quot;playwright test&quot;
+  }
+}
+</code></pre>
+<p>Example reset script (<code>scripts/db-reset.sh</code>):</p>
+<pre><code class="language-sh">pnpm db:teardown &amp;&amp; pnpm db:migrate &amp;&amp; pnpm db:seed
+</code></pre>
+<p>Then, define the script in <code>package.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;db:reset&quot;: &quot;sh ./scripts/db-reset.sh&quot;
+  }
+}
+</code></pre>
+<p>Run the reset script before each test:</p>
+<pre><code class="language-ts">import { test } from &quot;@playwright/test&quot;;
+import { execSync } from &quot;child_process&quot;;
+
+test.beforeEach(() =&gt; {
+  execSync(&quot;pnpm db:reset&quot;, { stdio: &quot;inherit&quot; });
+});
+</code></pre>
+<hr>
+<h2><strong>Running E2E Tests in CI/CD (GitHub Actions)</strong></h2>
+<p>To automate tests, add <code>.github/workflows/e2e.yml</code>:</p>
+<pre><code class="language-yaml">name: E2E Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        run: corepack enable &amp;&amp; corepack prepare pnpm@latest --activate
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: &quot;pnpm&quot;
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build the app
+        run: pnpm --filter web build
+
+      - name: Run E2E tests
+        run: pnpm --filter e2e-tests test
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+</code></pre>
+<p>Adjust your <strong>environment variables</strong> accordingly.</p>
+<hr>
+<h2><strong>Debugging with Traces</strong></h2>
+<p>Enable Playwright tracing to debug test failures. Update <code>playwright.config.ts</code>:</p>
+<pre><code class="language-ts">use: {
+  trace: process.env.CI ? &quot;retain-on-failure&quot; : &quot;on&quot;,
+  video: &quot;retain-on-failure&quot;,
+  screenshot: &quot;only-on-failure&quot;,
+},
+</code></pre>
+<p>To inspect traces after a failed test:</p>
+<pre><code class="language-sh">npx playwright show-trace trace.zip
+</code></pre>
+<hr>
+<h2><strong>Running Tests Locally</strong></h2>
+<p>Run <strong>Playwright UI mode</strong> for interactive debugging:</p>
+<pre><code class="language-sh">pnpm --filter e2e-tests exec playwright test --ui
+</code></pre>
+<p>Run tests <strong>headless</strong>:</p>
+<pre><code class="language-sh">pnpm --filter e2e-tests test
+</code></pre>
+<hr>
+<h2><strong>Final Thoughts</strong></h2>
+<p>✅ <strong>Keep Playwright tests in a separate package</strong> within your monorepo<br>✅ <strong>Start Next.js automatically before tests</strong><br>✅ <strong>Reset the database before each test</strong> to maintain data integrity<br>✅ <strong>Run E2E tests in CI/CD</strong> with GitHub Actions<br>✅ <strong>Use Playwright’s trace debugging</strong> to investigate failures  </p>
+<p>Following these best practices ensures <strong>reliable and reproducible</strong> E2E tests in a Next.js monorepo setup with Turborepo and pnpm. 🚀</p>
+<p>Are you using a similar setup? Let’s discuss your experience in the comments! 🔥</p>
+
+  <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+  <div class="share-buttons">
+    <button class="share-button" onclick="shareToFacebook()">F</button>
+    <button class="share-button" onclick="shareToTwitter()">X</button>
+    <button class="share-button" onclick="shareToWhatsApp()">W</button>
+    <button class="share-button" onclick="copyLink()">C</button>
+  </div>
+  <div id="disqus_thread"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://blog.akbarsahata.id/articles/end-to-end-testing-in-a-next-js-monorepo-with-playwright-and-turborepo.md";
+      this.page.identifier = "end-to-end-testing-in-a-next-js-monorepo-with-playwright-and-turborepo.md";
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    function shareToFacebook() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/end-to-end-testing-in-a-next-js-monorepo-with-playwright-and-turborepo.md");
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+    
+    function shareToTwitter() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/end-to-end-testing-in-a-next-js-monorepo-with-playwright-and-turborepo.md");
+      const text = encodeURIComponent("End-to-End Testing in a Next.js Monorepo with Playwright and Turborepo");
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    function shareToWhatsApp() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/end-to-end-testing-in-a-next-js-monorepo-with-playwright-and-turborepo.md");
+      window.open(`https://wa.me/?text=${url}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText("https://blog.akbarsahata.id/articles/end-to-end-testing-in-a-next-js-monorepo-with-playwright-and-turborepo.md").then(() => {
+        alert('Link copied to clipboard');
+      });
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>

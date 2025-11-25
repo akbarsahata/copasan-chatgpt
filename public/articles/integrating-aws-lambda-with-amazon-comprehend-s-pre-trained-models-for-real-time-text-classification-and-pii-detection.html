@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="By leveraging Amazon Comprehend's pretrained models, you can quickly build a scalable, serverless application for realtime text classification and PII...">
+  <meta property="og:title" content="Integrating AWS Lambda with Amazon Comprehend's Pre-trained Models for Real-Time Text Classification and PII Detection">
+  <meta property="og:description" content="By leveraging Amazon Comprehend's pretrained models, you can quickly build a scalable, serverless application for realtime text classification and PII...">
+  <meta property="og:image" content="https://images.pexels.com/photos/279810/pexels-photo-279810.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1">
+  <meta property="og:url" content="https://blog.akbarsahata.id/articles/integrating-aws-lambda-with-amazon-comprehend-s-pre-trained-models-for-real-time-text-classification-and-pii-detection.md">
+  <meta property="og:type" content="article">
+  <title>Integrating AWS Lambda with Amazon Comprehend's Pre-trained Models for Real-Time Text Classification and PII Detection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+  <link href="/styles/article.css" rel="stylesheet">
+</head>
+<body>
+  <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
+  <h1>Integrating AWS Lambda with Amazon Comprehend&#39;s Pre-trained Models for Real-Time Text Classification and PII Detection</h1>
+<hr>
+<p><img src="https://images.pexels.com/photos/279810/pexels-photo-279810.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1" alt="security"></p>
+<hr>
+<p>By leveraging Amazon Comprehend&#39;s pre-trained models, you can quickly build a scalable, serverless application for real-time text classification and PII detection without the need to train custom models. Below is a detailed guide on how to implement this solution, including code examples and practical tips.</p>
+<h2><strong>Problem Statement</strong></h2>
+<p><strong>Title</strong>: <em>Evaluating the Effectiveness of Serverless Architectures for Real-Time Text Classification and PII Detection Using AWS Lambda and Amazon Comprehend</em></p>
+<p><strong>Problem Statement</strong>:</p>
+<p>In today&#39;s digital landscape, organizations frequently handle large volumes of text data that may contain sensitive information, necessitating efficient and scalable solutions for text analysis and data protection. Traditional server-based architectures can be costly, complex to manage, and may not scale effectively with fluctuating workloads. Serverless computing offers a potential solution by automatically scaling resources and reducing operational overhead.</p>
+<p>This research aims to <strong>investigate the feasibility and effectiveness of using AWS Lambda in conjunction with Amazon Comprehend&#39;s pre-trained models for real-time text classification and Personally Identifiable Information (PII) detection</strong>. Specifically, the study seeks to address the following questions:</p>
+<ol>
+<li><strong>Performance Efficiency</strong>: How does the serverless architecture perform in terms of latency and throughput for real-time text processing tasks?</li>
+<li><strong>Accuracy of Pre-trained Models</strong>: How effective are Amazon Comprehend&#39;s pre-trained models in accurately detecting PII and classifying text in various contexts without customization?</li>
+<li><strong>Scalability and Cost-effectiveness</strong>: Can the integration of AWS Lambda and Amazon Comprehend provide a scalable and cost-efficient solution compared to traditional server-based approaches?</li>
+<li><strong>Implementation Challenges</strong>: What are the potential challenges and limitations encountered when deploying this serverless architecture, and how can they be mitigated?</li>
+</ol>
+<hr>
+<h2><strong>Expected Results</strong></h2>
+<p><strong>1. Performance Metrics</strong>:</p>
+<ul>
+<li><strong>Latency</strong>: Measure the time taken from the receipt of a text input to the return of analysis results.<ul>
+<li>Expected Result: AWS Lambda functions should exhibit low latency suitable for real-time applications, although cold starts might introduce some delays.</li>
+</ul>
+</li>
+<li><strong>Throughput</strong>: Assess how many requests can be handled per second.<ul>
+<li>Expected Result: The serverless architecture should scale automatically to handle increased loads without significant degradation in performance.</li>
+</ul>
+</li>
+</ul>
+<p><strong>2. Accuracy Evaluation</strong>:</p>
+<ul>
+<li><strong>PII Detection</strong>:<ul>
+<li>Use a test dataset containing known PII entities.</li>
+<li><strong>Expected Result</strong>: Amazon Comprehend&#39;s pre-trained models should accurately identify standard PII types (e.g., names, emails) but may miss domain-specific entities.</li>
+</ul>
+</li>
+<li><strong>Text Classification</strong>:<ul>
+<li>Evaluate sentiment analysis or entity recognition accuracy against a labeled dataset.</li>
+<li><strong>Expected Result</strong>: High accuracy in general contexts, with potential limitations in specialized domains.</li>
+</ul>
+</li>
+</ul>
+<p><strong>3. Scalability and Cost Analysis</strong>:</p>
+<ul>
+<li><strong>Scalability</strong>:<ul>
+<li>Simulate varying workloads to test automatic scaling.</li>
+<li><strong>Expected Result</strong>: The architecture should scale seamlessly with increasing requests without manual intervention.</li>
+</ul>
+</li>
+<li><strong>Cost</strong>:<ul>
+<li>Analyze the cost incurred over a period under different loads.</li>
+<li><strong>Expected Result</strong>: Potential cost savings due to pay-per-use billing, especially under variable workloads.</li>
+</ul>
+</li>
+</ul>
+<p><strong>4. Implementation Insights</strong>:</p>
+<ul>
+<li><strong>Ease of Deployment</strong>:<ul>
+<li>Document the time and resources required to implement the solution.</li>
+<li><strong>Expected Result</strong>: Faster deployment compared to traditional setups due to managed services.</li>
+</ul>
+</li>
+<li><strong>Challenges Encountered</strong>:<ul>
+<li>Identify any issues such as cold starts, permission configurations, or service limits.</li>
+<li><strong>Expected Result</strong>: Some challenges may arise, but they can be addressed with best practices and AWS configurations.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2><strong>Discussion</strong></h2>
+<p><strong>1. Interpretation of Results</strong>:</p>
+<ul>
+<li><p><strong>Performance Analysis</strong>:</p>
+<ul>
+<li>Discuss the measured latency and throughput.</li>
+<li>Compare results against performance benchmarks or traditional architectures.</li>
+<li><strong>Insight</strong>: Highlight the suitability of the serverless approach for real-time applications.</li>
+</ul>
+</li>
+<li><p><strong>Accuracy Findings</strong>:</p>
+<ul>
+<li>Analyze the effectiveness of PII detection and text classification.</li>
+<li>Identify any patterns where the pre-trained models performed well or underperformed.</li>
+<li><strong>Insight</strong>: Provide context on when pre-trained models are sufficient and when custom models might be necessary.</li>
+</ul>
+</li>
+</ul>
+<p><strong>2. Scalability and Cost-effectiveness</strong>:</p>
+<ul>
+<li><p><strong>Scalability</strong>:</p>
+<ul>
+<li>Reflect on how the serverless architecture handled workload fluctuations.</li>
+<li><strong>Insight</strong>: Emphasize the benefits of automatic scaling without the need for manual resource provisioning.</li>
+</ul>
+</li>
+<li><p><strong>Cost Analysis</strong>:</p>
+<ul>
+<li>Break down the costs incurred during testing.</li>
+<li>Compare with estimated costs of traditional server-based solutions.</li>
+<li><strong>Insight</strong>: Discuss cost savings or identify scenarios where serverless might be more expensive.</li>
+</ul>
+</li>
+</ul>
+<p><strong>3. Implementation Challenges and Solutions</strong>:</p>
+<ul>
+<li><p><strong>Cold Starts</strong>:</p>
+<ul>
+<li>Describe the impact of cold starts on performance.</li>
+<li><strong>Solution</strong>: Suggest mitigation strategies like Provisioned Concurrency if necessary.</li>
+</ul>
+</li>
+<li><p><strong>Security Considerations</strong>:</p>
+<ul>
+<li>Discuss how PII data is handled securely within the architecture.</li>
+<li><strong>Solution</strong>: Highlight the importance of IAM roles, encryption, and data anonymization.</li>
+</ul>
+</li>
+<li><p><strong>Service Limitations</strong>:</p>
+<ul>
+<li>Note any limitations encountered, such as API rate limits or payload size restrictions.</li>
+<li><strong>Solution</strong>: Provide recommendations on how to address these issues (e.g., batching requests, requesting service limit increases).</li>
+</ul>
+</li>
+</ul>
+<p><strong>4. Practical Implications</strong>:</p>
+<ul>
+<li><p><strong>Use Cases</strong>:</p>
+<ul>
+<li>Identify real-world applications where this architecture is beneficial (e.g., content moderation, customer feedback analysis).</li>
+<li><strong>Insight</strong>: Demonstrate the practicality and relevance of the solution.</li>
+</ul>
+</li>
+<li><p><strong>Benefits of Serverless Architecture</strong>:</p>
+<ul>
+<li>Summarize how serverless computing reduces operational overhead and allows developers to focus on application logic.</li>
+<li><strong>Insight</strong>: Emphasize the agility and flexibility provided by managed services.</li>
+</ul>
+</li>
+</ul>
+<p><strong>5. Limitations of the Study</strong>:</p>
+<ul>
+<li><p><strong>Scope of Pre-trained Models</strong>:</p>
+<ul>
+<li>Acknowledge that pre-trained models may not cover all industry-specific requirements.</li>
+<li><strong>Suggestion</strong>: Recommend areas where custom models could enhance performance.</li>
+</ul>
+</li>
+<li><p><strong>Data Privacy Concerns</strong>:</p>
+<ul>
+<li>Discuss any potential concerns regarding data sent to AWS services.</li>
+<li><strong>Solution</strong>: Mention AWS&#39;s compliance certifications and data handling policies.</li>
+</ul>
+</li>
+</ul>
+<p><strong>6. Future Work</strong>:</p>
+<ul>
+<li><strong>Custom Model Training</strong>:<ul>
+<li>Propose training custom models with Amazon Comprehend or SageMaker for specialized use cases.</li>
+</ul>
+</li>
+<li><strong>Extended Language Support</strong>:<ul>
+<li>Explore adding support for more languages or dialects.</li>
+</ul>
+</li>
+<li><strong>Integration with Other Services</strong>:<ul>
+<li>Suggest integrating additional AWS services (e.g., Amazon SQS for queueing, AWS KMS for encryption) to enhance the solution.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2><strong>Conclusion</strong></h2>
+<ul>
+<li><strong>Summary of Findings</strong>:<ul>
+<li>Recap how the integration of AWS Lambda and Amazon Comprehend provides an effective solution for real-time text analysis.</li>
+</ul>
+</li>
+<li><strong>Final Thoughts</strong>:<ul>
+<li>Reflect on the implications of adopting serverless architectures in modern applications.</li>
+<li>Encourage organizations to consider such architectures for scalable and cost-effective solutions.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2><strong>Additional Tips for Your Research Paper</strong></h2>
+<ul>
+<li><p><strong>Abstract and Introduction</strong>:</p>
+<ul>
+<li>Clearly state the motivation behind the research.</li>
+<li>Highlight the gap in existing solutions that your research addresses.</li>
+</ul>
+</li>
+<li><p><strong>Literature Review</strong>:</p>
+<ul>
+<li>Include a section reviewing existing literature on serverless architectures, text analysis, and PII detection.</li>
+<li>Compare traditional methods with serverless approaches.</li>
+</ul>
+</li>
+<li><p><strong>Methodology Details</strong>:</p>
+<ul>
+<li>Provide a step-by-step explanation of your implementation.</li>
+<li>Include diagrams of the architecture (e.g., flowcharts, AWS architecture diagrams).</li>
+</ul>
+</li>
+<li><p><strong>Data Description</strong>:</p>
+<ul>
+<li>Describe the datasets used for testing, including sources and characteristics.</li>
+<li>Discuss any ethical considerations in using the data.</li>
+</ul>
+</li>
+<li><p><strong>Appendices</strong>:</p>
+<ul>
+<li>Include code snippets, configurations, or additional data that support your research but are too detailed for the main body.</li>
+</ul>
+</li>
+<li><p><strong>References</strong>:</p>
+<ul>
+<li>Cite all sources, including AWS documentation, research papers, and any third-party tools or libraries used.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>By structuring your research paper with a clear problem statement, thorough analysis of results, and insightful discussion, you&#39;ll provide valuable contributions to the field. This approach not only demonstrates the practicality of using AWS Lambda with Amazon Comprehend for real-time text analysis but also offers a foundation for future exploration and innovation in serverless machine learning applications.</p>
+<hr>
+<h3><strong>1. Overview of the Architecture</strong></h3>
+<p><strong>AWS Services Involved:</strong></p>
+<ul>
+<li><strong>AWS Lambda</strong>: Serverless compute service to run your code in response to events.</li>
+<li><strong>Amazon Comprehend</strong>: Provides natural language processing (NLP) capabilities.</li>
+<li><strong>Amazon API Gateway</strong>: Creates and manages APIs to trigger Lambda functions.</li>
+<li><strong>AWS Identity and Access Management (IAM)</strong>: Manages permissions securely.</li>
+<li><strong>Amazon S3 or DynamoDB (Optional)</strong>: For storing processed data or logs.</li>
+</ul>
+<p><strong>Workflow:</strong></p>
+<ol>
+<li><strong>Client/Application</strong> sends text data via an API request.</li>
+<li><strong>Amazon API Gateway</strong> receives the request and triggers an AWS Lambda function.</li>
+<li><strong>AWS Lambda Function</strong> processes the text using Amazon Comprehend&#39;s pre-trained models.</li>
+<li><strong>Results</strong> (classification labels, PII entities) are returned to the client or stored.</li>
+</ol>
+<hr>
+<h3><strong>2. Setting Up the Infrastructure</strong></h3>
+<h4><strong>Step 1: Create an AWS Account and Configure IAM</strong></h4>
+<ul>
+<li><strong>Create an AWS Account</strong>: If you haven&#39;t already, sign up at <a href="https://aws.amazon.com/">AWS</a>.</li>
+<li><strong>IAM User and Roles</strong>:<ul>
+<li><strong>Create an IAM User</strong>: For yourself with administrative permissions.</li>
+<li><strong>Create an IAM Role for Lambda</strong>:<ul>
+<li>Permissions needed:<ul>
+<li><code>AWSLambdaBasicExecutionRole</code></li>
+<li><code>ComprehendFullAccess</code> or a custom policy with specific permissions (more secure).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4><strong>Step 2: Develop the AWS Lambda Function</strong></h4>
+<p>We&#39;ll use <strong>Node.js</strong> for the Lambda function code.</p>
+<p><strong>Code for AWS Lambda Function:</strong></p>
+<pre><code class="language-javascript">// index.js
+
+const AWS = require(&#39;aws-sdk&#39;);
+const comprehend = new AWS.Comprehend();
+
+exports.handler = async (event) =&gt; {
+    try {
+        // Extract text from the event
+        const text = event.text;
+        const languageCode = &#39;en&#39;; // Adjust if necessary
+
+        // PII Detection
+        const piiParams = {
+            Text: text,
+            LanguageCode: languageCode
+        };
+        const piiData = await comprehend.detectPiiEntities(piiParams).promise();
+
+        // Extract PII entities
+        const piiEntities = piiData.Entities;
+
+        // Text Classification (Sentiment Analysis as an example)
+        const sentimentParams = {
+            Text: text,
+            LanguageCode: languageCode
+        };
+        const sentimentData = await comprehend.detectSentiment(sentimentParams).promise();
+
+        // Extract sentiment
+        const sentiment = sentimentData.Sentiment;
+
+        // Key Phrases Extraction
+        const keyPhrasesParams = {
+            Text: text,
+            LanguageCode: languageCode
+        };
+        const keyPhrasesData = await comprehend.detectKeyPhrases(keyPhrasesParams).promise();
+
+        // Prepare the response
+        const response = {
+            statusCode: 200,
+            body: JSON.stringify({
+                sentiment: sentiment,
+                piiEntities: piiEntities,
+                keyPhrases: keyPhrasesData.KeyPhrases
+            }),
+        };
+        return response;
+    } catch (error) {
+        console.error(error);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({
+                error: &#39;Error processing the text.&#39;
+            }),
+        };
+    }
+};
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li><strong>LanguageCode</strong>: Adjust <code>&#39;en&#39;</code> if you&#39;re processing text in other languages.</li>
+<li><strong>Event Structure</strong>: Ensure that the event object passed to the Lambda function includes the <code>text</code> field.</li>
+</ul>
+<p><strong>Dependencies:</strong></p>
+<ul>
+<li>AWS SDK is available in the Lambda runtime environment by default.</li>
+<li>No need to include it in a <code>package.json</code> unless you need a specific version.</li>
+</ul>
+<h4><strong>Step 3: Create the Lambda Function</strong></h4>
+<ol>
+<li><p><strong>Go to AWS Lambda Console</strong>: <a href="https://console.aws.amazon.com/lambda/">Lambda Console</a></p>
+</li>
+<li><p><strong>Create a Function</strong>:</p>
+<ul>
+<li><strong>Function Name</strong>: e.g., <code>TextProcessingFunction</code></li>
+<li><strong>Runtime</strong>: Node.js 14.x (or the latest available)</li>
+<li><strong>Permissions</strong>: Choose or create an execution role with the necessary permissions.</li>
+</ul>
+</li>
+<li><p><strong>Set the Function Code</strong>:</p>
+<ul>
+<li>Copy and paste the <code>index.js</code> code into the code editor.</li>
+</ul>
+</li>
+<li><p><strong>Handler Configuration</strong>:</p>
+<ul>
+<li>Ensure the handler is set to <code>index.handler</code>.</li>
+</ul>
+</li>
+</ol>
+<h4><strong>Step 4: Set Up Amazon API Gateway</strong></h4>
+<ol>
+<li><p><strong>Navigate to API Gateway Console</strong>: <a href="https://console.aws.amazon.com/apigateway/">API Gateway Console</a></p>
+</li>
+<li><p><strong>Create a New API</strong>:</p>
+<ul>
+<li><strong>REST API</strong></li>
+<li><strong>Protocol</strong>: REST</li>
+<li><strong>Create New API</strong></li>
+<li><strong>API Name</strong>: e.g., <code>TextProcessingAPI</code></li>
+</ul>
+</li>
+<li><p><strong>Create a Resource</strong>:</p>
+<ul>
+<li><strong>Resource Name</strong>: e.g., <code>/process-text</code></li>
+<li><strong>Resource Path</strong>: <code>/process-text</code></li>
+</ul>
+</li>
+<li><p><strong>Create a Method</strong>:</p>
+<ul>
+<li><strong>Method</strong>: <code>POST</code></li>
+</ul>
+</li>
+<li><p><strong>Integration</strong>:</p>
+<ul>
+<li><strong>Integration Type</strong>: Lambda Function</li>
+<li><strong>Lambda Region</strong>: Your Lambda&#39;s region</li>
+<li><strong>Lambda Function</strong>: Select <code>TextProcessingFunction</code></li>
+</ul>
+</li>
+<li><p><strong>Method Request</strong>:</p>
+<ul>
+<li><strong>Request Validator</strong>: Validate body, query string parameters, and headers (optional).</li>
+</ul>
+</li>
+<li><p><strong>Method Response</strong>:</p>
+<ul>
+<li>Set up responses for <code>200</code>, <code>400</code>, <code>500</code> status codes.</li>
+</ul>
+</li>
+<li><p><strong>Deploy the API</strong>:</p>
+<ul>
+<li><strong>Actions</strong>: Deploy API</li>
+<li><strong>Deployment Stage</strong>: e.g., <code>prod</code></li>
+</ul>
+</li>
+<li><p><strong>Testing the API</strong>:</p>
+<ul>
+<li>Use the API Gateway&#39;s built-in test capability or tools like Postman to send a POST request to your API.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Example Request:</strong></p>
+<pre><code class="language-json">{
+    &quot;text&quot;: &quot;Your text to analyze goes here.&quot;
+}
+</code></pre>
+<h4><strong>Step 5: Configure IAM Permissions</strong></h4>
+<ul>
+<li><strong>Lambda Execution Role</strong>:<ul>
+<li>Attach policies:<ul>
+<li><strong>AWSLambdaBasicExecutionRole</strong></li>
+<li>Custom policy with <code>comprehend:DetectSentiment</code>, <code>comprehend:DetectPiiEntities</code>, <code>comprehend:DetectKeyPhrases</code> permissions.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Example IAM Policy:</strong></p>
+<pre><code class="language-json">{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Action&quot;: [
+                &quot;comprehend:DetectSentiment&quot;,
+                &quot;comprehend:DetectPiiEntities&quot;,
+                &quot;comprehend:DetectKeyPhrases&quot;
+            ],
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Resource&quot;: &quot;*&quot;
+        }
+    ]
+}
+</code></pre>
+<ul>
+<li><strong>API Gateway Execution Role</strong>:<ul>
+<li>Ensure that API Gateway can invoke your Lambda function.</li>
+</ul>
+</li>
+</ul>
+<h4><strong>Step 6: Testing the Lambda Function Locally (Optional)</strong></h4>
+<ul>
+<li>Use the AWS SAM CLI for local testing.</li>
+</ul>
+<p><strong>Install AWS SAM CLI</strong>: <a href="https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html">Installation Guide</a></p>
+<ul>
+<li><strong>sam init</strong>: Initialize a new SAM project.</li>
+<li><strong>sam local invoke</strong>: Test the Lambda function locally.</li>
+</ul>
+<hr>
+<h3><strong>3. Tips and Best Practices</strong></h3>
+<h4><strong>Lambda Function Optimization</strong></h4>
+<ul>
+<li><strong>Cold Starts</strong>:<ul>
+<li>Keep your deployment package size small.</li>
+<li>Avoid unnecessary dependencies.</li>
+</ul>
+</li>
+<li><strong>Timeouts and Memory</strong>:<ul>
+<li>Adjust the Lambda function&#39;s timeout and memory settings to balance performance and cost.</li>
+</ul>
+</li>
+<li><strong>Error Handling</strong>:<ul>
+<li>Implement try-catch blocks to handle exceptions.</li>
+<li>Log errors using <code>console.error</code> for troubleshooting.</li>
+</ul>
+</li>
+</ul>
+<h4><strong>Security</strong></h4>
+<ul>
+<li><strong>Input Validation</strong>:<ul>
+<li>Validate and sanitize input data to prevent injection attacks.</li>
+</ul>
+</li>
+<li><strong>IAM Policies</strong>:<ul>
+<li>Follow the principle of least privilege.</li>
+<li>Use specific resource ARNs if possible.</li>
+</ul>
+</li>
+<li><strong>Encrypt Sensitive Data</strong>:<ul>
+<li>If storing data, use encryption at rest and in transit.</li>
+</ul>
+</li>
+</ul>
+<h4><strong>Monitoring and Logging</strong></h4>
+<ul>
+<li><strong>CloudWatch Logs</strong>:<ul>
+<li>Monitor logs to debug and track function execution.</li>
+</ul>
+</li>
+<li><strong>CloudWatch Metrics</strong>:<ul>
+<li>Set up custom metrics if necessary.</li>
+</ul>
+</li>
+<li><strong>Alerts</strong>:<ul>
+<li>Create CloudWatch alarms for errors or performance thresholds.</li>
+</ul>
+</li>
+</ul>
+<h4><strong>Scaling Considerations</strong></h4>
+<ul>
+<li><strong>Concurrency Limits</strong>:<ul>
+<li>Be aware of default Lambda concurrency limits.</li>
+<li>Request limit increases if needed.</li>
+</ul>
+</li>
+<li><strong>Throttling</strong>:<ul>
+<li>Implement throttling in API Gateway to prevent abuse.</li>
+</ul>
+</li>
+</ul>
+<h4><strong>Cost Management</strong></h4>
+<ul>
+<li><strong>Optimize Function Execution</strong>:<ul>
+<li>Code efficiently to reduce execution time.</li>
+</ul>
+</li>
+<li><strong>Use AWS Free Tier</strong>:<ul>
+<li>Monitor usage to stay within free tier limits.</li>
+</ul>
+</li>
+<li><strong>Cost Monitoring</strong>:<ul>
+<li>Use AWS Cost Explorer to monitor expenses.</li>
+</ul>
+</li>
+</ul>
+<h4><strong>API Gateway Enhancements</strong></h4>
+<ul>
+<li><strong>CORS Configuration</strong>:<ul>
+<li>Enable CORS if your API will be called from web browsers.</li>
+</ul>
+</li>
+<li><strong>Custom Domain Names</strong>:<ul>
+<li>Set up a custom domain for your API if desired.</li>
+</ul>
+</li>
+<li><strong>Caching</strong>:<ul>
+<li>Use API Gateway caching to improve performance (less relevant for dynamic content).</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3><strong>4. Extending the Functionality</strong></h3>
+<h4><strong>Adding Language Detection</strong></h4>
+<ul>
+<li>Use <code>comprehend.detectDominantLanguage</code> to auto-detect the language.</li>
+</ul>
+<p><strong>Code Example:</strong></p>
+<pre><code class="language-javascript">// Language Detection
+const languageData = await comprehend.detectDominantLanguage({ Text: text }).promise();
+const detectedLanguages = languageData.Languages;
+const primaryLanguage = detectedLanguages[0].LanguageCode;
+</code></pre>
+<ul>
+<li>Then use <code>primaryLanguage</code> as the <code>LanguageCode</code> in subsequent API calls.</li>
+</ul>
+<h4><strong>Entity Recognition</strong></h4>
+<ul>
+<li>Recognize entities like names, places, organizations.</li>
+</ul>
+<p><strong>Code Example:</strong></p>
+<pre><code class="language-javascript">const entitiesParams = {
+    Text: text,
+    LanguageCode: languageCode
+};
+const entitiesData = await comprehend.detectEntities(entitiesParams).promise();
+const entities = entitiesData.Entities;
+</code></pre>
+<ul>
+<li>Add <code>entities</code> to your response.</li>
+</ul>
+<h4><strong>Masking PII in Text</strong></h4>
+<ul>
+<li>Replace PII entities with placeholders to anonymize text.</li>
+</ul>
+<p><strong>Code Example:</strong></p>
+<pre><code class="language-javascript">let anonymizedText = text;
+piiEntities.forEach(entity =&gt; {
+    const piiType = entity.Type;
+    const beginOffset = entity.BeginOffset;
+    const endOffset = entity.EndOffset;
+
+    const piiText = text.substring(beginOffset, endOffset);
+    anonymizedText = anonymizedText.replace(piiText, `[${piiType}]`);
+});
+</code></pre>
+<ul>
+<li>Include <code>anonymizedText</code> in your response.</li>
+</ul>
+<hr>
+<h3><strong>5. Sample Full Lambda Function with Enhancements</strong></h3>
+<pre><code class="language-javascript">const AWS = require(&#39;aws-sdk&#39;);
+const comprehend = new AWS.Comprehend();
+
+exports.handler = async (event) =&gt; {
+    try {
+        // Extract text from the event
+        const text = event.text;
+
+        // Language Detection
+        const languageData = await comprehend.detectDominantLanguage({ Text: text }).promise();
+        const detectedLanguages = languageData.Languages;
+        const languageCode = detectedLanguages[0].LanguageCode;
+
+        // PII Detection
+        const piiParams = {
+            Text: text,
+            LanguageCode: languageCode
+        };
+        const piiData = await comprehend.detectPiiEntities(piiParams).promise();
+        const piiEntities = piiData.Entities;
+
+        // Mask PII in Text
+        let anonymizedText = text;
+        piiEntities.forEach(entity =&gt; {
+            const beginOffset = entity.BeginOffset;
+            const endOffset = entity.EndOffset;
+            const piiType = entity.Type;
+
+            const piiText = text.substring(beginOffset, endOffset);
+            anonymizedText = anonymizedText.replace(piiText, `[${piiType}]`);
+        });
+
+        // Sentiment Analysis
+        const sentimentParams = {
+            Text: text,
+            LanguageCode: languageCode
+        };
+        const sentimentData = await comprehend.detectSentiment(sentimentParams).promise();
+        const sentiment = sentimentData.Sentiment;
+        const sentimentScore = sentimentData.SentimentScore;
+
+        // Entity Recognition
+        const entitiesParams = {
+            Text: text,
+            LanguageCode: languageCode
+        };
+        const entitiesData = await comprehend.detectEntities(entitiesParams).promise();
+        const entities = entitiesData.Entities;
+
+        // Key Phrases Extraction
+        const keyPhrasesParams = {
+            Text: text,
+            LanguageCode: languageCode
+        };
+        const keyPhrasesData = await comprehend.detectKeyPhrases(keyPhrasesParams).promise();
+
+        // Prepare the response
+        const response = {
+            statusCode: 200,
+            body: JSON.stringify({
+                originalText: text,
+                anonymizedText: anonymizedText,
+                language: languageCode,
+                sentiment: sentiment,
+                sentimentScore: sentimentScore,
+                piiEntities: piiEntities,
+                entities: entities,
+                keyPhrases: keyPhrasesData.KeyPhrases
+            }),
+        };
+        return response;
+    } catch (error) {
+        console.error(&#39;Error processing the text:&#39;, error);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({
+                error: &#39;Error processing the text.&#39;
+            }),
+        };
+    }
+};
+</code></pre>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li><strong>Language Detection</strong>: Automatically detects the dominant language in the text.</li>
+<li><strong>Anonymizing Text</strong>: Replaces PII entities with their types (e.g., <code>[NAME]</code>).</li>
+<li><strong>Sentiment Analysis</strong>: Provides overall sentiment and detailed sentiment scores.</li>
+<li><strong>Entity Recognition</strong>: Identifies entities like persons, places, and organizations.</li>
+<li><strong>Error Logging</strong>: Improved error messages for better debugging.</li>
+</ul>
+<hr>
+<h3><strong>6. Testing the Enhanced Lambda Function</strong></h3>
+<ul>
+<li><strong>Sample Event Input</strong>:</li>
+</ul>
+<pre><code class="language-json">{
+    &quot;text&quot;: &quot;Hello, my name is John Doe and my email is john.doe@example.com. I live in New York.&quot;
+}
+</code></pre>
+<ul>
+<li><strong>Expected Response</strong>:</li>
+</ul>
+<pre><code class="language-json">{
+    &quot;originalText&quot;: &quot;Hello, my name is John Doe and my email is john.doe@example.com. I live in New York.&quot;,
+    &quot;anonymizedText&quot;: &quot;Hello, my name is [NAME] and my email is [EMAIL]. I live in New York.&quot;,
+    &quot;language&quot;: &quot;en&quot;,
+    &quot;sentiment&quot;: &quot;NEUTRAL&quot;,
+    &quot;sentimentScore&quot;: {
+        &quot;Positive&quot;: 0.0,
+        &quot;Negative&quot;: 0.0,
+        &quot;Neutral&quot;: 0.99,
+        &quot;Mixed&quot;: 0.01
+    },
+    &quot;piiEntities&quot;: [
+        {
+            &quot;Score&quot;: 0.9999,
+            &quot;Type&quot;: &quot;NAME&quot;,
+            &quot;BeginOffset&quot;: 18,
+            &quot;EndOffset&quot;: 26
+        },
+        {
+            &quot;Score&quot;: 0.9999,
+            &quot;Type&quot;: &quot;EMAIL&quot;,
+            &quot;BeginOffset&quot;: 42,
+            &quot;EndOffset&quot;: 63
+        }
+    ],
+    &quot;entities&quot;: [
+        {
+            &quot;Score&quot;: 0.9999,
+            &quot;Type&quot;: &quot;PERSON&quot;,
+            &quot;Text&quot;: &quot;John Doe&quot;,
+            &quot;BeginOffset&quot;: 18,
+            &quot;EndOffset&quot;: 26
+        },
+        {
+            &quot;Score&quot;: 0.9999,
+            &quot;Type&quot;: &quot;LOCATION&quot;,
+            &quot;Text&quot;: &quot;New York&quot;,
+            &quot;BeginOffset&quot;: 75,
+            &quot;EndOffset&quot;: 83
+        }
+    ],
+    &quot;keyPhrases&quot;: [
+        {
+            &quot;Score&quot;: 0.9999,
+            &quot;Text&quot;: &quot;my name&quot;,
+            &quot;BeginOffset&quot;: 10,
+            &quot;EndOffset&quot;: 17
+        },
+        {
+            &quot;Score&quot;: 0.9999,
+            &quot;Text&quot;: &quot;email&quot;,
+            &quot;BeginOffset&quot;: 31,
+            &quot;EndOffset&quot;: 36
+        },
+        {
+            &quot;Score&quot;: 0.9999,
+            &quot;Text&quot;: &quot;New York&quot;,
+            &quot;BeginOffset&quot;: 75,
+            &quot;EndOffset&quot;: 83
+        }
+    ]
+}
+</code></pre>
+<hr>
+<h3><strong>7. Additional Tips</strong></h3>
+<h4><strong>Logging Sensitive Data</strong></h4>
+<ul>
+<li>Be cautious about logging text that contains PII.</li>
+<li>Use logging levels to control what gets logged in production.</li>
+</ul>
+<h4><strong>Asynchronous Processing</strong></h4>
+<ul>
+<li>For large texts or high throughput, consider asynchronous processing using SQS and Lambda triggers.</li>
+</ul>
+<h4><strong>Error Monitoring</strong></h4>
+<ul>
+<li>Use AWS X-Ray for tracing and profiling.</li>
+</ul>
+<h4><strong>Documentation and Comments</strong></h4>
+<ul>
+<li>Document your code thoroughly for maintainability.</li>
+<li>Use comments to explain complex logic.</li>
+</ul>
+<h4><strong>Version Control</strong></h4>
+<ul>
+<li>Use a version control system like Git.</li>
+<li>Consider using AWS CodeCommit or integrate with GitHub.</li>
+</ul>
+<h4><strong>Automation and Deployment</strong></h4>
+<ul>
+<li>Use AWS SAM or CloudFormation for infrastructure as code.</li>
+<li>Automate deployments using AWS CodePipeline.</li>
+</ul>
+<hr>
+<h3><strong>8. References and Resources</strong></h3>
+<ul>
+<li><strong>AWS SDK for JavaScript Documentation</strong>: <a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/">AWS SDK Docs</a></li>
+<li><strong>Amazon Comprehend API Reference</strong>: <a href="https://docs.aws.amazon.com/comprehend/latest/dg/API_Reference.html">Comprehend API</a></li>
+<li><strong>AWS Lambda Developer Guide</strong>: <a href="https://docs.aws.amazon.com/lambda/latest/dg/welcome.html">Lambda Guide</a></li>
+<li><strong>AWS Serverless Application Model (SAM)</strong>: <a href="https://aws.amazon.com/serverless/sam/">AWS SAM</a></li>
+<li><strong>Tutorial: Build a Serverless Web Application</strong>: <a href="https://aws.amazon.com/getting-started/hands-on/build-serverless-web-app-lambda-apigateway-s3-dynamodb-cognito/">AWS Workshop</a></li>
+</ul>
+<hr>
+<h3><strong>Conclusion</strong></h3>
+<p>By leveraging Amazon Comprehend&#39;s pre-trained models and AWS Lambda, you can quickly build a serverless application for real-time text analysis. This approach eliminates the need for model training and infrastructure management, allowing you to focus on application logic and user experience.</p>
+<p>The provided code examples and tips should help you implement the solution efficiently. Remember to adhere to best practices for security, performance optimization, and cost management.</p>
+
+  <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+  <div class="share-buttons">
+    <button class="share-button" onclick="shareToFacebook()">F</button>
+    <button class="share-button" onclick="shareToTwitter()">X</button>
+    <button class="share-button" onclick="shareToWhatsApp()">W</button>
+    <button class="share-button" onclick="copyLink()">C</button>
+  </div>
+  <div id="disqus_thread"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://blog.akbarsahata.id/articles/integrating-aws-lambda-with-amazon-comprehend-s-pre-trained-models-for-real-time-text-classification-and-pii-detection.md";
+      this.page.identifier = "integrating-aws-lambda-with-amazon-comprehend-s-pre-trained-models-for-real-time-text-classification-and-pii-detection.md";
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    function shareToFacebook() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/integrating-aws-lambda-with-amazon-comprehend-s-pre-trained-models-for-real-time-text-classification-and-pii-detection.md");
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+    
+    function shareToTwitter() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/integrating-aws-lambda-with-amazon-comprehend-s-pre-trained-models-for-real-time-text-classification-and-pii-detection.md");
+      const text = encodeURIComponent("Integrating AWS Lambda with Amazon Comprehend's Pre-trained Models for Real-Time Text Classification and PII Detection");
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    function shareToWhatsApp() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/integrating-aws-lambda-with-amazon-comprehend-s-pre-trained-models-for-real-time-text-classification-and-pii-detection.md");
+      window.open(`https://wa.me/?text=${url}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText("https://blog.akbarsahata.id/articles/integrating-aws-lambda-with-amazon-comprehend-s-pre-trained-models-for-real-time-text-classification-and-pii-detection.md").then(() => {
+        alert('Link copied to clipboard');
+      });
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>

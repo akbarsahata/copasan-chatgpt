@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="In this blog post, we will explore how decision tree classification works, focusing on how to split data using the Gini Index. We'll also walk through...">
+  <meta property="og:title" content="Understanding Decision Tree Classification and the Gini Index">
+  <meta property="og:description" content="In this blog post, we will explore how decision tree classification works, focusing on how to split data using the Gini Index. We'll also walk through...">
+  <meta property="og:image" content="https://images.pexels.com/photos/3183170/pexels-photo-3183170.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1">
+  <meta property="og:url" content="https://blog.akbarsahata.id/articles/understanding-decision-tree-classification-and-the-gini-index.md">
+  <meta property="og:type" content="article">
+  <title>Understanding Decision Tree Classification and the Gini Index</title>
+  <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+  <link href="/styles/article.css" rel="stylesheet">
+</head>
+<body>
+  <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
+  <h1>Understanding Decision Tree Classification and the Gini Index</h1>
+<hr>
+<p><img src="https://images.pexels.com/photos/3183170/pexels-photo-3183170.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1" alt="decision-tree-look-like"></p>
+<hr>
+<p>In this blog post, we will explore how decision tree classification works, focusing on how to split data using the <strong>Gini Index</strong>. We&#39;ll also walk through a coding example using the popular <strong>scikit-learn</strong> library, explain the use of the <code>random_state</code> parameter, and calculate the Gini Index with an example dataset.</p>
+<h2><strong>What is a Decision Tree?</strong></h2>
+<p>A decision tree is a machine learning algorithm that splits data into subsets based on feature values to make predictions. It’s popular for both classification and regression tasks due to its simplicity and interpretability. In a classification context, decision trees work by repeatedly splitting the data into subsets that minimize a particular measure of impurity, such as the <strong>Gini Index</strong>.</p>
+<h2><strong>Gini Index</strong></h2>
+<p>The <strong>Gini Index</strong> is a metric that evaluates the impurity of a dataset. It measures how often a randomly chosen element would be incorrectly classified if it were randomly labeled according to the distribution of labels in the dataset. The formula for the Gini Index is:</p>
+<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>G</mi><mi>i</mi><mi>n</mi><mi>i</mi><mo stretchy="false">(</mo><mi>S</mi><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn><mo>−</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msubsup><mi>p</mi><mi>i</mi><mn>2</mn></msubsup></mrow><annotation encoding="application/x-tex">Gini(S) = 1 - \sum_{i=1}^{n} p_i^2</annotation></semantics></math></span>
+<p>Where:</p>
+<ul>
+<li><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">p_i</annotation></semantics></math></span> is the proportion of data points belonging to class <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span>,</li>
+<li><span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span> is the number of classes in the dataset.</li>
+</ul>
+<p>A <strong>Gini Index</strong> of 0 indicates perfect purity, where all elements belong to the same class, and a Gini Index close to 1 indicates high impurity.</p>
+<h2><strong>Example: Gini Index Calculation</strong></h2>
+<p>Let’s consider a dataset of customer purchases based on their age:</p>
+<table>
+<thead>
+<tr>
+<th>Age</th>
+<th>Purchase (Yes/No)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>25</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>35</td>
+<td>No</td>
+</tr>
+<tr>
+<td>45</td>
+<td>No</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Yes</td>
+</tr>
+</tbody></table>
+<p>We can calculate the Gini Index for the initial (parent) node:</p>
+<ul>
+<li><strong>Yes</strong>: 3 instances</li>
+<li><strong>No</strong>: 2 instances</li>
+</ul>
+<p>Using the formula:</p>
+<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>G</mi><mi>i</mi><mi>n</mi><mi>i</mi><mo stretchy="false">(</mo><mtext>Parent</mtext><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn><mo>−</mo><mo stretchy="false">(</mo><mi>p</mi><mo stretchy="false">(</mo><mi>Y</mi><mi>e</mi><mi>s</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo>+</mo><mi>p</mi><mo stretchy="false">(</mo><mi>N</mi><mi>o</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup><mo stretchy="false">)</mo><mo>=</mo><mn>1</mn><mo>−</mo><msup><mrow><mo fence="true">(</mo><mfrac><mn>3</mn><mn>5</mn></mfrac><mo fence="true">)</mo></mrow><mn>2</mn></msup><mo>−</mo><msup><mrow><mo fence="true">(</mo><mfrac><mn>2</mn><mn>5</mn></mfrac><mo fence="true">)</mo></mrow><mn>2</mn></msup><mo>=</mo><mn>1</mn><mo>−</mo><mn>0.36</mn><mo>−</mo><mn>0.16</mn><mo>=</mo><mn>0.48</mn></mrow><annotation encoding="application/x-tex">Gini(\text{Parent}) = 1 - (p(Yes)^2 + p(No)^2) = 1 - \left(\frac{3}{5}\right)^2 - \left(\frac{2}{5}\right)^2 = 1 - 0.36 - 0.16 = 0.48</annotation></semantics></math></span>
+<p>The Gini Index of the parent node is 0.48, indicating some impurity.</p>
+<h2><strong>How Does Splitting Work?</strong></h2>
+<p>In decision trees, we look for the best way to split the data to minimize the impurity. For continuous variables, this is done by evaluating several possible threshold values.</p>
+<p>For example, splitting on <strong>Age ≤ 32.5</strong> would create two groups:</p>
+<ul>
+<li><strong>Group 1 (Age ≤ 32.5)</strong>: [25, 30] → Yes, Yes (Gini = 0)</li>
+<li><strong>Group 2 (Age &gt; 32.5)</strong>: [35, 45, 50] → No, No, Yes (Gini = 0.444)</li>
+</ul>
+<p>The weighted Gini Index for this split is calculated as:</p>
+<span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>Gini for split</mtext><mo>=</mo><mfrac><mn>2</mn><mn>5</mn></mfrac><mo>×</mo><mn>0</mn><mo>+</mo><mfrac><mn>3</mn><mn>5</mn></mfrac><mo>×</mo><mn>0.444</mn><mo>=</mo><mn>0.266</mn></mrow><annotation encoding="application/x-tex">\text{Gini for split} = \frac{2}{5} \times 0 + \frac{3}{5} \times 0.444 = 0.266</annotation></semantics></math></span>
+<p>This reduction in Gini Index means that this split is an improvement, leading to a more pure division of data.</p>
+<h2><strong>Coding Example Using scikit-learn</strong></h2>
+<p>Now, let’s build a decision tree using <strong>scikit-learn</strong> with the Gini Index as the criterion for splitting.</p>
+<pre><code class="language-python">from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+import pandas as pd
+
+# Sample dataset
+data = {
+    &#39;Age&#39;: [25, 30, 35, 45, 50],
+    &#39;Purchase&#39;: [&#39;Yes&#39;, &#39;Yes&#39;, &#39;No&#39;, &#39;No&#39;, &#39;Yes&#39;]
+}
+
+# Convert Yes/No to binary labels
+df = pd.DataFrame(data)
+df[&#39;Purchase&#39;] = df[&#39;Purchase&#39;].map({&#39;Yes&#39;: 1, &#39;No&#39;: 0})
+
+# Features (X) and Target (y)
+X = df[[&#39;Age&#39;]]  # Feature: Age
+y = df[&#39;Purchase&#39;]  # Target: Purchase
+
+# Split the data into training and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and train the Decision Tree Classifier
+clf = DecisionTreeClassifier(criterion=&#39;gini&#39;, random_state=42)
+clf.fit(X_train, y_train)
+
+# Make predictions
+y_pred = clf.predict(X_test)
+
+# Calculate accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(f&quot;Accuracy: {accuracy}&quot;)
+</code></pre>
+<h3><strong>Explanation of the Code</strong>:</h3>
+<ol>
+<li><p><strong>Data Preparation</strong>:</p>
+<ul>
+<li>We create a simple dataset where &quot;Age&quot; is the feature and &quot;Purchase&quot; is the target (Yes/No).</li>
+<li>The target is mapped to binary labels: 1 for Yes, 0 for No.</li>
+</ul>
+</li>
+<li><p><strong>Train-Test Split</strong>:</p>
+<ul>
+<li>The data is split into a training set (80%) and a test set (20%) using <code>train_test_split</code>. </li>
+<li>We use <code>random_state=42</code> to ensure the results are reproducible. (More on <code>random_state</code> below.)</li>
+</ul>
+</li>
+<li><p><strong>Model Training</strong>:</p>
+<ul>
+<li>A <code>DecisionTreeClassifier</code> is created using the Gini criterion.</li>
+<li>The model is trained on the training set using the <code>fit()</code> method.</li>
+</ul>
+</li>
+<li><p><strong>Prediction and Accuracy</strong>:</p>
+<ul>
+<li>The trained model makes predictions on the test set.</li>
+<li>The accuracy of the model is calculated using <code>accuracy_score()</code>.</li>
+</ul>
+</li>
+</ol>
+<h2><strong>What is <code>random_state</code> and Why Use 42?</strong></h2>
+<p>The <code>random_state</code> parameter controls the randomness in splitting the data and other random processes in the model. Setting it to a specific number ensures the same results each time the code is run, making the results reproducible. The number <strong>42</strong> is often used as a reference to <em>The Hitchhiker’s Guide to the Galaxy</em>, where 42 is &quot;the answer to the ultimate question of life, the universe, and everything.&quot;</p>
+<h2><strong>Conclusion</strong></h2>
+<p>In this blog post, we explored how decision trees classify data and how the Gini Index is used to evaluate splits in the data. We also showed how to implement a decision tree classifier using scikit-learn with a simple dataset. Using <code>random_state=42</code> helps to ensure reproducibility, making the results consistent each time the code is run.</p>
+<p>Decision trees are powerful and interpretable tools for classification tasks, and the Gini Index is a valuable metric for improving their accuracy by ensuring better splits in the data.</p>
+<hr>
+<p>Feel free to experiment with different datasets or <code>random_state</code> values and explore how the decision tree model behaves!</p>
+
+  <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+  <div class="share-buttons">
+    <button class="share-button" onclick="shareToFacebook()">F</button>
+    <button class="share-button" onclick="shareToTwitter()">X</button>
+    <button class="share-button" onclick="shareToWhatsApp()">W</button>
+    <button class="share-button" onclick="copyLink()">C</button>
+  </div>
+  <div id="disqus_thread"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://blog.akbarsahata.id/articles/understanding-decision-tree-classification-and-the-gini-index.md";
+      this.page.identifier = "understanding-decision-tree-classification-and-the-gini-index.md";
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    function shareToFacebook() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/understanding-decision-tree-classification-and-the-gini-index.md");
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+    
+    function shareToTwitter() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/understanding-decision-tree-classification-and-the-gini-index.md");
+      const text = encodeURIComponent("Understanding Decision Tree Classification and the Gini Index");
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    function shareToWhatsApp() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/understanding-decision-tree-classification-and-the-gini-index.md");
+      window.open(`https://wa.me/?text=${url}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText("https://blog.akbarsahata.id/articles/understanding-decision-tree-classification-and-the-gini-index.md").then(() => {
+        alert('Link copied to clipboard');
+      });
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>

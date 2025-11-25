@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="If you've ever stared at a GitHub PR wondering how to summarize your recent commits, this project is for you. In this post, I'll walk you through how ...">
+  <meta property="og:title" content="Build an AI-Powered PR Description Generator with Git, OpenAI, and Cloudflare Workers">
+  <meta property="og:description" content="If you've ever stared at a GitHub PR wondering how to summarize your recent commits, this project is for you. In this post, I'll walk you through how ...">
+  <meta property="og:image" content="https://images.pexels.com/photos/8849295/pexels-photo-8849295.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1">
+  <meta property="og:url" content="https://blog.akbarsahata.id/articles/build-an-ai-powered-pr-description-generator-with-git-openai-and-cloudflare-workers.md">
+  <meta property="og:type" content="article">
+  <title>Build an AI-Powered PR Description Generator with Git, OpenAI, and Cloudflare Workers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+  <link href="/styles/article.css" rel="stylesheet">
+</head>
+<body>
+  <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
+  <h1>Build an AI-Powered PR Description Generator with Git, OpenAI, and Cloudflare Workers</h1>
+<hr>
+<h2><img src="https://images.pexels.com/photos/8849295/pexels-photo-8849295.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1" alt="artificial-intelligence"></h2>
+<p>If you&#39;ve ever stared at a GitHub PR wondering how to summarize your recent commits, this project is for you. In this post, I&#39;ll walk you through how I built <strong>pr-desc-ai</strong> — an AI-powered tool that takes your Git commit messages and turns them into high-quality, human-friendly pull request descriptions.</p>
+<p>The best part? It&#39;s built with a modern stack: TypeScript, Cloudflare Workers, OpenAI, and even comes with a VSCode extension. It&#39;s also structured as a monorepo managed by Turborepo.</p>
+<hr>
+<h2>🏛 Project Overview</h2>
+<p><strong>pr-desc-ai</strong> helps you:</p>
+<ul>
+<li>Parse Git commits from your local repository</li>
+<li>Send them to a Cloudflare Worker that uses LLMs (like OpenAI&#39;s GPT)</li>
+<li>Get back a concise and meaningful PR description</li>
+<li>Use it via CLI or directly inside VSCode</li>
+</ul>
+<h3>Monorepo Structure</h3>
+<pre><code class="language-bash">pr-desc-ai/
+├── git-parser/          # Node.js CLI tool
+├── inference-worker/    # Cloudflare Worker as backend API
+└── vscode-extension/    # Optional VSCode integration
+</code></pre>
+<hr>
+<h2>🤝 Step-by-Step Guide</h2>
+<h3>1. Scaffold the Monorepo with Turbo</h3>
+<pre><code class="language-bash">mkdir pr-desc-ai &amp;&amp; cd pr-desc-ai
+pnpm init -y
+pnpm add -D turbo
+</code></pre>
+<p>Then add a <code>turbo.json</code> in the root:</p>
+<pre><code class="language-json">{
+  &quot;$schema&quot;: &quot;https://turborepo.org/schema.json&quot;,
+  &quot;pipeline&quot;: {
+    &quot;build&quot;: {
+      &quot;dependsOn&quot;: [&quot;^build&quot;],
+      &quot;outputs&quot;: [&quot;dist/**&quot;, &quot;build/**&quot;]
+    },
+    &quot;dev&quot;: {
+      &quot;cache&quot;: false
+    },
+    &quot;lint&quot;: {
+      &quot;outputs&quot;: []
+    },
+    &quot;test&quot;: {
+      &quot;outputs&quot;: []
+    }
+  }
+}
+</code></pre>
+<p>Update your <code>package.json</code> to enable workspaces:</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;pr-desc-ai&quot;,
+  &quot;private&quot;: true,
+  &quot;workspaces&quot;: [&quot;git-parser&quot;, &quot;inference-worker&quot;, &quot;vscode-extension&quot;],
+  &quot;scripts&quot;: {
+    &quot;build&quot;: &quot;turbo run build&quot;,
+    &quot;dev&quot;: &quot;turbo run dev&quot;
+  }
+}
+</code></pre>
+<hr>
+<h3>2. Create the Git Parser CLI</h3>
+<p>In <code>/git-parser</code>, write a script that runs this:</p>
+<pre><code class="language-bash">git log origin/main..HEAD --pretty=format:&quot;%s&quot;
+</code></pre>
+<p>Then send the commits to the backend using <code>fetch</code> or <code>axios</code>.</p>
+<p>Key tools:</p>
+<ul>
+<li><code>execa</code> to run git commands</li>
+<li><code>clipboardy</code> to copy result</li>
+<li><code>commander</code> for CLI flags</li>
+</ul>
+<hr>
+<h3>3. Build the Cloudflare Worker</h3>
+<p>In <code>/inference-worker</code>:</p>
+<pre><code class="language-bash">npm create cloudflare@latest
+# Choose &#39;hello world&#39; template
+</code></pre>
+<p>Then:</p>
+<ul>
+<li>Install <code>Hono.js</code> for routing (optional)</li>
+<li>Create <code>/generate</code> POST endpoint</li>
+<li>Accept <code>{ commits: string[] }</code></li>
+<li>Generate prompt and send it to OpenAI</li>
+</ul>
+<pre><code class="language-ts">const prompt = `Write a PR description for these commits:\n\n${commits.join(&#39;\n&#39;)}`
+</code></pre>
+<p>Deploy with:</p>
+<pre><code class="language-bash">wrangler publish
+</code></pre>
+<p>Don&#39;t forget:</p>
+<pre><code class="language-bash">wrangler secret put OPENAI_API_KEY
+</code></pre>
+<hr>
+<h3>4. Optional: Add a VSCode Extension</h3>
+<p>Use <code>yo code</code> to bootstrap:</p>
+<pre><code class="language-bash">npm install -g yo generator-code
+yo code
+</code></pre>
+<p>In <code>src/extension.ts</code>:</p>
+<ul>
+<li>Read git commits (from workspace folder)</li>
+<li>Send them to the inference-worker</li>
+<li>Show the response in an input box or paste it directly</li>
+</ul>
+<p>Make it configurable:</p>
+<pre><code class="language-json">{
+  &quot;prGen.apiEndpoint&quot;: &quot;https://your-cloudflare-endpoint&quot;,
+  &quot;prGen.apiKey&quot;: &quot;your-api-key&quot;
+}
+</code></pre>
+<hr>
+<h2>🌐 Hosting &amp; Deployment</h2>
+<p>Use Cloudflare Workers and Pages (optional) to host your API and docs.</p>
+<hr>
+<h2>🚀 Final Thoughts</h2>
+<p>This was a fun and practical weekend project that helped me:</p>
+<ul>
+<li>Learn Cloudflare Workers and Wrangler</li>
+<li>Build and deploy an OpenAI-powered microservice</li>
+<li>Use Turborepo for real-world monorepo dev</li>
+<li>Create tools I can use daily as a developer</li>
+</ul>
+<p>If you&#39;re curious about building AI-native developer tools, this kind of project is a fantastic place to start.</p>
+<p>Happy shipping!</p>
+<p><em>Repo: <a href="https://github.com/akbarsahata/pr-desc-ai">github.com/akbarsahata/pr-desc-ai</a></em></p>
+
+  <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+  <div class="share-buttons">
+    <button class="share-button" onclick="shareToFacebook()">F</button>
+    <button class="share-button" onclick="shareToTwitter()">X</button>
+    <button class="share-button" onclick="shareToWhatsApp()">W</button>
+    <button class="share-button" onclick="copyLink()">C</button>
+  </div>
+  <div id="disqus_thread"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://blog.akbarsahata.id/articles/build-an-ai-powered-pr-description-generator-with-git-openai-and-cloudflare-workers.md";
+      this.page.identifier = "build-an-ai-powered-pr-description-generator-with-git-openai-and-cloudflare-workers.md";
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    function shareToFacebook() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/build-an-ai-powered-pr-description-generator-with-git-openai-and-cloudflare-workers.md");
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+    
+    function shareToTwitter() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/build-an-ai-powered-pr-description-generator-with-git-openai-and-cloudflare-workers.md");
+      const text = encodeURIComponent("Build an AI-Powered PR Description Generator with Git, OpenAI, and Cloudflare Workers");
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    function shareToWhatsApp() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/build-an-ai-powered-pr-description-generator-with-git-openai-and-cloudflare-workers.md");
+      window.open(`https://wa.me/?text=${url}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText("https://blog.akbarsahata.id/articles/build-an-ai-powered-pr-description-generator-with-git-openai-and-cloudflare-workers.md").then(() => {
+        alert('Link copied to clipboard');
+      });
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>

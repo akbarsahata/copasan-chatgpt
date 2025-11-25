@@ -1,0 +1,52 @@
+# Cache static HTML files for 1 hour in browser, 1 day on CDN, revalidate while stale
+/*.html
+  Cache-Control: public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800
+
+# Cache home page
+/index.html
+  Cache-Control: public, max-age=1800, s-maxage=3600, stale-while-revalidate=86400
+
+# Cache article pages for longer (content rarely changes)
+/articles/*.html
+  Cache-Control: public, max-age=86400, s-maxage=2592000, stale-while-revalidate=604800
+
+# Cache CSS and JS files for 1 year (immutable)
+/styles/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache images for 1 year
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.gif
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache metadata and markdown for 1 hour
+/metadata.json
+  Cache-Control: public, max-age=3600, s-maxage=86400
+
+/docs/*.md
+  Cache-Control: public, max-age=86400, s-maxage=2592000
+
+# Cache sitemap for 1 day
+/sitemap.xml
+  Cache-Control: public, max-age=86400, s-maxage=86400
+
+# Security headers for all pages
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin

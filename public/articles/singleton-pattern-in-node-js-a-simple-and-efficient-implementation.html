@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="In this post, we'll explore a straightforward implementation of the singleton pattern in Node.js, designed to ensure a single instance of a resource i...">
+  <meta property="og:title" content="Singleton Pattern in Node.js: A Simple and Efficient Implementation">
+  <meta property="og:description" content="In this post, we'll explore a straightforward implementation of the singleton pattern in Node.js, designed to ensure a single instance of a resource i...">
+  <meta property="og:image" content="https://images.pexels.com/photos/411195/pexels-photo-411195.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1">
+  <meta property="og:url" content="https://blog.akbarsahata.id/articles/singleton-pattern-in-node-js-a-simple-and-efficient-implementation.md">
+  <meta property="og:type" content="article">
+  <title>Singleton Pattern in Node.js: A Simple and Efficient Implementation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Calibri:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet">
+  <link href="/styles/article.css" rel="stylesheet">
+</head>
+<body>
+  <a href="https://blog.akbarsahata.id" class="home-button">Back to Home</a>
+  <h1>Singleton Pattern in Node.js: A Simple and Efficient Implementation</h1>
+<hr>
+<p><img src="https://images.pexels.com/photos/411195/pexels-photo-411195.jpeg?auto=compress&cs=tinysrgb&w=800&dpr=1" alt="singleton"></p>
+<hr>
+<p>In this post, we&#39;ll explore a straightforward implementation of the <strong>singleton pattern</strong> in Node.js, designed to ensure a single instance of a resource is created and reused throughout an application. This pattern is especially useful for managing shared resources like database connections, configuration objects, or other costly-to-create entities.</p>
+<hr>
+<h2>What is a Singleton?</h2>
+<p>A <strong>singleton</strong> is a design pattern that ensures a class or function creates only one instance of an object and provides a global point of access to that instance. It&#39;s a common approach to managing shared resources efficiently, as it avoids redundant instantiations.</p>
+<hr>
+<h2>The Singleton Function</h2>
+<p>Here’s a simple yet effective implementation of the singleton pattern in Node.js:</p>
+<pre><code class="language-typescript">function singleton&lt;Value&gt;(name: string, value: () =&gt; Value): Value {
+  const globalAny: any = global;
+  globalAny.__singletons = globalAny.__singletons || {};
+
+  if (!globalAny.__singletons[name]) {
+    globalAny.__singletons[name] = value();
+  }
+
+  return globalAny.__singletons[name];
+}
+</code></pre>
+<h3><strong>How It Works</strong></h3>
+<ol>
+<li><p><strong>Global Object as Storage:</strong> </p>
+<ul>
+<li>The function uses the Node.js <code>global</code> object to store singleton instances.</li>
+<li>A property named <code>__singletons</code> is added to the <code>global</code> object to act as a container for all singleton instances.</li>
+</ul>
+</li>
+<li><p><strong>Lazy Initialization:</strong> </p>
+<ul>
+<li>If the requested singleton doesn’t exist in the <code>__singletons</code> object, the <code>value</code> factory function is called to create it. Otherwise, the existing instance is returned.</li>
+</ul>
+</li>
+<li><p><strong>Reusable Across Calls:</strong></p>
+<ul>
+<li>Once created, the singleton instance is reused for all subsequent requests with the same <code>name</code>.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3><strong>Function Parameters</strong></h3>
+<ul>
+<li><p><code>name: string</code><br>A unique identifier for the singleton instance. Each singleton is stored and accessed using this name.</p>
+</li>
+<li><p><code>value: () =&gt; Value</code><br>A factory function that generates the value. This is invoked only once, the first time the singleton is requested.</p>
+</li>
+</ul>
+<hr>
+<h2>Example Usage</h2>
+<p>Let’s see how this <code>singleton</code> function can be used to manage a database connection:</p>
+<pre><code class="language-typescript">const dbConnection = singleton(&#39;dbConnection&#39;, () =&gt; {
+  console.log(&#39;Creating database connection...&#39;);
+  return { connection: &#39;DatabaseConnectionInstance&#39; };
+});
+
+// The first call creates the singleton instance
+const conn1 = dbConnection;
+
+// Subsequent calls reuse the existing instance
+const conn2 = singleton(&#39;dbConnection&#39;, () =&gt; {
+  console.log(&#39;This will not run because the instance already exists.&#39;);
+  return { connection: &#39;AnotherDatabaseConnectionInstance&#39; };
+});
+
+console.log(conn1 === conn2); // true
+</code></pre>
+<h3><strong>Output:</strong></h3>
+<pre><code>Creating database connection...
+true
+</code></pre>
+<ul>
+<li>The factory function (<code>value</code>) runs only during the first call, creating the singleton instance.</li>
+<li>Further calls with the same <code>name</code> return the already-created instance.</li>
+</ul>
+<hr>
+<h2>Why Use This Pattern?</h2>
+<ol>
+<li><p><strong>Performance:</strong><br>Creating and destroying resources like database connections repeatedly can be expensive. The singleton pattern minimizes this overhead by reusing instances.</p>
+</li>
+<li><p><strong>Global Accessibility:</strong><br>By storing singletons in the <code>global</code> object, they are accessible throughout the application without the need for complex dependency injection.</p>
+</li>
+<li><p><strong>Simplicity:</strong><br>This implementation is lightweight and requires minimal setup, making it ideal for scenarios like managing database connections or caching configuration objects.</p>
+</li>
+</ol>
+<hr>
+<h2>Key Considerations</h2>
+<p>While this implementation is effective, there are a few important caveats to keep in mind:</p>
+<h3>1. <strong>Global Pollution</strong></h3>
+<ul>
+<li>Adding properties to the <code>global</code> object can lead to conflicts. Ensure the property name (<code>__singletons</code> in this case) is unique and unlikely to collide with other global properties.</li>
+</ul>
+<h3>2. <strong>Memory Leaks</strong></h3>
+<ul>
+<li>Objects stored in the <code>global</code> object persist for the lifetime of the application. Be cautious about adding large or temporary objects to the singleton store.</li>
+</ul>
+<h3>3. <strong>Type Safety</strong></h3>
+<ul>
+<li>The use of <code>globalAny</code> circumvents TypeScript’s type system, potentially leading to runtime errors. You can improve type safety by creating a typed interface for the <code>global</code> object.</li>
+</ul>
+<hr>
+<h2>When is a Singleton Useful in Node.js?</h2>
+<p>The singleton pattern is particularly effective in the following scenarios:</p>
+<ul>
+<li><strong>Database Connections:</strong> Maintain a single database connection pool across multiple modules.</li>
+<li><strong>Configuration Objects:</strong> Share application-wide configuration settings.</li>
+<li><strong>Caching:</strong> Reuse expensive calculations or API responses.</li>
+</ul>
+<hr>
+<h2>Singleton in Cloud Function Context</h2>
+<p>If you’re working in a <strong>cloud function</strong> environment like AWS Lambda or Google Cloud Functions, the usefulness of a singleton depends on the execution model:</p>
+<ol>
+<li><p><strong>Single-Request Handling (Default Setup):</strong><br>If each function instance handles only one request, singletons may have limited usefulness, as new instances of the function may be created for each invocation. However, singletons can still persist across &quot;warm&quot; invocations, improving performance.</p>
+</li>
+<li><p><strong>Concurrent Request Handling:</strong><br>If a function instance handles multiple requests concurrently, a singleton can efficiently manage shared resources, like a connection pool.</p>
+</li>
+</ol>
+<p>To ensure efficient use of resources in cloud functions, define your singleton outside the function handler:</p>
+<pre><code class="language-typescript">const dbPool = singleton(&#39;dbPool&#39;, () =&gt; {
+  console.log(&#39;Initializing connection pool...&#39;);
+  return createConnectionPool(); // Example database pool creation
+});
+
+exports.handler = async (event) =&gt; {
+  const connection = dbPool.getConnection();
+  // Use the connection
+};
+</code></pre>
+<hr>
+<h2>Conclusion</h2>
+<p>The <code>singleton</code> function demonstrated above is a simple and practical way to manage shared resources in Node.js applications. Whether you’re building a backend API or a serverless function, the singleton pattern can help you optimize resource usage and improve application performance.</p>
+<p>By keeping the implementation lightweight and mindful of global object usage, you can effectively leverage this pattern for a variety of use cases.</p>
+
+  <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+  <div class="share-buttons">
+    <button class="share-button" onclick="shareToFacebook()">F</button>
+    <button class="share-button" onclick="shareToTwitter()">X</button>
+    <button class="share-button" onclick="shareToWhatsApp()">W</button>
+    <button class="share-button" onclick="copyLink()">C</button>
+  </div>
+  <div id="disqus_thread"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://blog.akbarsahata.id/articles/singleton-pattern-in-node-js-a-simple-and-efficient-implementation.md";
+      this.page.identifier = "singleton-pattern-in-node-js-a-simple-and-efficient-implementation.md";
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    function shareToFacebook() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/singleton-pattern-in-node-js-a-simple-and-efficient-implementation.md");
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+    
+    function shareToTwitter() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/singleton-pattern-in-node-js-a-simple-and-efficient-implementation.md");
+      const text = encodeURIComponent("Singleton Pattern in Node.js: A Simple and Efficient Implementation");
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    function shareToWhatsApp() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/singleton-pattern-in-node-js-a-simple-and-efficient-implementation.md");
+      window.open(`https://wa.me/?text=${url}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText("https://blog.akbarsahata.id/articles/singleton-pattern-in-node-js-a-simple-and-efficient-implementation.md").then(() => {
+        alert('Link copied to clipboard');
+      });
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>
