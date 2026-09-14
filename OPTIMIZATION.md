@@ -18,7 +18,7 @@ This blog has been optimized from a fully dynamic serverless architecture to a s
 - Served directly from Netlify's global CDN
 - Aggressive caching with `Cache-Control` headers
 - TTFB: ~20-50ms (10x faster)
-- Near-zero serverless execution costs
+- Zero serverless execution costs
 
 ## Architecture Changes
 
@@ -37,6 +37,7 @@ npm run build
 ### 2. CSS Extraction
 
 Inline styles moved to external cached files:
+- `public/styles/theme.css` - Shared theme (personal site aesthetic)
 - `public/styles/article.css` - Article page styles
 - `public/styles/home.css` - Home page styles
 
@@ -61,30 +62,15 @@ All HTML uses `stale-while-revalidate` - serves stale content instantly while fe
 
 ### 4. Routing Configuration
 
-**`netlify.toml` routing (priority order):**
+**`netlify.toml` routing:**
 
-1. **Static HTML first** - Serves pre-rendered files
-2. **Function fallback** - Executes serverless function if static file missing
-3. **Dynamic rendering** - Functions now include `Cache-Control` headers
+1. **Static HTML** - Serves pre-rendered files
+2. **Extensionless Article URLs** - `/articles/:slug` maps to `/articles/:slug.html`
 
 ```toml
-# Try static HTML first
 /articles/:slug → /articles/:slug.html (200)
-
-# Fallback to function if not found
-/articles/* → /.netlify/functions/articles (200)
+/ → /index.html (200)
 ```
-
-### 5. Serverless Functions Updated
-
-Both `articles.js` and `home.js` now include:
-- **Success responses:** Aggressive `Cache-Control` headers
-- **Error responses:** No caching (`no-cache, no-store`)
-
-Functions serve as fallback for:
-- Dynamic content generation
-- Error handling
-- Development/testing
 
 ## Performance Improvements
 
@@ -94,7 +80,7 @@ Functions serve as fallback for:
 |--------|--------|-------|-------------|
 | TTFB | 200-500ms | 20-50ms | **10x faster** |
 | HTML Size | 15-20KB | 12-16KB | 20% smaller |
-| Serverless Invocations | 100% requests | <1% requests | **99% reduction** |
+| Serverless Invocations | 100% requests | 0 | **eliminated** |
 | Monthly Cost (10K visits) | ~$5-10 | ~$0.50 | **90% cheaper** |
 | Cache Hit Rate | 0% | >95% | CDN serves most traffic |
 
@@ -130,6 +116,7 @@ public/
 │   ├── article-2.html
 │   └── ...
 ├── styles/                    # Extracted CSS
+│   ├── theme.css
 │   ├── home.css
 │   └── article.css
 ├── _headers                   # CDN cache configuration
@@ -190,49 +177,29 @@ npx http-server public -p 8080
 netlify dev
 ```
 
-### Testing Functions
-
-Functions still work for:
-- Development without building
-- Dynamic content testing
-- Error handling validation
-
 ## Monitoring
 
 ### Key Metrics to Track
 
 1. **CDN Hit Rate** - Should be >95% after warmup
 2. **TTFB** - Should be <100ms globally
-3. **Function Invocations** - Should drop >90%
+3. **Function Invocations** - Should be zero (static-only site)
 4. **Build Time** - Currently ~10-15 seconds
 
 ### Netlify Analytics
 
 - **Bandwidth:** Should see reduction (smaller payloads)
-- **Function Execution Time:** Near zero for static hits
+- **Function Execution Time:** None (static-only site)
 - **Build Minutes:** Minimal increase (~30s per build)
 
 ## Rollback Plan
 
 If issues arise, rollback is simple:
 
-### Option 1: Revert `netlify.toml` Routing
-Remove static-first routing, use functions only:
-
-```toml
-[[redirects]]
-  from = "/articles/*"
-  to = "/.netlify/functions/articles"
-  status = 200
-```
-
-### Option 2: Full Revert
 ```bash
 git revert HEAD  # Revert this commit
 git push origin master
 ```
-
-Functions still work with caching headers, so partial benefits remain.
 
 ## Future Optimizations
 
@@ -265,8 +232,7 @@ Functions still work with caching headers, so partial benefits remain.
 ```json
 {
   "marked": "^14.1.4",           // Markdown parser
-  "marked-katex-extension": "^5.1.2", // Math rendering
-  "node-fetch": "^2.7.0"         // Fetch polyfill (function fallback)
+  "marked-katex-extension": "^5.1.2" // Math rendering
 }
 ```
 
@@ -300,7 +266,6 @@ Functions still work with caching headers, so partial benefits remain.
 ### No Breaking Changes
 
 - All URLs remain the same
-- Functions still available as fallback
 - No authentication/authorization changes
 
 ## Cost Analysis
@@ -316,8 +281,8 @@ Functions still work with caching headers, so partial benefits remain.
 ### After Optimization (Estimated)
 
 - **10K monthly visits**
-- **<1% function invocations:** 100 × $0.0000025 = $0.0003
-- **Function execution time:** 100 × 200ms × $0.0000002/ms = $0.004
+- **Function invocations:** 0
+- **Function execution time:** 0
 - **Bandwidth:** 10K × 16KB = ~160MB → negligible
 - **Total:** ~$0.005/month (**91% reduction**)
 
@@ -328,7 +293,7 @@ Functions still work with caching headers, so partial benefits remain.
 ### Questions?
 
 1. Check Netlify build logs: `netlify build`
-2. Review function logs: Netlify UI → Functions → Logs
+2. Review deploy logs: Netlify UI → Deploys → Logs
 3. Test locally: `npm run build && npx http-server public`
 
 ### Common Issues
@@ -351,6 +316,5 @@ This optimization transforms your blog from a dynamic web app to a static site w
 - ✅ Comment system (Disqus)
 - ✅ Search functionality
 - ✅ Social sharing
-- ✅ Function fallbacks for flexibility
 
 **Result:** 10x faster, 90% cheaper, infinitely scalable blog! 🚀

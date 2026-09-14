@@ -11,6 +11,7 @@ const site = {
   description: 'Example description.',
   image: '/image.webp',
   disqusShortname: 'example',
+  personalUrl: 'https://akbarsahata.id',
 };
 
 function makeFixture() {
@@ -51,10 +52,44 @@ test('builds a consistent site from the sources', () => {
   assert.match(home, /Newest &amp; best\./);
   assert.match(home, /href="\/articles\/newer\.html"/);
 
+  assert.match(home, /<link href="\/styles\/theme\.css\?v=\d+" rel="stylesheet">/);
+  assert.match(home, /<link href="\/styles\/home\.css\?v=\d+" rel="stylesheet">/);
+  assert.match(home, /name="theme-color" content="#0a0f1c"/);
+  assert.match(home, /href="\/favicon\.ico"/);
+  assert.match(home, /fonts\.googleapis\.com\/css2\?family=Inter/);
+  assert.match(home, /class="brand" href="https:\/\/akbarsahata\.id\/"/);
+  assert.match(home, /href="https:\/\/akbarsahata\.id\/">Home</);
+  assert.match(home, /href="https:\/\/akbarsahata\.id\/profile\/"/);
+  assert.match(home, /href="https:\/\/akbarsahata\.id\/projects\/"/);
+  assert.match(home, /href="https:\/\/akbarsahata\.id\/publications\/"/);
+  assert.match(home, /aria-current="page"[^>]*>Blog</);
+  assert.match(home, /class="role">Blog</);
+  assert.match(home, /Search articles/);
+  assert.match(home, /github\.com\/akbarsahata/);
+  assert.match(home, /© 2026 Akbar Sahata/);
+
   const article = fs.readFileSync(path.join(publicDir, 'articles', 'newer.html'), 'utf8');
   assert.match(article, /og:url" content="https:\/\/example\.com\/articles\/newer\.html"/);
   assert.match(article, /page\.identifier = "newer\.html"/);
   assert.match(article, /Newest &amp; best\./);
+
+  assert.match(article, /<link href="\/styles\/theme\.css\?v=\d+" rel="stylesheet">/);
+  assert.match(article, /<link href="\/styles\/article\.css\?v=\d+" rel="stylesheet">/);
+  assert.match(article, /prism-tomorrow\.min\.css/);
+  assert.match(article, /<link rel="canonical" href="https:\/\/example\.com\/articles\/newer\.html">/);
+  assert.match(article, /name="twitter:card" content="summary_large_image"/);
+  assert.match(article, /name="theme-color" content="#0a0f1c"/);
+  assert.match(article, /href="\/favicon\.ico"/);
+  assert.match(article, /class="brand" href="https:\/\/akbarsahata\.id\/"/);
+  assert.match(article, /href="https:\/\/akbarsahata\.id\/">Home</);
+  assert.match(article, /href="https:\/\/akbarsahata\.id\/publications\/"/);
+  assert.match(article, /aria-current="page"[^>]*>Blog</);
+  assert.match(article, /linkedin\.com\/in\/akbarsahata/);
+  assert.match(article, /instagram\.com\/akbarsahata/);
+  assert.match(article, /© 2026 Akbar Sahata/);
+  assert.match(article, /class="share-buttons"/);
+  assert.match(article, /class="back-to-top"/);
+  assert.ok(!article.includes('home-button'));
 
   const metadata = JSON.parse(fs.readFileSync(path.join(publicDir, 'metadata.json'), 'utf8'));
   assert.deepEqual(Object.keys(metadata), ['newer.html', 'older.html']);

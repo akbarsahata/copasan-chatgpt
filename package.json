@@ -17,7 +17,6 @@
   "dependencies": {
     "express": "^4.19.2",
     "marked": "^14.1.4",
-    "marked-katex-extension": "^5.1.2",
-    "node-fetch": "^2.7.0"
+    "marked-katex-extension": "^5.1.2"
   }
 }

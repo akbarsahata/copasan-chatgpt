@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Validation script to verify CDN optimization implementation
+ * Validation script to verify the published build
  * Run after build to ensure everything is properly generated
  */
 
@@ -13,16 +13,21 @@ const errors = [];
 const warnings = [];
 const checks = [];
 
-console.log('🔍 Validating CDN optimization build...\n');
+console.log('🔍 Validating build...\n');
 
 // Check 1: Home page exists
 const homePagePath = path.join(publicDir, 'index.html');
 if (fs.existsSync(homePagePath)) {
   const size = fs.statSync(homePagePath).size;
   checks.push(`✅ Home page exists (${(size / 1024).toFixed(2)} KB)`);
-  
+
   // Verify it links to CSS
   const content = fs.readFileSync(homePagePath, 'utf8');
+  if (content.includes('/styles/theme.css')) {
+    checks.push('✅ Home page references the theme stylesheet');
+  } else {
+    errors.push('❌ Home page does not reference /styles/theme.css');
+  }
   if (content.includes('/styles/home.css')) {
     checks.push('✅ Home page references external CSS');
   } else {
@@ -37,13 +42,22 @@ const articlesDir = path.join(publicDir, 'articles');
 if (fs.existsSync(articlesDir)) {
   const htmlFiles = fs.readdirSync(articlesDir).filter(f => f.endsWith('.html'));
   checks.push(`✅ Articles directory exists with ${htmlFiles.length} HTML files`);
-  
+
   if (htmlFiles.length === 0) {
     warnings.push('⚠️  No HTML files found in articles directory');
   }
-  
-  // Check first article for CSS reference
+
+  // Check every article for CSS references
   if (htmlFiles.length > 0) {
+    const missingTheme = htmlFiles.filter(
+      f => !fs.readFileSync(path.join(articlesDir, f), 'utf8').includes('/styles/theme.css'),
+    );
+    if (missingTheme.length === 0) {
+      checks.push('✅ Articles reference the theme stylesheet');
+    } else {
+      errors.push(`❌ ${missingTheme.length} Article Page(s) do not reference /styles/theme.css`);
+    }
+
     const firstArticle = fs.readFileSync(path.join(articlesDir, htmlFiles[0]), 'utf8');
     if (firstArticle.includes('/styles/article.css')) {
       checks.push('✅ Articles reference external CSS');
@@ -57,8 +71,16 @@ if (fs.existsSync(articlesDir)) {
 
 // Check 3: CSS files
 const stylesDir = path.join(publicDir, 'styles');
+const themeCSS = path.join(stylesDir, 'theme.css');
 const homeCSS = path.join(stylesDir, 'home.css');
 const articleCSS = path.join(stylesDir, 'article.css');
+
+if (fs.existsSync(themeCSS)) {
+  const size = fs.statSync(themeCSS).size;
+  checks.push(`✅ theme.css exists (${(size / 1024).toFixed(2)} KB)`);
+} else {
+  errors.push('❌ theme.css not found');
+}
 
 if (fs.existsSync(homeCSS)) {
   const size = fs.statSync(homeCSS).size;
@@ -79,13 +101,13 @@ const headersFile = path.join(publicDir, '_headers');
 if (fs.existsSync(headersFile)) {
   const content = fs.readFileSync(headersFile, 'utf8');
   checks.push('✅ _headers file exists');
-  
+
   if (content.includes('Cache-Control')) {
     checks.push('✅ Cache-Control headers configured');
   } else {
     warnings.push('⚠️  No Cache-Control headers found in _headers');
   }
-  
+
   if (content.includes('/styles/*.css')) {
     checks.push('✅ CSS caching configured');
   } else {
@@ -111,33 +133,6 @@ if (fs.existsSync(sitemapFile)) {
   warnings.push('⚠️  sitemap.xml not found');
 }
 
-// Check 6: Functions still exist
-const functionsDir = path.join(__dirname, '../netlify/functions');
-const articlesFunction = path.join(functionsDir, 'articles.js');
-const homeFunction = path.join(functionsDir, 'home.js');
-
-if (fs.existsSync(articlesFunction)) {
-  const content = fs.readFileSync(articlesFunction, 'utf8');
-  if (content.includes('Cache-Control')) {
-    checks.push('✅ articles.js function has Cache-Control headers');
-  } else {
-    warnings.push('⚠️  articles.js function missing Cache-Control headers');
-  }
-} else {
-  warnings.push('⚠️  articles.js function not found (fallback unavailable)');
-}
-
-if (fs.existsSync(homeFunction)) {
-  const content = fs.readFileSync(homeFunction, 'utf8');
-  if (content.includes('Cache-Control')) {
-    checks.push('✅ home.js function has Cache-Control headers');
-  } else {
-    warnings.push('⚠️  home.js function missing Cache-Control headers');
-  }
-} else {
-  warnings.push('⚠️  home.js function not found (fallback unavailable)');
-}
-
 // Print results
 console.log('📋 Validation Results:\n');
 
@@ -155,10 +150,11 @@ if (errors.length > 0) {
   process.exit(1);
 } else {
   console.log('\n✅ Build validation PASSED\n');
-  
+
   // Print summary
   const totalSize = [
     homePagePath,
+    themeCSS,
     homeCSS,
     articleCSS
   ].reduce((acc, file) => {
@@ -167,7 +163,7 @@ if (errors.length > 0) {
     }
     return acc;
   }, 0);
-  
+
   console.log('📊 Summary:');
   console.log(`   - Total core files size: ${(totalSize / 1024).toFixed(2)} KB`);
   console.log(`   - Article HTML files: ${fs.readdirSync(articlesDir).filter(f => f.endsWith('.html')).length}`);

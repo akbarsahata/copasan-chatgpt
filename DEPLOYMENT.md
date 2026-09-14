@@ -6,7 +6,7 @@ Your blog has been optimized with:
 1. ✅ Static site generation (SSG) - All pages pre-rendered at build time
 2. ✅ External CSS files - Extracted from inline styles for better caching
 3. ✅ CDN caching headers - Aggressive caching for maximum performance
-4. ✅ Updated routing - Static files served first, functions as fallback
+4. ✅ Updated routing - Static files served directly from the CDN
 5. ✅ Build validation - Automated checks to ensure everything works
 
 ## 🚀 Deploying the Changes
@@ -99,6 +99,7 @@ curl -I https://blog.akbarsahata.id/articles/[article-name].html
 Visit these URLs to confirm static files are served:
 - https://blog.akbarsahata.id/ (should load instantly)
 - https://blog.akbarsahata.id/articles/[any-article].html
+- https://blog.akbarsahata.id/styles/theme.css
 - https://blog.akbarsahata.id/styles/home.css
 - https://blog.akbarsahata.id/styles/article.css
 
@@ -106,7 +107,7 @@ Visit these URLs to confirm static files are served:
 
 After 24 hours, check Netlify Analytics:
 - CDN hit rate should be >95%
-- Function invocations should be <1%
+- Function invocations should be zero (static-only site)
 
 ## 📝 Common Operations
 
@@ -162,7 +163,7 @@ npx http-server public -p 8080
 open http://localhost:8080
 ```
 
-Or use Netlify Dev (includes functions):
+Or use Netlify Dev:
 
 ```bash
 netlify dev
@@ -253,7 +254,6 @@ Your blog is now optimized! Consider:
 - ✅ Build process validated and working
 - ✅ Static HTML generated for all pages
 - ✅ CDN caching configured
-- ✅ Functions updated with cache headers as fallback
 
 **Next Step:** `git push origin master` to deploy! 🚀
 
