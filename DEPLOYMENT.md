@@ -74,7 +74,7 @@ netlify watch
 ```
 
 Look for:
-- ✅ "Generated 22 article HTML files"
+- ✅ "Built 22 Article Page(s)"
 - ✅ "Build validation PASSED"
 - ✅ "Ready for deployment! 🚀"
 

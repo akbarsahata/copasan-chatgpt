@@ -24,14 +24,14 @@ This blog has been optimized from a fully dynamic serverless architecture to a s
 
 ### 1. Static Site Generation
 
-**New Build Scripts:**
-- `scripts/generate-articles.js` - Pre-renders all article pages to `public/articles/*.html`
-- `scripts/generate-home.js` - Pre-renders home page to `public/index.html`
+**Build Entry:**
+- `scripts/build.js` - Derives the Content Index from `docs/`, renders every Article Page, the Home Page, the public Metadata file, and the sitemap, then sweeps orphaned Article Pages.
 
 **Build Pipeline:**
 ```bash
-npm run build:static
-# Runs: generate:metadata → generate:articles → generate:home → generate:sitemap
+npm run build
+# Reads every markdown source, derives Metadata once, renders all outputs in one fixed order,
+# sweeps orphaned Article Pages, copies assets, then validates
 ```
 
 ### 2. CSS Extraction
@@ -114,7 +114,7 @@ Functions serve as fallback for:
 npm install
 
 # Generate all static files
-npm run build:static
+npm run build
 
 # Deploy to Netlify
 git push origin master
@@ -143,7 +143,7 @@ public/
 ### Adding New Articles
 
 1. Add markdown file to `docs/`
-2. Run `npm run build:static` (or push to trigger build)
+2. Run `npm run build` (or push to trigger build)
 3. New article automatically:
    - Generates HTML
    - Updates home page
@@ -153,7 +153,7 @@ public/
 ### Updating Existing Articles
 
 1. Edit markdown file in `docs/`
-2. Run `npm run build:static`
+2. Run `npm run build`
 3. Deploy - CDN cache expires based on `_headers` rules
 
 ## Cache Invalidation
@@ -181,7 +181,7 @@ Site settings → Build & deploy → Clear cache and deploy
 
 ```bash
 # Generate static files
-npm run build:static
+npm run build
 
 # Test with local server
 npx http-server public -p 8080
@@ -329,7 +329,7 @@ Functions still work with caching headers, so partial benefits remain.
 
 1. Check Netlify build logs: `netlify build`
 2. Review function logs: Netlify UI → Functions → Logs
-3. Test locally: `npm run build:static && npx http-server public`
+3. Test locally: `npm run build && npx http-server public`
 
 ### Common Issues
 
