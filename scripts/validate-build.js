@@ -133,6 +133,14 @@ if (fs.existsSync(sitemapFile)) {
   warnings.push('⚠️  sitemap.xml not found');
 }
 
+// Check 6: Internal agent docs are not published
+const publishedAgents = path.join(publicDir, 'docs', 'agents');
+if (fs.existsSync(publishedAgents)) {
+  errors.push('❌ Internal agent docs found at public/docs/agents');
+} else {
+  checks.push('✅ Internal agent docs are not published');
+}
+
 // Print results
 console.log('📋 Validation Results:\n');
 

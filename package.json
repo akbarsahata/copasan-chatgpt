@@ -6,7 +6,7 @@
     "test": "node --test test/",
     "start": "node api/index.js",
     "build": "node scripts/build.js && npm run copy:assets && npm run validate",
-    "copy:assets": "cp -r docs public/",
+    "copy:assets": "mkdir -p public/docs && cp docs/*.md public/docs/",
     "validate": "node scripts/validate-build.js",
     "title": "node scripts/title.js"
   },
