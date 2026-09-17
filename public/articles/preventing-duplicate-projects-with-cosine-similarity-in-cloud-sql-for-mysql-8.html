@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ever tried launching a new project, only to realize halfway through that another team down the hall built the exact same thing six months ago?">
+  <meta name="author" content="Akbar Sahata">
+  <meta name="theme-color" content="#0a0f1c">
+  <link rel="canonical" href="https://blog.akbarsahata.id/articles/preventing-duplicate-projects-with-cosine-similarity-in-cloud-sql-for-mysql-8.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Akbar Sahata&#39;s Blog">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Preventing Duplicate Projects with Cosine Similarity in Cloud SQL for MySQL 8">
+  <meta property="og:description" content="Ever tried launching a new project, only to realize halfway through that another team down the hall built the exact same thing six months ago?">
+  <meta property="og:image" content="https://blog.akbarsahata.id/image.webp">
+  <meta property="og:url" content="https://blog.akbarsahata.id/articles/preventing-duplicate-projects-with-cosine-similarity-in-cloud-sql-for-mysql-8.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Preventing Duplicate Projects with Cosine Similarity in Cloud SQL for MySQL 8</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Zilla+Slab:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <link href="/styles/theme.css?v=2" rel="stylesheet">
+  <link href="/styles/article.css?v=2" rel="stylesheet">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="https://akbarsahata.id/">Akbar Sahata</a>
+      <nav class="site-nav" aria-label="Main">
+          <ul>
+            <li><a href="https://akbarsahata.id/">Home</a></li>
+            <li><a href="https://akbarsahata.id/profile/">Profile</a></li>
+            <li><a href="https://akbarsahata.id/projects/">Projects</a></li>
+            <li><a href="https://akbarsahata.id/publications/">Publications</a></li>
+            <li><a href="https://blog.akbarsahata.id/" aria-current="page">Blog</a></li>
+          </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="container">
+      <article class="article">
+<h1>Preventing Duplicate Projects with Cosine Similarity in Cloud SQL for MySQL 8</h1>
+<p>Ever tried launching a new project, only to realize halfway through that another team down the hall built the exact same thing six months ago?</p>
+<p>Duplicate projects are a silent tax on engineering teams. But if you’re running your application on Google Cloud SQL with MySQL 8, you don’t need to migrate to a brand-new vector database just to stop double-work before it starts.</p>
+<p>Here is how to build an AI-powered &quot;similarity guard&quot; right inside your existing MySQL setup.</p>
+<hr>
+<h3>First, a Quick Reality Check: GCP MySQL 8 vs. Community MySQL 8</h3>
+<p>If you try to run vector search on a standard, open-source MySQL 8.0 server, you’ll hit a wall. Standard MySQL 8 doesn&#39;t support vector data types—that feature only arrived natively in MySQL 9.0.</p>
+<p>However, Google Cloud SQL bridges this gap. GCP adds a proprietary extension (<code>cloudsql_vector</code>) to MySQL 8.0.36+ that allows you to store vectors using a <code>VECTOR(...) USING VARBINARY</code> definition and query them using similarity functions like <code>approx_distance()</code>.</p>
+<p>If you&#39;re self-hosting vanilla MySQL 8, you would have to compute these vector distances manually in your application layer. But on Cloud SQL, the database engine handles the heavy math for you.</p>
+<hr>
+<h3>The Goal: Block Similar Projects at Submission</h3>
+<p>Imagine a project manager opening a form, filling out a title, a scope, and a list of deliverables, and clicking <strong>Submit</strong>.</p>
+<p>Instead of blindly saving the entry, your system should read the new project&#39;s overall context, compare it against every existing project in your database, and raise a flag if someone is trying to reinvent the wheel.</p>
+<p>Here is how you set that up step-by-step.</p>
+<pre><code>[Project Manager Fills Form]
+       │
+       ▼
+[Concatenate Title + Scope + Deliverables]
+       │
+       ▼
+[Generate Vector via Embedding Model (e.g., Vertex AI)]
+       │
+       ▼
+[Cloud SQL Cosine Distance Search] ──(Find Closest Match)
+       │
+       ├─► Distance &lt; 0.12 (Too Similar)  ──► [BLOCK &amp; WARN USER]
+       │
+       └─► Distance &gt;= 0.12 (Unique Enough) ──► [INSERT INTO DATABASE]
+</code></pre>
+<h4>Step 1: Create the Table with Vector Support</h4>
+<p>First, set up your <code>projects</code> table. Notice the <code>overall_embedding</code> column—this is where your proprietary Cloud SQL vector type comes into play.</p>
+<pre><code class="language-sql">CREATE TABLE projects (
+    project_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255),
+    scope TEXT,
+    deliverables TEXT,
+    overall_embedding VECTOR(768) USING VARBINARY
+);
+</code></pre>
+<h4>Step 2: Build an Index for Fast Lookups</h4>
+<p>As your project count grows into the thousands, scanning every row for every new submission will slow down. Create an Approximate Nearest Neighbor (ANN) index set to measure <strong>Cosine Similarity</strong> to keep lookups sub-second.</p>
+<pre><code class="language-sql">CREATE VECTOR INDEX idx_project_similarity ON projects(overall_embedding)
+USING SCANN QUANTIZER = SQ8 DISTANCE_MEASURE = COSINE;
+</code></pre>
+<h4>Step 3: Intercept the Submission in Your App</h4>
+<p>When the project manager hits &quot;Submit,&quot; your backend application steps in before touching the database:</p>
+<ol>
+<li><strong>Combine the Text:</strong> Merge the fields into a single block of text:
+<code>&quot;Title: Customer Dashboard | Scope: Build a real-time analytics UI | Deliverables: React frontend, chart widgets&quot;</code></li>
+<li><strong>Convert to a Vector:</strong> Pass that text string to your embedding model (like Vertex AI&#39;s <code>text-embedding-004</code>) to generate a 768-dimension numeric array representing the project&#39;s true semantic meaning.</li>
+</ol>
+<h4>Step 4: Run the Cosine Similarity Guard</h4>
+<p>Now, query your Cloud SQL database to find the closest existing project. Passing <code>distance_measure=cosine</code> tells MySQL to calculate how far apart the two project concepts are.</p>
+<pre><code class="language-sql">SELECT
+    title,
+    approx_distance(overall_embedding, string_to_vector(&#39;[NEW_PROJECT_VECTOR]&#39;), &#39;distance_measure=cosine&#39;) AS similarity_score
+FROM
+    projects
+ORDER BY
+    similarity_score ASC
+LIMIT 1;
+</code></pre>
+<h4>Step 5: Evaluate the Score and Decision</h4>
+<p>In cosine distance calculations, <strong>smaller numbers mean higher similarity</strong> (a score of <code>0</code> means identical concepts).</p>
+<p>Your backend reads the <code>similarity_score</code> returned by MySQL:</p>
+<ul>
+<li><strong>Score is below your safety threshold (e.g., <code>&lt; 0.12</code>):</strong>
+<strong>Block the submission.</strong> Show a warning in the UI: <em>&quot;Wait! This project overlaps heavily with an existing project: &#39;[Matching Project Title]&#39;. Please review it before creating a new entry.&quot;</em></li>
+<li><strong>Score is above the threshold (e.g., <code>&gt;= 0.12</code>):</strong>
+<strong>Pass.</strong> Run your standard <code>INSERT</code> query to store the project along with its new embedding vector.</li>
+</ul>
+<hr>
+<h3>Wrapping Up</h3>
+<p>By leveraging Google Cloud SQL&#39;s vector extension on MySQL 8, you don&#39;t need to spin up separate infrastructure or manage third-party vector databases. With just a single vector column, a cosine index, and a simple backend check, you can build an automated safeguard that keeps your organization&#39;s projects lean and focused.</p>
+
+      </article>
+      <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+      <div class="share-buttons">
+        <button class="share-button" onclick="shareToFacebook()" aria-label="Share to Facebook">F</button>
+        <button class="share-button" onclick="shareToTwitter()" aria-label="Share to X">X</button>
+        <button class="share-button" onclick="shareToWhatsApp()" aria-label="Share to WhatsApp">W</button>
+        <button class="share-button" onclick="copyLink()" aria-label="Copy link">C</button>
+      </div>
+      <div id="disqus_thread"></div>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <ul class="social">
+          <li><a href="https://github.com/akbarsahata" target="_blank" rel="me noopener">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/akbarsahata" target="_blank" rel="me noopener">LinkedIn</a></li>
+          <li><a href="https://blog.akbarsahata.id" target="_blank" rel="me noopener">Blog</a></li>
+          <li><a href="https://www.instagram.com/akbarsahata/" target="_blank" rel="me noopener">Instagram</a></li>
+      </ul>
+      <p class="copyright">© 2026 Akbar Sahata</p>
+    </div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://blog.akbarsahata.id/articles/preventing-duplicate-projects-with-cosine-similarity-in-cloud-sql-for-mysql-8.html";
+      this.page.identifier = "preventing-duplicate-projects-with-cosine-similarity-in-cloud-sql-for-mysql-8.html";
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    function shareToFacebook() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/preventing-duplicate-projects-with-cosine-similarity-in-cloud-sql-for-mysql-8.html");
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+    
+    function shareToTwitter() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/preventing-duplicate-projects-with-cosine-similarity-in-cloud-sql-for-mysql-8.html");
+      const text = encodeURIComponent("Preventing Duplicate Projects with Cosine Similarity in Cloud SQL for MySQL 8");
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    function shareToWhatsApp() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/preventing-duplicate-projects-with-cosine-similarity-in-cloud-sql-for-mysql-8.html");
+      window.open(`https://wa.me/?text=${url}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText("https://blog.akbarsahata.id/articles/preventing-duplicate-projects-with-cosine-similarity-in-cloud-sql-for-mysql-8.html").then(() => {
+        alert('Link copied to clipboard');
+      });
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>
