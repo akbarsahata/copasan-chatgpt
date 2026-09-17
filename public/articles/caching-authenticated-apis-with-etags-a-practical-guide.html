@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Caching a public website is easy: slap Cache-Control: public, max-age=3600 on it and move on. Caching an API behind a login is where it gets interesti...">
+  <meta name="author" content="Akbar Sahata">
+  <meta name="theme-color" content="#0a0f1c">
+  <link rel="canonical" href="https://blog.akbarsahata.id/articles/caching-authenticated-apis-with-etags-a-practical-guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Akbar Sahata&#39;s Blog">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Caching Authenticated APIs with ETags: A Practical Guide">
+  <meta property="og:description" content="Caching a public website is easy: slap Cache-Control: public, max-age=3600 on it and move on. Caching an API behind a login is where it gets interesti...">
+  <meta property="og:image" content="https://blog.akbarsahata.id/image.webp">
+  <meta property="og:url" content="https://blog.akbarsahata.id/articles/caching-authenticated-apis-with-etags-a-practical-guide.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Caching Authenticated APIs with ETags: A Practical Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Zilla+Slab:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <link href="/styles/theme.css?v=2" rel="stylesheet">
+  <link href="/styles/article.css?v=2" rel="stylesheet">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="https://akbarsahata.id/">Akbar Sahata</a>
+      <nav class="site-nav" aria-label="Main">
+          <ul>
+            <li><a href="https://akbarsahata.id/">Home</a></li>
+            <li><a href="https://akbarsahata.id/profile/">Profile</a></li>
+            <li><a href="https://akbarsahata.id/projects/">Projects</a></li>
+            <li><a href="https://akbarsahata.id/publications/">Publications</a></li>
+            <li><a href="https://blog.akbarsahata.id/" aria-current="page">Blog</a></li>
+          </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <div class="container">
+      <article class="article">
+<h1>Caching Authenticated APIs with ETags: A Practical Guide</h1>
+<p>Caching a public website is easy: slap <code>Cache-Control: public, max-age=3600</code> on it and move on. Caching an API behind a login is where it gets interesting. Every response is per-user, one leak is a security incident, and a badly chosen validator can serve yesterday&#39;s numbers under today&#39;s label.</p>
+<p>This post is a field guide to doing it properly: the mental model, a per-endpoint policy, server and client implementation, and the mistakes that bite teams in production.</p>
+<h2>1. The 60-second mental model</h2>
+<p>HTTP caching has two independent concepts that people constantly mix up:</p>
+<ul>
+<li><strong>Freshness</strong> — &quot;may I reuse this without asking?&quot; Controlled by <code>max-age</code>, <code>s-maxage</code>, <code>immutable</code>.</li>
+<li><strong>Validation</strong> — &quot;is my stored copy still correct?&quot; Controlled by <code>ETag</code> + <code>If-None-Match</code> (or <code>Last-Modified</code> + <code>If-Modified-Since</code>).</li>
+</ul>
+<p>A conditional request looks like this:</p>
+<pre><code>GET /reports/summary
+If-None-Match: W/&quot;8f14e45f&quot;
+
+→ 304 Not Modified        (validators match, no body)
+→ 200 OK + new body       (validators differ)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Directive</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>max-age=N</code></td>
+<td>Fresh for N seconds in any cache</td>
+</tr>
+<tr>
+<td><code>s-maxage=N</code></td>
+<td>Same, but shared caches only (CDN, proxy)</td>
+</tr>
+<tr>
+<td><code>no-cache</code></td>
+<td>May store, <strong>must validate on every reuse</strong></td>
+</tr>
+<tr>
+<td><code>no-store</code></td>
+<td>Never store. Nothing.</td>
+</tr>
+<tr>
+<td><code>private</code></td>
+<td>Browser cache only; shared caches must not store</td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td>Shared caches may store (even normally-private responses)</td>
+</tr>
+<tr>
+<td><code>must-revalidate</code></td>
+<td>Once stale, don&#39;t serve stale even offline</td>
+</tr>
+<tr>
+<td><code>immutable</code></td>
+<td>Don&#39;t revalidate during freshness (fingerprinted assets)</td>
+</tr>
+</tbody></table>
+<p>The name <code>no-cache</code> is the worst-named header in HTTP: it does <strong>not</strong> mean &quot;don&#39;t cache&quot;. It means &quot;cache it, but ask me every time.&quot; That is exactly the policy you want for most authenticated aggregates — combined with a validator that makes &quot;asking&quot; cheap in bytes.</p>
+<h2>2. What an ETag actually promises</h2>
+<p>An ETag identifies a <strong>representation</strong>, not a resource. Two variants of the same URL (say, gzipped and not) are different representations and can have different ETags.</p>
+<ul>
+<li><strong>Strong</strong> (<code>&quot;abc123&quot;</code>) — byte-for-byte identical. Required for range requests (<code>If-Range</code>).</li>
+<li><strong>Weak</strong> (<code>W/&quot;abc123&quot;</code>) — semantically equivalent; a byte difference (whitespace, compression) doesn&#39;t invalidate it. Fine for conditional GETs and easier to generate safely.</li>
+</ul>
+<p>Two ways to produce the validator, with very different costs:</p>
+<ol>
+<li><strong>Content hash</strong> — hash the response body. Exact and automatic; saves bandwidth but <strong>not CPU</strong>, because you still generated the body.</li>
+<li><strong>Change token</strong> — hash cheap metadata instead (data version, role version, report date, query). Saves CPU <em>and</em> bandwidth, but only if the token truly captures every input. Miss one and you serve stale 304s forever.</li>
+</ol>
+<p>Rule of thumb: start with content hashes. Graduate to change tokens where measurements justify it, and write tests for every input that must invalidate.</p>
+<h2>3. The authentication-shaped constraint</h2>
+<p>Every response that depends on a session must declare it:</p>
+<pre><code>Cache-Control: private, no-cache
+Vary: Cookie
+</code></pre>
+<ul>
+<li><code>private</code> keeps shared caches (corporate proxies, CDNs) from ever storing per-user data.</li>
+<li><code>Vary: Cookie</code> tells caches that the response varies by the <code>Cookie</code> request header. Note the HTTP cache default: responses to requests carrying <code>Authorization</code> are treated specially, but <strong>cookie-based auth gets no such protection</strong> — you must be explicit.</li>
+</ul>
+<p>One subtle trap: if your server rotates the session cookie on every response, <code>Vary: Cookie</code> will key each stored entry on a slightly different value, browser reuse can collapse to zero, and you&#39;ll revalidate far less than expected. Either stabilize the cookie value, or measure reuse and accept it.</p>
+<p>And the security invariant: <strong>the validator must change when the authorization context changes</strong>. If the body differs by role, scope, or entitlement, a content-hash ETag handles that automatically. A metadata token must include the user/role/entitlement version — otherwise user A&#39;s tag could produce a 304 for user B.</p>
+<h2>4. Pick a policy per endpoint category</h2>
+<table>
+<thead>
+<tr>
+<th>Response kind</th>
+<th>Example</th>
+<th>Cache-Control</th>
+<th>Validator</th>
+<th>Skips compute?</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Fingerprinted assets</td>
+<td><code>/app.4f2a.js</code></td>
+<td><code>public, max-age=31536000, immutable</code></td>
+<td>filename</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Shared reference data</td>
+<td>currencies, countries</td>
+<td><code>private, max-age=300, must-revalidate</code></td>
+<td>content hash</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Per-user aggregates</td>
+<td>dashboards, reports</td>
+<td><code>private, no-cache</code></td>
+<td>content hash or token</td>
+<td>token only</td>
+</tr>
+<tr>
+<td>Sensitive/volatile detail</td>
+<td>person rows, audit trails</td>
+<td><code>private, no-store</code></td>
+<td>none</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Mutations, errors</td>
+<td>POST/PUT, 4xx/5xx</td>
+<td><code>no-store</code></td>
+<td>none</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<p>Notice the shape of the trade-off: <strong><code>no-cache</code> + ETag</strong> is the workhorse for logged-in APIs. You keep the data safe in the browser, you revalidate on every use, and when nothing changed you only pay for headers.</p>
+<h2>5. Server-side implementation</h2>
+<p>Most frameworks already generate weak ETags and convert <code>If-None-Match</code> into a 304 if you send through the standard response path. Verify that first — you may only need to add policy headers. Here&#39;s a generic Express-flavored sketch.</p>
+<p><strong>Step 1: a policy middleware.</strong></p>
+<pre><code class="language-js">function cachePolicy(kind) {
+  return (req, res, next) =&gt; {
+    if (kind === &#39;aggregate&#39;) {
+      res.set(&#39;Cache-Control&#39;, &#39;private, no-cache&#39;);
+      res.vary(&#39;Cookie&#39;);
+      res.vary(&#39;Accept-Encoding&#39;);
+    } else if (kind === &#39;detail&#39;) {
+      res.set(&#39;Cache-Control&#39;, &#39;private, no-store&#39;);
+      res.vary(&#39;Accept-Encoding&#39;);
+    }
+    next();
+  };
+}
+
+router.get(&#39;/reports/summary&#39;, authorize, cachePolicy(&#39;aggregate&#39;), handler);
+router.get(&#39;/reports/:id/people&#39;, authorize, cachePolicy(&#39;detail&#39;), handler);
+</code></pre>
+<p>Use <code>res.vary(...)</code> rather than setting <code>Vary</code> wholesale so you don&#39;t clobber other components (CORS, compression) that also vary the response.</p>
+<p><strong>Step 2: let the framework hash the body — or set the tag yourself.</strong></p>
+<p>If you pre-set an ETag before the response is sent, most frameworks keep yours instead of generating one:</p>
+<pre><code class="language-js">const crypto = require(&#39;crypto&#39;);
+
+const tag = `W/&quot;${crypto.createHash(&#39;sha1&#39;).update(body).digest(&#39;base64url&#39;)}&quot;`;
+res.set(&#39;ETag&#39;, tag);
+</code></pre>
+<p>If your compression layer runs after this point, decide deliberately: either compute the tag on the <strong>encoded</strong> bytes, or keep it weak and set <code>Vary: Accept-Encoding</code>. Never let a strong tag describe a representation other than the exact bytes on the wire.</p>
+<p><strong>Step 3: skip the expensive work with a change token (optional).</strong></p>
+<p>This is the pattern that actually saves server time:</p>
+<pre><code class="language-js">async function conditionalReport(req, res, next) {
+  // Must include: data version, report date, user, roles/scope, all query params
+  const token = await reportVersionToken(req);
+  const etag = `&quot;${crypto.createHash(&#39;sha1&#39;).update(token).digest(&#39;base64url&#39;)}&quot;`;
+
+  if (req.headers[&#39;if-none-match&#39;] === etag) {
+    res.set(&#39;ETag&#39;, etag);
+    res.set(&#39;Cache-Control&#39;, &#39;private, no-cache&#39;);
+    return res.status(304).end();
+  }
+
+  const body = await buildReport(req);
+  res.set(&#39;ETag&#39;, etag);
+  res.set(&#39;Cache-Control&#39;, &#39;private, no-cache&#39;);
+  res.locals.data = body;
+  next();
+}
+</code></pre>
+<p>Two notes. First, real code should parse <code>If-None-Match</code> properly (it can be a list, and weak comparison applies); use your framework&#39;s freshness helper rather than string equality. Second, <strong>authentication and authorization always run before this middleware</strong> — conditional logic must never be a bypass.</p>
+<h2>6. What the browser does for you</h2>
+<p>For same-origin <code>fetch</code> and XHR with the default cache mode, the browser participates in the HTTP cache automatically: it stores the response, attaches <code>If-None-Match</code> when revalidating, and hands your JavaScript the cached body when the server answers 304. Your code sees a normal 200 — the 304 dance is invisible.</p>
+<pre><code class="language-js">// default: participates in HTTP cache, revalidates per Cache-Control
+fetch(&#39;/api/reports/summary&#39;);
+
+// force revalidation even during freshness (rarely needed with no-cache)
+fetch(&#39;/api/reports/summary&#39;, { cache: &#39;no-cache&#39; });
+
+// bypass HTTP cache entirely
+fetch(&#39;/api/reports/summary&#39;, { cache: &#39;no-store&#39; });
+</code></pre>
+<p>Gotchas:</p>
+<ul>
+<li>Don&#39;t set <code>If-None-Match</code> yourself; let the browser manage validators.</li>
+<li>Adding a request header <code>Cache-Control: no-cache</code> can disable 304 handling in many servers&#39; freshness checks, turning every revalidation into a full 200. Don&#39;t add it casually.</li>
+<li>ETags do nothing for out-of-order responses. If a user toggles filters quickly, keep an abort controller and a request sequence guard; a stale 200 will happily overwrite a fresh one.</li>
+<li>Service workers sit in front of this pipeline; if you add one, make sure it delegates or deliberately bypasses these requests.</li>
+</ul>
+<h2>7. Test and measure</h2>
+<p>Curl is enough to verify the contract:</p>
+<pre><code class="language-bash"># First call: capture the validator
+curl -si -b cookies.txt https://api.example.com/reports/summary | grep -i -E &#39;etag|cache-control|vary&#39;
+
+# Second call: expect 304 and an empty body
+curl -si -b cookies.txt \
+  -H &#39;If-None-Match: W/&quot;8f14e45f&quot;&#39; \
+  https://api.example.com/reports/summary
+</code></pre>
+<p>In integration tests, assert three things per aggregate endpoint: the policy headers are present, a matching <code>If-None-Match</code> yields 304, and two different users/scopes never validate each other&#39;s content. Then instrument: <strong>304 ratio</strong> per endpoint, bytes on the wire before/after, and revalidation latency. If the 304 ratio is near zero, your validator is changing too often; if CPU didn&#39;t move, you&#39;re only saving bytes — which may still be exactly the goal.</p>
+<h2>8. Pitfalls checklist</h2>
+<ol>
+<li><code>no-cache</code> ≠ <code>no-store</code>. Pick intentionally.</li>
+<li>Authenticated responses: <code>private</code> always, <code>public</code> never.</li>
+<li><code>Vary: Cookie</code> plus per-response cookie rotation can silently kill reuse.</li>
+<li>A metadata ETag must include user, roles/scope, all query params, report date, and schema version. Test each one.</li>
+<li>Compression changes the representation; set <code>Vary: Accept-Encoding</code> and compute the tag over the sent bytes.</li>
+<li>304 responses must repeat <code>ETag</code>, <code>Cache-Control</code>, and <code>Vary</code>; assert it.</li>
+<li><code>Last-Modified</code> has one-second granularity and produces false positives; prefer ETags.</li>
+<li><code>no-store</code> endpoints may still receive a framework-generated ETag; clients that honor <code>no-store</code> won&#39;t use it, but know it&#39;s there.</li>
+<li>Never cache mutations or error responses — <code>no-store</code>.</li>
+<li>Conditional handling runs <strong>after</strong> authn/authz, never instead of it.</li>
+<li>Weak ETags are fine for conditional GET but not for range requests.</li>
+<li>A 304 still executes your server code unless you use a change token. Don&#39;t claim a CPU win you didn&#39;t measure.</li>
+</ol>
+<h2>9. A reasonable rollout order</h2>
+<ol>
+<li>Add explicit <code>Cache-Control</code> and <code>Vary</code> headers per endpoint category.</li>
+<li>Enable (or verify) content-hash ETags and automatic 304 handling.</li>
+<li>Write tests for the 304 flow, header presence, and cross-user isolation.</li>
+<li>Instrument 304 ratio and bytes saved; compare before/after.</li>
+<li>Only where revalidation CPU is a measured problem, introduce change tokens — with tests for every invalidation input.</li>
+<li>Keep sensitive detail endpoints on <code>no-store</code> and re-check entitlements on every request, regardless of caching.</li>
+</ol>
+<p>ETags won&#39;t make a slow endpoint fast. But a disciplined <code>private, no-cache</code> + validator policy turns a dashboard that re-downloads megabytes on every visit into a few hundred bytes of headers, without ever risking a wrong user&#39;s data. That&#39;s a very good trade — as long as you respect what the validator actually promises.</p>
+
+      </article>
+      <button class="back-to-top" onclick="scrollToTop()">Back to Top</button>
+      <div class="share-buttons">
+        <button class="share-button" onclick="shareToFacebook()" aria-label="Share to Facebook">F</button>
+        <button class="share-button" onclick="shareToTwitter()" aria-label="Share to X">X</button>
+        <button class="share-button" onclick="shareToWhatsApp()" aria-label="Share to WhatsApp">W</button>
+        <button class="share-button" onclick="copyLink()" aria-label="Copy link">C</button>
+      </div>
+      <div id="disqus_thread"></div>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <ul class="social">
+          <li><a href="https://github.com/akbarsahata" target="_blank" rel="me noopener">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/akbarsahata" target="_blank" rel="me noopener">LinkedIn</a></li>
+          <li><a href="https://blog.akbarsahata.id" target="_blank" rel="me noopener">Blog</a></li>
+          <li><a href="https://www.instagram.com/akbarsahata/" target="_blank" rel="me noopener">Instagram</a></li>
+      </ul>
+      <p class="copyright">© 2026 Akbar Sahata</p>
+    </div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://blog.akbarsahata.id/articles/caching-authenticated-apis-with-etags-a-practical-guide.html";
+      this.page.identifier = "caching-authenticated-apis-with-etags-a-practical-guide.html";
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://copasan-chatgpt.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    function shareToFacebook() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/caching-authenticated-apis-with-etags-a-practical-guide.html");
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+    
+    function shareToTwitter() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/caching-authenticated-apis-with-etags-a-practical-guide.html");
+      const text = encodeURIComponent("Caching Authenticated APIs with ETags: A Practical Guide");
+      window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    function shareToWhatsApp() {
+      const url = encodeURIComponent("https://blog.akbarsahata.id/articles/caching-authenticated-apis-with-etags-a-practical-guide.html");
+      window.open(`https://wa.me/?text=${url}`, '_blank');
+    }
+    
+    function copyLink() {
+      navigator.clipboard.writeText("https://blog.akbarsahata.id/articles/caching-authenticated-apis-with-etags-a-practical-guide.html").then(() => {
+        alert('Link copied to clipboard');
+      });
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    window.addEventListener('scroll', () => {
+      const backToTopButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    document.querySelectorAll('pre').forEach((pre) => {
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.innerText = 'Copy';
+      button.addEventListener('click', () => {
+        const code = pre.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          button.innerText = 'Copied!';
+          setTimeout(() => {
+            button.innerText = 'Copy';
+          }, 2000);
+        });
+      });
+      pre.appendChild(button);
+    });
+  </script>
+</body>
+</html>
